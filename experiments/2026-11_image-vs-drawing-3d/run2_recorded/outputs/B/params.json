@@ -1,0 +1,394 @@
+[
+ {
+  "name": "scale_px_per_m",
+  "value_mm": 50,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "1マス=1m、グリッド線間隔50pxで確認"
+ },
+ {
+  "name": "origin_x_left_box_left_edge",
+  "value_mm": 0,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "1階平面 px x=140（グリッド線と一致）"
+ },
+ {
+  "name": "origin_y_front_facade",
+  "value_mm": 0,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "y=0は正面外壁線（1階平面 py=850／2階 py=2335）。最寄りのグリッド線py=860とは200mmずれる"
+ },
+ {
+  "name": "building_depth",
+  "value_mm": 11100,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "奥の外壁 py=295 → 11.1m"
+ },
+ {
+  "name": "left_box_x_extent",
+  "value_mm": 12600,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図 7.5m帯 x0〜12.6m"
+ },
+ {
+  "name": "left_box_front_y",
+  "value_mm": 2800,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "左側面図・2階平面の緑線 y=2.8m（左翼の前端）"
+ },
+ {
+  "name": "left_box_height",
+  "value_mm": 7500,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図・左側面図"
+ },
+ {
+  "name": "left_box_rear_left_radius",
+  "value_mm": 2000,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "平面の曲線計測＋左側面図『丸み』線 2.0m"
+ },
+ {
+  "name": "left_wing_width",
+  "value_mm": 1000,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "凹みの左壁 x=1.0m"
+ },
+ {
+  "name": "right_box_x_min",
+  "value_mm": 6000,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図・平面 x=6.0m"
+ },
+ {
+  "name": "right_box_x_max",
+  "value_mm": 15300,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "2階平面・正面図 x=15.3m"
+ },
+ {
+  "name": "right_box_height",
+  "value_mm": 6800,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図『6.8m（右の箱）』"
+ },
+ {
+  "name": "right_box_front_right_radius",
+  "value_mm": 1500,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図ハッチ13.8〜15.3m、2階帯窓がy1.5mまで回る"
+ },
+ {
+  "name": "right_box_rear_right_radius",
+  "value_mm": 1000,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "2階平面の曲線計測"
+ },
+ {
+  "name": "right_box_front_left_radius",
+  "value_mm": 500,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "正面図ハッチ6.0〜6.5m"
+ },
+ {
+  "name": "recess_x_min",
+  "value_mm": 1000,
+  "source": "drawing",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "name": "recess_glass_x",
+  "value_mm": 7000,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "平面の青線 x=7.0m（ガラスは奥行250mmのポケット内 x=7.12〜7.14）"
+ },
+ {
+  "name": "recess_front_nose_depth_y",
+  "value_mm": 1300,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "x6〜7の前の壁先端 y0〜1.3m、ガラスはy1.3〜6.8m"
+ },
+ {
+  "name": "recess_back_wall_y",
+  "value_mm": 6800,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "平面計測 py=510→6.8m。正面図注記『5.0m奥』と不一致（左翼前端2.8mからは4.0m、外壁線からは6.8m）"
+ },
+ {
+  "name": "recess_ceiling_height",
+  "value_mm": 5800,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図『凹みの天井5.8m』"
+ },
+ {
+  "name": "open_sky_front_y",
+  "value_mm": 2800,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "2階平面の緑線（上の屋根の端）"
+ },
+ {
+  "name": "slit_y_min",
+  "value_mm": 3200,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "平面の左外壁の青線"
+ },
+ {
+  "name": "slit_y_max",
+  "value_mm": 4500,
+  "source": "drawing",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "name": "slit_z_min",
+  "value_mm": 300,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "左側面図"
+ },
+ {
+  "name": "slit_z_max",
+  "value_mm": 5800,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "左側面図"
+ },
+ {
+  "name": "front_ribbon_x_start",
+  "value_mm": 7120,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図 px495"
+ },
+ {
+  "name": "front_ribbon_z_min",
+  "value_mm": 4700,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図注記"
+ },
+ {
+  "name": "front_ribbon_z_max",
+  "value_mm": 5900,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図注記"
+ },
+ {
+  "name": "front_ribbon_wrap_end_y",
+  "value_mm": 1500,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "2階平面：青線が右側面y≈1.5まで"
+ },
+ {
+  "name": "ribbon_mullions_x",
+  "value_mm": "9400/11700/13800",
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "正面図の縦線。材質は画像では暗色金属だがM_Woodに入れた"
+ },
+ {
+  "name": "rear_1F_window_x",
+  "value_mm": "2400-6800",
+  "source": "drawing",
+  "confidence": "high",
+  "note": "1階平面 上辺の青線"
+ },
+ {
+  "name": "rear_1F_window_height",
+  "value_mm": 2400,
+  "source": "guess",
+  "confidence": "low",
+  "note": "掃き出し窓として床〜2.4mと仮定"
+ },
+ {
+  "name": "rear_2F_ribbon_x",
+  "value_mm": "8000-12000",
+  "source": "drawing",
+  "confidence": "high",
+  "note": "2階平面 上辺の青線"
+ },
+ {
+  "name": "rear_2F_ribbon_z",
+  "value_mm": "4700-5900",
+  "source": "drawing",
+  "confidence": "high",
+  "note": "注記『正面と同じ高さ』"
+ },
+ {
+  "name": "window_pocket_depth",
+  "value_mm": 200,
+  "source": "guess",
+  "confidence": "medium",
+  "note": "窓はマスから200〜250mm彫り込み、厚さ20mmのガラスを内側に配置"
+ },
+ {
+  "name": "glass_thickness",
+  "value_mm": 20,
+  "source": "guess",
+  "confidence": "high",
+  "note": "指示どおり"
+ },
+ {
+  "name": "one_storey_part_x_max",
+  "value_mm": 18000,
+  "source": "drawing",
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "name": "one_storey_height",
+  "value_mm": 3300,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図『3.3m（1階だけ）』"
+ },
+ {
+  "name": "one_storey_rear_right_radius",
+  "value_mm": 1000,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "1階平面の曲線計測"
+ },
+ {
+  "name": "garage_x",
+  "value_mm": "12600-17300",
+  "source": "drawing",
+  "confidence": "high",
+  "note": "1階平面の車庫内法"
+ },
+ {
+  "name": "garage_depth_y",
+  "value_mm": 10360,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "内法奥 py≈332"
+ },
+ {
+  "name": "garage_opening_height",
+  "value_mm": 2700,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "正面図の白い開口 2.7m（内部天井も2.7mと仮定）"
+ },
+ {
+  "name": "garage_right_wall",
+  "value_mm": 700,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "x17.3〜18.0"
+ },
+ {
+  "name": "garage_inner_corner_radius",
+  "value_mm": 600,
+  "source": "guess",
+  "confidence": "low",
+  "note": "1階平面で丸く見える。半径は目測"
+ },
+ {
+  "name": "house_corner_by_garage_radius",
+  "value_mm": 1300,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "1階平面：家側の前角が丸い（x12.6→11.3）"
+ },
+ {
+  "name": "recess_mullion_spacing",
+  "value_mm": 1375,
+  "source": "image",
+  "confidence": "medium",
+  "note": "画像で各階4スパン→5.5m/4"
+ },
+ {
+  "name": "recess_mullion_size",
+  "value_mm": "60x120",
+  "source": "guess",
+  "confidence": "low",
+  "note": ""
+ },
+ {
+  "name": "floor_band_z",
+  "value_mm": "3000-3300",
+  "source": "guess",
+  "confidence": "medium",
+  "note": "画像の階間の木の帯。高さは1階屋根3.3mから推定"
+ },
+ {
+  "name": "recess_soffit_wood",
+  "value_mm": 25,
+  "source": "image",
+  "confidence": "medium",
+  "note": "画像の木の天井。厚さは推定"
+ },
+ {
+  "name": "pool_extent",
+  "value_mm": "x1200-5800,y400-4500",
+  "source": "image",
+  "confidence": "low",
+  "note": "図面に無し。画像の凹み前の水盤から位置・大きさを推定"
+ },
+ {
+  "name": "pool_water_z",
+  "value_mm": -150,
+  "source": "guess",
+  "confidence": "low",
+  "note": "水深の見た目（浅い水盤）から"
+ },
+ {
+  "name": "paving_top_z",
+  "value_mm": 0,
+  "source": "guess",
+  "confidence": "medium",
+  "note": ""
+ },
+ {
+  "name": "road_edge_y",
+  "value_mm": -1000,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "1階平面の道路線 py≈900"
+ },
+ {
+  "name": "road_width",
+  "value_mm": 6000,
+  "source": "guess",
+  "confidence": "low",
+  "note": ""
+ },
+ {
+  "name": "road_top_z",
+  "value_mm": -120,
+  "source": "guess",
+  "confidence": "low",
+  "note": "縁石段差"
+ },
+ {
+  "name": "road_corner_wrap_left",
+  "value_mm": 3000,
+  "source": "image",
+  "confidence": "low",
+  "note": "画像：角地で道路が左側へカーブ。内側R3m・外側R9mは推定"
+ }
+]

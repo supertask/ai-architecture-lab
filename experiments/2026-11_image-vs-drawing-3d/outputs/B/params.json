@@ -1,0 +1,340 @@
+[
+ {
+  "name": "origin_x0_left_edge_left_box",
+  "value_mm": 0,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "plan grid line x=140px"
+ },
+ {
+  "name": "origin_y0_building_front_line",
+  "value_mm": 0,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "y=0 chosen at 1F front edge; road line is 1.0 m in front"
+ },
+ {
+  "name": "building_depth",
+  "value_mm": 11100,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "555px"
+ },
+ {
+  "name": "total_width_1F",
+  "value_mm": 18000,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "left_box_width",
+  "value_mm": 12600,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "front elev label ~12.6m"
+ },
+ {
+  "name": "left_box_front_y (green line / end of leg)",
+  "value_mm": 2800,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "left_box_height",
+  "value_mm": 7500,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "left_leg_thickness",
+  "value_mm": 1000,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "left_box_back_left_corner_radius",
+  "value_mm": 2000,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "fitted to arc pixels"
+ },
+ {
+  "name": "right_box_left_x (notch face)",
+  "value_mm": 6000,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "right_box_right_x",
+  "value_mm": 15300,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "right_box_height",
+  "value_mm": 6800,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "right_box_front_right_radius",
+  "value_mm": 1500,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "fitted; ribbon wraps it"
+ },
+ {
+  "name": "right_box_back_right_radius",
+  "value_mm": 1500,
+  "source": "drawing",
+  "confidence": "medium",
+  "note": "fitted 2F plan"
+ },
+ {
+  "name": "notch_depth_y",
+  "value_mm": 1300,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "notch_front_left_radius",
+  "value_mm": 500,
+  "source": "drawing",
+  "confidence": "low",
+  "note": "hatch width in elevation ~0.5m"
+ },
+ {
+  "name": "recess_x_from",
+  "value_mm": 1000,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "recess_glass_x",
+  "value_mm": 7000,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "recess_back_wall_y",
+  "value_mm": 6800,
+  "source": "drawing",
+  "confidence": "high",
+  "note": "elev note says 5.0m奥 - inconsistent; plan used"
+ },
+ {
+  "name": "recess_ceiling_height",
+  "value_mm": 5800,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "recess_glass_y_range",
+  "value_mm": "1300-6800",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "recess_glass_height",
+  "value_mm": "0-5800",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "recess_mullion_bays",
+  "value_mm": 4,
+  "source": "image",
+  "confidence": "medium"
+ },
+ {
+  "name": "mullion_section",
+  "value_mm": "80x150",
+  "source": "guess",
+  "confidence": "low"
+ },
+ {
+  "name": "floor_band_2F_z",
+  "value_mm": "2900-3200",
+  "source": "guess",
+  "confidence": "low",
+  "note": "image shows wood band mid-height"
+ },
+ {
+  "name": "garage_interior_x",
+  "value_mm": "12600-17300",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "garage_interior_depth",
+  "value_mm": 10400,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "garage_wall_thickness",
+  "value_mm": 700,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "garage_opening_height",
+  "value_mm": 2700,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "garage_interior_back_corner_radius",
+  "value_mm": 500,
+  "source": "drawing",
+  "confidence": "low"
+ },
+ {
+  "name": "1F_corner_at_garage_radius",
+  "value_mm": 1500,
+  "source": "drawing",
+  "confidence": "medium"
+ },
+ {
+  "name": "1F_only_part_height",
+  "value_mm": 3300,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "1F_only_back_right_radius",
+  "value_mm": 1200,
+  "source": "drawing",
+  "confidence": "medium"
+ },
+ {
+  "name": "ribbon_window_z",
+  "value_mm": "4700-5900",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "ribbon_window_x_start",
+  "value_mm": 7100,
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "ribbon_window_end",
+  "value_mm": "wraps r1500 arc to (15300,1500)",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "ribbon_pane_divisions_x",
+  "value_mm": "9400,11700,13800",
+  "source": "drawing",
+  "confidence": "medium"
+ },
+ {
+  "name": "slit_window_face",
+  "value_mm": "x=0 (left side face)",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "slit_window_y",
+  "value_mm": "3200-4500",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "slit_window_z",
+  "value_mm": "300-5800",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "slit_reveal_depth",
+  "value_mm": 250,
+  "source": "image",
+  "confidence": "low",
+  "note": "image: deeply recessed"
+ },
+ {
+  "name": "back_window_1F_x",
+  "value_mm": "2400-6800",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "back_window_1F_z",
+  "value_mm": "0-2400",
+  "source": "guess",
+  "confidence": "low",
+  "note": "掃き出し窓 height not drawn"
+ },
+ {
+  "name": "back_window_2F_x",
+  "value_mm": "8000-12000",
+  "source": "drawing",
+  "confidence": "high"
+ },
+ {
+  "name": "back_window_2F_z",
+  "value_mm": "4700-5900",
+  "source": "drawing",
+  "confidence": "high",
+  "note": "label: same height as front"
+ },
+ {
+  "name": "window_reveal_depth",
+  "value_mm": 150,
+  "source": "guess",
+  "confidence": "low"
+ },
+ {
+  "name": "glass_thickness",
+  "value_mm": 20,
+  "source": "guess",
+  "confidence": "high",
+  "note": "spec"
+ },
+ {
+  "name": "road_line_y",
+  "value_mm": -1000,
+  "source": "drawing",
+  "confidence": "medium"
+ },
+ {
+  "name": "left_road (corner lot)",
+  "value_mm": "x<-1000",
+  "source": "image",
+  "confidence": "low"
+ },
+ {
+  "name": "site_corner_radius",
+  "value_mm": 3000,
+  "source": "guess",
+  "confidence": "low"
+ },
+ {
+  "name": "curb_drop",
+  "value_mm": 150,
+  "source": "guess",
+  "confidence": "low"
+ },
+ {
+  "name": "pool_footprint",
+  "value_mm": "x1000-6000 (6700 behind notch), y-700..5800",
+  "source": "image",
+  "confidence": "low"
+ },
+ {
+  "name": "pool_water_level",
+  "value_mm": -100,
+  "source": "guess",
+  "confidence": "low"
+ },
+ {
+  "name": "pool_depth",
+  "value_mm": 300,
+  "source": "guess",
+  "confidence": "low"
+ }
+]

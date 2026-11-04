@@ -1,0 +1,46 @@
+{
+ "A_image_only": {
+  "top": {
+   "iou": 0.803,
+   "missing": 0.159,
+   "extra": 0.047
+  },
+  "front": {
+   "iou": 0.769,
+   "missing": 0.217,
+   "extra": 0.018
+  },
+  "right": {
+   "iou": 0.769,
+   "missing": 0.23,
+   "extra": 0.001
+  },
+  "back": {
+   "iou": 0.767,
+   "missing": 0.213,
+   "extra": 0.026
+  }
+ },
+ "B_image_plus_drawing": {
+  "top": {
+   "iou": 0.908,
+   "missing": 0.004,
+   "extra": 0.098
+  },
+  "front": {
+   "iou": 0.992,
+   "missing": 0.002,
+   "extra": 0.006
+  },
+  "right": {
+   "iou": 0.985,
+   "missing": 0.004,
+   "extra": 0.011
+  },
+  "back": {
+   "iou": 0.993,
+   "missing": 0.001,
+   "extra": 0.006
+  }
+ }
+}

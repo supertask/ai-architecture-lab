@@ -1,0 +1,235 @@
+{
+ "source_image": "work/proposals/images/P-20261031-02-house-v6C.png",
+ "units": "mm",
+ "origin": "front-left corner of tall left volume (nearest corner in image)",
+ "params": [
+  {
+   "name": "camera_eye_height",
+   "value_mm": 2100,
+   "how": "Scale anchor. Car height (~1.6-1.9 m) vs. horizon (y~590 px, from where the roof and base lines meet). A 1.7 m eye gives a car of ~1.55 m, but the house is then only 5.2 m tall, so a compromise was used.",
+   "confidence": "low"
+  },
+  {
+   "name": "horizon_px_y",
+   "value_mm": 590,
+   "how": "Where roofline and base-line pairs meet: left face roof+base, ribbon head+sill. The field horizon in the image is ~637 px (AI inconsistency).",
+   "confidence": "med"
+  },
+  {
+   "name": "focal_px",
+   "value_mm": 1307,
+   "how": "Two-point perspective: VP_L~-940 px, VP_R~1800 px, principal point x=839 px (~28 mm equiv.)",
+   "confidence": "med"
+  },
+  {
+   "name": "L_height_parapet_top",
+   "value_mm": 6400,
+   "how": "Near corner, top 45 px / base 858 px, scaled from the horizon (=3.03 x eye height)",
+   "confidence": "med"
+  },
+  {
+   "name": "L_width_X",
+   "value_mm": 3930,
+   "how": "Left volume front roof edge seen until x~905 px, where it disappears behind R",
+   "confidence": "med"
+  },
+  {
+   "name": "L_depth_Y",
+   "value_mm": 7000,
+   "how": "Far end of left face: base 7.14 m, top 6.54 m",
+   "confidence": "med"
+  },
+  {
+   "name": "L_backleft_corner_radius",
+   "value_mm": 600,
+   "how": "Rounded silhouette at the far left, ~30-35 px",
+   "confidence": "low"
+  },
+  {
+   "name": "R_height",
+   "value_mm": 6000,
+   "how": "Taken where R's side-face roof edge meets L's front plane (862,197 px): 5.95 m. Ribbon-end check: 6.05 m.",
+   "confidence": "med"
+  },
+  {
+   "name": "R_left_face_X",
+   "value_mm": 3170,
+   "how": "Same point (862,197 px) intersected with the plane Y=0",
+   "confidence": "med"
+  },
+  {
+   "name": "R_front_projection_Y",
+   "value_mm": -2330,
+   "how": "Rounded front-left corner of R at 1080,146 px, at height R_height. Ground lines point to only about -1.5 to -1.8 m.",
+   "confidence": "low"
+  },
+  {
+   "name": "R_front_left_corner_radius",
+   "value_mm": 350,
+   "how": "Coping arc across ~1070-1117 px",
+   "confidence": "low"
+  },
+  {
+   "name": "R_upper_end_X",
+   "value_mm": 12500,
+   "how": "Upper-floor silhouette at x 1367 px. Close to VP_R, so very sensitive to small errors.",
+   "confidence": "low"
+  },
+  {
+   "name": "R_upper_front_right_radius",
+   "value_mm": 1500,
+   "how": "Ribbon window wraps the corner; curved part 1335-1367 px",
+   "confidence": "low"
+  },
+  {
+   "name": "R_groundfloor_end_X",
+   "value_mm": 9400,
+   "how": "GF wall end at x 1300 px, in the front plane",
+   "confidence": "low"
+  },
+  {
+   "name": "R_cantilever_length",
+   "value_mm": 3100,
+   "how": "R_upper_end_X - R_groundfloor_end_X",
+   "confidence": "low"
+  },
+  {
+   "name": "R_upper_underside_Z",
+   "value_mm": 3600,
+   "how": "Upper-floor underside / carport slab top (~454 px). Computes as 4.07 m, but the end is rounded, so lowered.",
+   "confidence": "low"
+  },
+  {
+   "name": "parapet_height_and_thickness",
+   "value_mm": 300,
+   "how": "Flat roofs with a 300 mm parapet (cut 300 deep, 200 thick). Not visible; assumed.",
+   "confidence": "low"
+  },
+  {
+   "name": "recess_X_range",
+   "value_mm": "360-3170",
+   "how": "Left jamb 660 px (X=0.36 m) to R's side face",
+   "confidence": "med"
+  },
+  {
+   "name": "recess_depth_Y",
+   "value_mm": 2130,
+   "how": "Glass on R's side face: mullions at 700/775/855/945 px project to an even ~1.02 m pitch at Y=2.13/1.10/0.08/-0.95 m, ending at Y=-1.95 (1041 px). The concrete strip at 660-700 px is the back wall at Y=2.13.",
+   "confidence": "med"
+  },
+  {
+   "name": "recess_soffit_Z",
+   "value_mm": 5440,
+   "how": "Soffit edge at 175 px (left jamb) and its junction with the R face at 249 px both give ~5.4 m",
+   "confidence": "med"
+  },
+  {
+   "name": "glazing_plane",
+   "value_mm": "X=3170+150 reveal, Y -1950..2130",
+   "how": "All visible recess glazing faces -X on R's/L's side face. No glass on the back wall.",
+   "confidence": "med"
+  },
+  {
+   "name": "glazing_Z_range",
+   "value_mm": "0-5000",
+   "how": "Glass top 262 px gives 5.02 m; base hidden by the pool coping",
+   "confidence": "med"
+  },
+  {
+   "name": "glass_bays",
+   "value_mm": 4,
+   "how": "Mullion pitch ~1020 mm",
+   "confidence": "med"
+  },
+  {
+   "name": "timber_band_Z",
+   "value_mm": "2750-3150",
+   "how": "Band at 475-520 px on the X=3.17 m face",
+   "confidence": "med"
+  },
+  {
+   "name": "slit_window_Y",
+   "value_mm": "400-1500",
+   "how": "Left face X=0: 595 px gives Y=0.37 m, outer jamb 500 px gives Y=1.54 m. Narrow only relative to the face.",
+   "confidence": "med"
+  },
+  {
+   "name": "slit_window_Z",
+   "value_mm": "300-5500",
+   "how": "Glass top 165-190 px gives ~5.5 m; sill ~805 px gives ~0.3 m",
+   "confidence": "med"
+  },
+  {
+   "name": "slit_reveal_depth",
+   "value_mm": 250,
+   "how": "Jamb visible ~17 px",
+   "confidence": "low"
+  },
+  {
+   "name": "ribbon_window_Z",
+   "value_mm": "4230-5300",
+   "how": "Head 248 px / sill 362 px on the R front plane",
+   "confidence": "med"
+  },
+  {
+   "name": "ribbon_window_X_start",
+   "value_mm": 4180,
+   "how": "Left jamb at 1128 px",
+   "confidence": "med"
+  },
+  {
+   "name": "carport_canopy",
+   "value_mm": "X 12300-18300, Y -3600..4200, Z 3300-3600",
+   "how": "Slab end at 1531 px, 500-520 px, intersected with X=18.3 m. Depth back to Y 4.2 m is a guess.",
+   "confidence": "low"
+  },
+  {
+   "name": "carport_end_pier",
+   "value_mm": 1900,
+   "how": "Low wing wall at 1507-1528 px, 602-712 px: ~1.9 m tall, at X~18 m, Y~-3.3 m",
+   "confidence": "low"
+  },
+  {
+   "name": "carport_back_wall_Y",
+   "value_mm": 4200,
+   "how": "Hidden. Guessed from the depth needed for a car parked nose-in.",
+   "confidence": "low"
+  },
+  {
+   "name": "pool",
+   "value_mm": "X -400..3170, Y -1800..2130, water Z -80",
+   "how": "Fills the recess floor and the inside corner of the L-shape. Front edge from the kerb points (~-1.8 m).",
+   "confidence": "low"
+  },
+  {
+   "name": "paving_front_edge_Y",
+   "value_mm": -4000,
+   "how": "Kerb lines: -2.9 m at X 7.5, -5.4 m at X 24 (inconsistent); averaged",
+   "confidence": "low"
+  },
+  {
+   "name": "paving_left_edge_X",
+   "value_mm": -1800,
+   "how": "Left road white line projects to X~-1.75 m",
+   "confidence": "low"
+  },
+  {
+   "name": "road_width",
+   "value_mm": 7000,
+   "how": "Assumed; the far edge is not visible",
+   "confidence": "low"
+  },
+  {
+   "name": "kerb_height",
+   "value_mm": 150,
+   "how": "Assumed",
+   "confidence": "low"
+  },
+  {
+   "name": "back_and_right_sides",
+   "value_mm": "flat walls, no openings",
+   "how": "Invisible. The back of L and R is flush at Y=7.0 m. A GF room sits behind the carport.",
+   "confidence": "low"
+  }
+ ]
+}
