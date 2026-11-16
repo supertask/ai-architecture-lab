@@ -45,20 +45,20 @@ The "In the experiment" column says how that step was done in the experiment:
 
 - **Same prompt, run as-is**: the experiment's prompt file, unchanged (only how paths and the port are written is substituted)
 - **Same scripts run (prompt newly added)**: in the experiment, the experimenter's AI ran these scripts directly. We added a short prompt that only runs the same scripts in the same order
-- **By hand**: a person does it in the Archicad GUI
+- **By hand**: a person does it in the Archicad GUI (it can also be handed to the AI; see "Let the AI do the screen steps too" below)
 - **Added (not used)**: added for the public kit; not used in the experiment
 
 | Step | Line to paste (or what you do) | What happens | In the experiment | When it finishes | Time |
 | --- | --- | --- | --- | --- | --- |
-| 0 | You: start Archicad and open an empty project (File › New) | — | By hand | go to step 1 | 1 min |
+| 0 | You: start Archicad and open an empty project (File › New) | — | By hand / can be handed to the AI via screen control (cua-driver) | go to step 1 | 1 min |
 | 1 | `Read prompts/00_prepare.md and follow its instructions.` | Checks the connection, creates the work folder (`work`), sets the stories to 1FL/2FL/RFL and saves as "house_from_scratch" in `work` | Added (not used) *1 | check the output the AI shows has no "NG" or errors | a few min |
 | 2 | `Read work/prompts/01_model_M.md and follow its instructions.` | Places exterior walls, slabs, roof, windows and doors one by one | Same prompt, run as-is | save in Archicad (File › Save) | ~14 min |
 | 3 | `Read work/prompts/02_interior_I.md and follow its instructions.` | Partitions, doors, stair, rooms; fixes one set of grid lines in `work/grid.json` | Same prompt, run as-is | save; check `grid.json` exists in `work` | ~18 min |
 | 4 | `Read work/prompts/05_sections.md and follow its instructions.` | Creates 4 elevation lines and the A-A / B-B section lines | Same scripts run (prompt newly added) *2 | go to step 5 | a few min |
-| 5 | You: in the Navigator, Project Map → Sections, double-click each of the 6 (S南 = south, S東 = east, S北 = north, S西 = west, A-A, B-B) once to open it | Some versions cannot open a newly created section window from the AI | By hand | save | a few min |
+| 5 | You: in the Navigator, Project Map → Sections, double-click each of the 6 (S南 = south, S東 = east, S北 = north, S西 = west, A-A, B-B) once to open it | Some versions cannot open a newly created section window through the AI's commands | By hand / can be handed to the AI via screen control (cua-driver) | save | a few min |
 | 6 | `Read work/prompts/06_fix_model.md and follow its instructions.` | Layered walls/slabs/roof, foundations, whole house raised 100 so 1FL = GL+100, deletes previously drawn 2D (usually none in this order) | Same scripts run (prompt newly added) | save | a few min |
 | 7 | 8 lines, one at a time, each in a new conversation: `Read work/prompts/12_sheet_SA.md and follow its instructions.` → `13_sheet_SB` → `14_sheet_ES` → `15_sheet_EN` → `16_sheet_EE` → `17_sheet_EW` → `10_sheet_P1` → `11_sheet_P2` | Reads the drawing rules and draws one sheet at a time (sections A-A, B-B; south, north, east, west elevations; ground- and first-floor plans) | Same prompt, run as-is (in this order) | **save after every sheet**, then the next line | 12–35 min per sheet; ~3 h for 8 |
-| 8 | You: in the Navigator, right-click "S-01 A-A" → rename the section, set the Reference ID to A; same for "S-01 B-B" → B | Section markers on the plans read A / B (the AI cannot change this) | By hand *3 | save | a few min |
+| 8 | You: in the Navigator, right-click "S-01 A-A" → rename the section, set the Reference ID to A; same for "S-01 B-B" → B | Section markers on the plans read A / B (the AI's commands cannot change this) | By hand *3 / can be handed to the AI via screen control (cua-driver) | save | a few min |
 | 9 | `Read work/prompts/18_export.md and follow its instructions.` | Moves below-ground elements (foundations etc.) to their own layer and exports the 8 sheets as images | Same scripts run (prompt newly added) | look at the 8 images in this folder's `out` → `png` | 5–10 min |
 | 10 | `Read work/prompts/30_inspect_and_fix.md and follow its instructions.` (add what you noticed after it) | Reviews the sheets, writes fix prompts and fixes them (one round) | Added (not used) | stop after 2–3 rounds | ~1–1.5 h per round |
 
@@ -67,8 +67,21 @@ The "In the experiment" column says how that step was done in the experiment:
 - *3 In the experiment, this was done midway through the review/fix rounds (between the 3rd and 4th fix).
 - Step 7 can also be run as a batch (`scripts/run_sheets.sh`: hands each prompt to a fresh AI run and saves after each sheet; see [AI_GUIDE.en.md](AI_GUIDE.en.md#5-using-run_sheetssh)). This is the same shape as the experiment's batch run.
 - In step 10, add what you noticed in plain words after the line. Example: `Read work/prompts/30_inspect_and_fix.md and follow its instructions. In section A-A, the blue waterproofing line runs up over the parapet coping.`
-- **The "By hand" steps (0, 5, 8) can sometimes be handed to the AI.** If your AI has a screen-control feature (computer use: the AI moves the mouse and keyboard), give it that step's text and ask it to do it on screen. In our environment (Hermes Agent) the AI can operate Archicad's menus and Navigator through a screen-control tool, **but doing these three steps by AI screen control has not been tested yet.** If your AI has no such feature or it fails, do them by hand (a few minutes each).
 - **The flow in this table has not yet been run end-to-end from the public kit** (see "Honest notes").
+
+### Let the AI do the screen steps too (cua-driver)
+
+The "By hand" steps (0, 5, 8) can be handed to the AI if it can operate the screen. The tool for that is **cua-driver** (a free tool that lets the AI see an app's window and click and type in it; [trycua/cua](https://github.com/trycua/cua)). It connects to both Claude Code and Codex (Windows and Mac).
+
+1. **Install and connect (once)**: paste this line into your AI.
+   `Read "12. Hand the by-hand steps to the AI with cua-driver" in https://github.com/supertask/ai-architecture-lab/blob/master/experiments/2026-11_archicad-drawing-set/AI_GUIDE.en.md, then install cua-driver and connect it to yourself.`
+   On a Mac you will be asked for **Accessibility** and **Screen Recording** permission. **Turn these two switches on yourself** (the AI is not allowed to press them). When it is done, close your AI and open it again.
+2. **Use it in steps 0, 5, 8**: when you reach the step, paste this into a new conversation (change the step number).
+   `Read section 12 of AI_GUIDE.en.md and do step 5 by operating the screen with cua-driver.`
+   Do not touch the mouse or keyboard while the AI is working. Save as usual when it finishes.
+
+- cua-driver itself has been confirmed working with our agent (Hermes Agent). **Doing steps 0, 5 and 8 through cua-driver from Claude Code or Codex has not yet been run end-to-end.** If it does not work, do them by hand (a few minutes each).
+- Details (install, checks, per-step procedure): [AI_GUIDE.en.md section 12](AI_GUIDE.en.md#12-hand-the-by-hand-steps-to-the-ai-with-cua-driver).
 
 ### Prompts included as records of the experiment (not part of the normal order)
 

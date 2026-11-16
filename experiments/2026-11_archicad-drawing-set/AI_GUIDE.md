@@ -24,15 +24,15 @@
 
 | 段（README の表） | ファイル | 中身 | 実験で |
 | --- | --- | --- | --- |
-| 0 | （人：Archicad で ファイル › 新規） | 空のプロジェクトを開く | 人が手で |
+| 0 | （人：Archicad で ファイル › 新規） | 空のプロジェクトを開く | 人が手で（cua-driver があれば「12」で AI が画面から） |
 | 1 | `prompts/00_prepare.md` | `check_connection.py --scan` → `prepare_workdir.py` → `setup_stories.py work/house_from_scratch.pln` を流すだけ | 追加（未使用） |
 | 2 | `work/prompts/01_model_M.md` | 外形を組む | 同じ指示で実行 |
 | 3 | `work/prompts/02_interior_I.md` | 間取りと通り芯（`work/grid.json`） | 同じ指示で実行 |
 | 4 | `work/prompts/05_sections.md` | `make_sections.py create` を流すだけ | 同じスクリプトを実行（指示文は今回追加） |
-| 5 | （人：断面の窓6つを1回ずつ開く） | S南・S東・S北・S西・A-A・B-B | 人が手で |
+| 5 | （人：断面の窓6つを1回ずつ開く） | S南・S東・S北・S西・A-A・B-B | 人が手で（cua-driver があれば「12」で AI が画面から） |
 | 6 | `work/prompts/06_fix_model.md` | `fixA_snapshot` → `fixA_comps` → `fixA_walls` → `fixA_slabs --apply` → `fixA_found` → `fixA_raise` → `fixA_del2d --apply` を流すだけ | 同じスクリプトを実行（指示文は今回追加） |
 | 7 | `work/prompts/12_sheet_SA` → `13_sheet_SB` → `14_sheet_ES` → `15_sheet_EN` → `16_sheet_EE` → `17_sheet_EW` → `10_sheet_P1` → `11_sheet_P2` | 1枚ずつ描く（1本ずつ新しい会話、1枚ごとに保存） | 同じ指示で実行（この順） |
-| 8 | （人：断面記号の参照ID を A・B に） | ナビゲータで「S-01 A-A」「S-01 B-B」の名前を変更 | 人が手で |
+| 8 | （人：断面記号の参照ID を A・B に） | ナビゲータで「S-01 A-A」「S-01 B-B」の名前を変更 | 人が手で（cua-driver があれば「12」で AI が画面から） |
 | 9 | `work/prompts/18_export.md` | `layer_found.py` → `export_png.py` を流すだけ | 同じスクリプトを実行（指示文は今回追加） |
 | 10 | `work/prompts/30_inspect_and_fix.md` | 点検、直しの指示を書く、直す | 追加（未使用） |
 | 記録 | `03_south_elevation_recorded`・`04_fix_partition_F` | 実験の回の記録（ふだんの順では使わない） | 同じ指示で実行 |
@@ -205,7 +205,7 @@ SHEETS='20_fix_SA_round2' AGENT_CMD='...' bash scripts/run_sheets.sh            
 **試していないこと**
 - 公開用に書き直したスクリプトは、文法の確認と、Archicad を使わない部分（作業フォルダ作り・計画の表示・文字の照合・通り芯ファイルの統一）の試し実行だけ。Archicad では流していない。
 - `00_prepare`・`05_sections`・`06_fix_model`・`18_export`・`30_inspect_and_fix` の指示文は、この形では流していない。README の表の流れを、公開したキットで最初から最後まで通したことはまだない。
-- 人が手で行う段（0・5・8）を AI の画面操作で行う流れも試していない。
+- 人が手で行う段（0・5・8）を AI の画面操作で行う流れ（「12」）も、Claude Code・Codex では通しで試していない。
 
 失敗したら、試していない部分で起きた可能性を前提に、出力をそのまま見せて止まり、どこまで進んだかをユーザーと確かめてください。
 
@@ -215,8 +215,8 @@ SHEETS='20_fix_SA_round2' AGENT_CMD='...' bash scripts/run_sheets.sh            
 | --- | --- |
 | 接続できない、ポートが違う | Archicad が起動してプロジェクトが開いているかをユーザーに確かめてもらい、`check_connection.py --scan` をもう一度。だめならセットアップ資料を案内して止まる |
 | 材料が見つからない・違う材料になる | テンプレートが日本語の標準でない。`fixA_comps.py` は材料を**番号**で、`fixA_found.py`・`fixA_slabs.py` は名前「コンクリート」で選ぶ。ユーザーの許可を取り、各スクリプト先頭の番号・名前を、そのテンプレートの材料に合わせて書き換える |
-| 断面の窓を開けない（ChangeWindow が失敗） | 版によっては、作ったばかりの断面の窓を AI から開けない。段 5（人が画面で6つを1回ずつ開く）を済ませたか確かめてもらう |
-| 断面記号の参照ID を変えたい | AI からは変えられない。段 8 をユーザーに頼む |
+| 断面の窓を開けない（ChangeWindow が失敗） | 版によっては、作ったばかりの断面の窓を AI から開けない。段 5（人が画面で6つを1回ずつ開く）を済ませたか確かめてもらう。cua-driver につながっていれば「12」の段 5 で開ける |
+| 断面記号の参照ID を変えたい | Archicad への命令（JSON API・Tapir）からは変えられない。段 8 をユーザーに頼むか、cua-driver につながっていれば「12」の段 8 で画面から変える |
 | Archicad が落ちた | ユーザーに `work` の「house_from_scratch」を開き直してもらう（復元は「いいえ」）。最後に保存した所から続ける。続けて描く時は1枚ごとに保存し、`GetElementsInDrawOrder` を使わない |
 | スクリプトが途中で失敗した | 流し直す前に、どこまで反映されたかを確かめる。`fixA_raise.py`（2回流すと2回上がる）と `layer_found.py`（壁の下端が2回下がる）は流し直さない |
 | `fixA_snapshot.py` が「既にある」で止まる | 前の控えを残すのが正しい。`fixA_walls.py` 以降を流した後は取り直さない（`--force` は、まだ直しを始めていない時だけ） |
@@ -230,3 +230,111 @@ SHEETS='20_fix_SA_round2' AGENT_CMD='...' bash scripts/run_sheets.sh            
 - 点検と直しの指示の作り方：[skills/inspection.md](skills/inspection.md)
 - スキル（rules・skills）のエージェントへの渡し方：[skills/README.md](skills/README.md)
 - 作図ルール：[rules/README.md](rules/README.md)
+
+## 12. cua-driver で人の段を AI に任せる
+
+段 0・5・8 は Archicad への命令（JSON API・Tapir）ではできないので、画面を操作して行います。その道具が **cua-driver**（[trycua/cua](https://github.com/trycua/cua)。アプリの窓を読み取り、クリック・入力をする MCP サーバー）です。
+
+- cua-driver そのものは、実験者の AI エージェント（Hermes Agent）で動くことを確かめています。**Claude Code・Codex から、この「12」の手順で段 0・5・8 を行うことは、まだ通しで試していません。** うまくいかなければ、出力と画面の状態をそのまま見せて止まり、その段をユーザーに手で頼んでください。
+- 下のコマンドは cua の公式の説明（2026年11月時点）から取った物です。コマンドや道具の名前は版で変わることがあります。違っていたら、その時の公式の説明を優先してください。
+
+### 12.1 入れる・つなぐ（ユーザーの了承を得てから）
+
+入れる物はユーザーのパソコン全体に入り、AI の設定（MCP の登録）も書き換えます。**流す前に、何を入れるかをユーザーに伝えて了承を得てください。** 管理者の権限は要りません。どちらも、ユーザーがふだん使っている画面（ログインしているデスクトップ）の端末で流します（SSH やサービスからではなく）。
+
+Windows（PowerShell）：
+
+```
+irm https://cua.ai/driver/install.ps1 | iex
+cua-driver autostart kick
+```
+
+`autostart kick` は、サインイン時に起動する登録をすぐ動かします。登録できなかった時は、別の端末で `cua-driver serve` を流し、その端末を開いたままにします。
+
+macOS（ターミナル）：
+
+```
+/bin/bash -c "$(curl -fsSL https://cua.ai/driver/install.sh)"
+cua-driver permissions grant
+```
+
+`permissions grant` で、macOS が「アクセシビリティ」と「画面収録とシステムオーディオ録音」の許可を求めます。**システム設定のスイッチは、ユーザー本人が入れます。AI は押しません**（cua-driver も、この種の確認画面への入力は既定で拒みます）。後で `cua-driver permissions status` で確かめられます。
+
+AI へのつなぎ：入れる時のスクリプトが `cua-driver connect` を流し、入っている Claude Code・Codex に自動でつなぎます（サーバー名は `cua-driver`）。後から入れた時や、つながっていない時は：
+
+| エージェント | コマンド | 手で登録する形（`cua-driver mcp-config --client …` が、そのパソコンの実際のパスで表示する） |
+| --- | --- | --- |
+| Claude Code | `cua-driver connect --client claude` | `claude mcp add-json --scope user cua-driver '{"command":"<cua-driver のパス>","args":["mcp"]}'` |
+| Codex（CLI・アプリ・IDE） | `cua-driver connect --client codex` | `codex mcp add cua-driver -- <cua-driver のパス> mcp`（`~/.codex/config.toml` の `[mcp_servers.cua-driver]` に `command` と `args = ["mcp"]`） |
+
+- `--dry-run` を付けると、変えずに中身だけ見られます。何度流しても同じ結果です。
+- つないだ後は、エージェントを一度終了して起動し直します（ユーザーに頼む）。
+- `<cua-driver のパス>` は、macOS は `command -v cua-driver`、Windows は PowerShell で `(Get-Command cua-driver).Source`。
+
+出典：
+- cua-driver の入れ方と確かめ方：https://cua.ai/docs/cua-driver/quickstart
+- エージェントへのつなぎ方：https://cua.ai/docs/cua-driver/guides/connect-your-agent 、https://cua.ai/docs/cua-driver/guides/claude-code 、https://cua.ai/docs/cua-driver/guides/codex
+- 権限のモード：https://cua.ai/docs/cua-driver/guides/permissions
+- Claude Code の MCP：https://code.claude.com/docs/en/mcp
+- Codex の MCP：https://developers.openai.com/codex/mcp
+
+### 12.2 確かめる
+
+```
+cua-driver status          # 「Cua Driver daemon is running」と出る
+cua-driver doctor          # 警告も全部読む（終了コード 0 だけでは足りない）
+cua-driver call list_apps  # 開いているアプリが並ぶ。空なら画面に届いていない
+claude mcp list            # Claude Code：cua-driver がある（会話の中では /mcp）
+codex mcp list             # Codex：cua-driver がある
+```
+
+起動し直した新しい会話で、cua-driver の道具（`list_apps` など）が使えるかを1回呼んで確かめます。公式の最初の練習は「電卓で 6 × 7 を計算し、画面の表示 42 を読み返す」です。
+
+### 12.3 使う道具
+
+| 道具 | 使い方 |
+| --- | --- |
+| `list_apps`・`list_windows` | Archicad の pid と窓を見つける |
+| `get_window_state` | 窓の部品の一覧（番号つき）と画面の画像を取る。**操作の前と後に毎回取り直す**（前の番号は使い回せない） |
+| `click`・`double_click`・`right_click` | 部品の番号か、窓の中の座標でクリック |
+| `invoke_menu` | メニューを名前の順にたどって実行する（例：ファイル › 新規） |
+| `type_text`・`press_key`・`hotkey` | 文字の入力、Enter・Esc、Ctrl+A など |
+| `zoom` | 窓の一部を拡大して読む（ナビゲータの小さい文字など） |
+| `bring_to_front` | 裏からの操作が効かない時に、Archicad を前に出す |
+
+道具の一覧は `cua-driver list-tools` で見られます。
+
+### 12.4 段ごとの手順
+
+共通の決まり：
+- 触るのは Archicad の窓だけ。ほかのアプリ、OS の確認画面、ほかのプロジェクトのファイルは触らない。
+- 1回操作したら `get_window_state` を取り直し、思ったとおりに変わったかを確かめてから次へ。違っていたら止めて、画面の状態をユーザーに見せる。
+- メニューやダイアログの文字は Archicad の言語で違う（日本語版：ファイル › 新規、英語版：File › New）。画面に出ている文字を読んで選ぶ。
+- 「保存しますか」などの思っていなかったダイアログが出たら、押さずにユーザーに聞く。
+- この間、Tapir の命令（スクリプト）を同時に送らない。ユーザーにはマウスとキーボードに触らないよう伝える。
+- 保存はユーザーが Archicad で行うか、ユーザーの了承を得て `python scripts/check_connection.py --save`。
+
+**段 0：空のプロジェクトを開く**
+1. `list_apps` で Archicad が起動しているか見る。起動していなければ、ユーザーに起動してもらう（ユーザーが頼んだ時だけ `launch_app`）。
+2. `get_window_state` → `invoke_menu` で ファイル › 新規（効かなければメニューを `click` でたどる）。
+3. 新規のダイアログが出たら、画面を読んで、既定のテンプレートのまま新しいプロジェクトを作る項目を選び、新規（OK）を押す。前のプロジェクトの保存を聞かれたら、ユーザーに聞く。
+4. 確かめ：`get_window_state` で、題名が新しい名称未設定のプロジェクトになったか見る。続けて `python scripts/check_connection.py --scan` → `--count` で、壁・スラブなどが 0 か見る。
+
+**段 5：断面の窓6つを1回ずつ開く**
+1. `get_window_state` でナビゲータを探す（無ければ、ウィンドウ › パレット からナビゲータを出す）。プロジェクト一覧を選び、断面図の項目を開く（左の三角を `click`）。
+2. S南・S東・S北・S西・A-A・B-B の6つ（「S-01 A-A」のように番号つきで出ることがある）を、1つずつ `double_click`。
+3. 1つ開くごとに `get_window_state` を取り直し、その断面の窓（タブ）が開いたか確かめる。開くとナビゲータの表示が変わることがあるので、次の項目は取り直した一覧から探す。
+4. 6つ開いたら、ユーザーに保存を頼む（または了承を得て `--save`）。
+
+**段 8：断面記号の参照ID を A・B に**
+1. ナビゲータの断面図で「S-01 A-A」を `right_click` → 出たメニューを `get_window_state` で読み、断面図の名前を変更する項目（日本語版「断面図の名前を変更...」）を `click`。
+2. ダイアログの参照ID の欄を `click` → `hotkey`（Windows は Ctrl+A、macOS は Cmd+A）で中身を選ぶ → `type_text` で `A` → OK。名前の欄は変えない。
+3. `get_window_state` で、ナビゲータの表示が A になったか確かめる。
+4. 「S-01 B-B」も同じく `B` に。終わったら保存（段 5 と同じ）。
+
+### 12.5 安全のために
+
+- cua-driver の既定（standard）は、**どのアプリにも入力できる**モードです。この段の間だけ使い、ほかの作業を同じ会話で頼まない。範囲を絞るなら、公式の「Permissions」にある bounded モード（使ってよい道具とアプリを書いた設定ファイル）を使う。
+- エージェントの確認（Claude Code の許可、Codex の承認）は飛ばさない。`run_sheets.sh` で使う「確認を飛ばす」設定は、この段では使わない。
+- cua-driver は、中身を含まない利用状況を既定で送ります。止めるなら `cua-driver telemetry disable`。
+- 使い終わって止めたい時は `cua-driver stop`。

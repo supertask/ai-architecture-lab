@@ -25,15 +25,15 @@ If the user asks without naming a prompt file, show them the README table and as
 
 | Step (README table) | File | Content | In the experiment |
 | --- | --- | --- | --- |
-| 0 | (person: File › New in Archicad) | Open an empty project | Done by hand |
+| 0 | (person: File › New in Archicad) | Open an empty project | Done by hand (with cua-driver, the AI can do it on screen; see 12) |
 | 1 | `prompts/00_prepare.md` | Only runs `check_connection.py --scan` → `prepare_workdir.py` → `setup_stories.py work/house_from_scratch.pln` | Added (not used) |
 | 2 | `work/prompts/01_model_M.md` | Build the massing | Same prompt, run as-is |
 | 3 | `work/prompts/02_interior_I.md` | Layout and grid lines (`work/grid.json`) | Same prompt, run as-is |
 | 4 | `work/prompts/05_sections.md` | Only runs `make_sections.py create` | Same scripts run (prompt newly added) |
-| 5 | (person: open the 6 section windows once each) | S-south, S-east, S-north, S-west, A-A, B-B | Done by hand |
+| 5 | (person: open the 6 section windows once each) | S-south, S-east, S-north, S-west, A-A, B-B | Done by hand (with cua-driver, the AI can do it on screen; see 12) |
 | 6 | `work/prompts/06_fix_model.md` | Only runs `fixA_snapshot` → `fixA_comps` → `fixA_walls` → `fixA_slabs --apply` → `fixA_found` → `fixA_raise` → `fixA_del2d --apply` | Same scripts run (prompt newly added) |
 | 7 | `work/prompts/12_sheet_SA` → `13_sheet_SB` → `14_sheet_ES` → `15_sheet_EN` → `16_sheet_EE` → `17_sheet_EW` → `10_sheet_P1` → `11_sheet_P2` | Draw one sheet each (each in a new conversation, save after each) | Same prompt, run as-is (this order) |
-| 8 | (person: section markers' Reference IDs to A/B) | Rename "S-01 A-A" / "S-01 B-B" in the Navigator | Done by hand |
+| 8 | (person: section markers' Reference IDs to A/B) | Rename "S-01 A-A" / "S-01 B-B" in the Navigator | Done by hand (with cua-driver, the AI can do it on screen; see 12) |
 | 9 | `work/prompts/18_export.md` | Only runs `layer_found.py` → `export_png.py` | Same scripts run (prompt newly added) |
 | 10 | `work/prompts/30_inspect_and_fix.md` | Review, write fix prompts, fix | Added (not used) |
 | record | `03_south_elevation_recorded`, `04_fix_partition_F` | Records of experiment rounds (not in the normal order) | Same prompt, run as-is |
@@ -206,7 +206,7 @@ If review finds these, they were in the experiment's sheets too: the carport wal
 **Untested**
 - The rewritten scripts have only been syntax-checked and test-run in the parts that do not use Archicad (work-folder creation, plan display, text matching, grid-file normalization). They have not been run against Archicad.
 - The prompts `00_prepare`, `05_sections`, `06_fix_model`, `18_export` and `30_inspect_and_fix` have not been run in this form. The README table's flow has not yet been run from start to finish from the public kit.
-- Doing the by-hand steps (0, 5, 8) via the AI's screen control has not been tried either.
+- Doing the by-hand steps (0, 5, 8) via the AI's screen control (section 12) has not been run end-to-end from Claude Code or Codex either.
 
 If something fails, assume it may be in an untested part: show the output as-is, stop, and confirm with the user how far it got.
 
@@ -216,8 +216,8 @@ If something fails, assume it may be in an untested part: show the output as-is,
 | --- | --- |
 | Cannot connect / wrong port | Have the user confirm Archicad is running with a project open, then rerun `check_connection.py --scan`. If it still fails, point to the setup page and stop |
 | Material not found / wrong material | The template is not the Japanese standard one. `fixA_comps.py` selects materials **by index**; `fixA_found.py` and `fixA_slabs.py` by the name "コンクリート". With the user's permission, edit the indices/names at the top of those scripts to match the template's materials |
-| Cannot open a section window (ChangeWindow fails) | In some versions a newly created section window cannot be opened by the AI. Check that step 5 (the person opens the 6 windows once in the GUI) was done |
-| Need to change a section marker's Reference ID | Not possible from the AI. Ask the user to do step 8 |
+| Cannot open a section window (ChangeWindow fails) | In some versions a newly created section window cannot be opened by the AI. Check that step 5 (the person opens the 6 windows once in the GUI) was done. If cua-driver is connected, open them with step 5 in section 12 |
+| Need to change a section marker's Reference ID | Not possible through Archicad commands (JSON API / Tapir). Ask the user to do step 8, or, if cua-driver is connected, do it on screen with step 8 in section 12 |
 | Archicad crashed | Have the user reopen "house_from_scratch" in `work` (answer "No" to restore). Continue from the last save. When drawing in a row, save after every sheet and do not use `GetElementsInDrawOrder` |
 | A script failed midway | Before rerunning, check how much was applied. Do not rerun `fixA_raise.py` (raises twice) or `layer_found.py` (lowers wall bottoms twice) |
 | `fixA_snapshot.py` stops with "already exists" | Keeping the earlier snapshot is correct. Never retake it after `fixA_walls.py` has run (`--force` only if the fix has not started) |
@@ -231,3 +231,111 @@ If something fails, assume it may be in an untested part: show the output as-is,
 - How to review and write fix prompts: [skills/inspection.md](skills/inspection.md) (Japanese)
 - How to hand the knowledge (rules, skills) to an agent: [skills/README.en.md](skills/README.en.md)
 - Drawing rules: [rules/README.en.md](rules/README.en.md)
+
+## 12. Hand the by-hand steps to the AI with cua-driver
+
+Steps 0, 5 and 8 cannot be done through Archicad commands (JSON API / Tapir), so they are done by operating the screen. The tool for that is **cua-driver** ([trycua/cua](https://github.com/trycua/cua): an MCP server that reads an app's window and clicks and types in it).
+
+- cua-driver itself has been confirmed working with the experimenter's agent (Hermes Agent). **Doing steps 0, 5 and 8 from Claude Code or Codex with this section has not yet been run end-to-end.** If it does not work, show the output and the screen state as-is, stop, and ask the user to do that step by hand.
+- The commands below are taken from cua's official docs (as of November 2026). Commands and tool names may change between versions; if they differ, follow the current official docs.
+
+### 12.1 Install and connect (only after the user agrees)
+
+This installs software for the user's whole computer and changes the agent's settings (MCP registration). **Before running anything, tell the user what will be installed and get their OK.** No administrator rights are needed. Run it in a terminal on the desktop the user is logged into (not over SSH or from a service).
+
+Windows (PowerShell):
+
+```
+irm https://cua.ai/driver/install.ps1 | iex
+cua-driver autostart kick
+```
+
+`autostart kick` starts the sign-in autostart entry now. If that entry could not be registered, run `cua-driver serve` in another terminal and leave it open.
+
+macOS (Terminal):
+
+```
+/bin/bash -c "$(curl -fsSL https://cua.ai/driver/install.sh)"
+cua-driver permissions grant
+```
+
+`permissions grant` makes macOS ask for **Accessibility** and **Screen & System Audio Recording**. **The user turns those switches on in System Settings themselves; the AI does not press them** (cua-driver also refuses input to such consent prompts by default). Check later with `cua-driver permissions status`.
+
+Connecting to the agent: the installer runs `cua-driver connect`, which connects the Claude Code and Codex already installed (server name `cua-driver`). If an agent was installed later or is not connected:
+
+| Agent | Command | Manual registration (`cua-driver mcp-config --client …` prints it with the real path on that computer) |
+| --- | --- | --- |
+| Claude Code | `cua-driver connect --client claude` | `claude mcp add-json --scope user cua-driver '{"command":"<path to cua-driver>","args":["mcp"]}'` |
+| Codex (CLI, app, IDE) | `cua-driver connect --client codex` | `codex mcp add cua-driver -- <path to cua-driver> mcp` (`[mcp_servers.cua-driver]` with `command` and `args = ["mcp"]` in `~/.codex/config.toml`) |
+
+- Add `--dry-run` to preview without changing anything. Running it again gives the same result.
+- After connecting, the agent must be quit and restarted (ask the user).
+- `<path to cua-driver>`: on macOS `command -v cua-driver`; on Windows, in PowerShell, `(Get-Command cua-driver).Source`.
+
+Sources:
+- Installing and checking cua-driver: https://cua.ai/docs/cua-driver/quickstart
+- Connecting agents: https://cua.ai/docs/cua-driver/guides/connect-your-agent , https://cua.ai/docs/cua-driver/guides/claude-code , https://cua.ai/docs/cua-driver/guides/codex
+- Permission modes: https://cua.ai/docs/cua-driver/guides/permissions
+- Claude Code MCP: https://code.claude.com/docs/en/mcp
+- Codex MCP: https://developers.openai.com/codex/mcp
+
+### 12.2 Check
+
+```
+cua-driver status          # shows "Cua Driver daemon is running"
+cua-driver doctor          # read every warning (exit code 0 alone is not enough)
+cua-driver call list_apps  # lists open apps; empty means it cannot reach the desktop
+claude mcp list            # Claude Code: cua-driver is listed (/mcp inside a session)
+codex mcp list             # Codex: cua-driver is listed
+```
+
+In a new conversation after the restart, call one cua-driver tool (such as `list_apps`) to confirm it works. The official first exercise is "compute 6 × 7 in Calculator and read back the 42 shown on screen".
+
+### 12.3 Tools used
+
+| Tool | Use |
+| --- | --- |
+| `list_apps`, `list_windows` | Find Archicad's pid and window |
+| `get_window_state` | Get the window's elements (numbered) and a screenshot. **Take it again before and after every action** (numbers from an earlier capture do not carry over) |
+| `click`, `double_click`, `right_click` | Click by element number or by window coordinates |
+| `invoke_menu` | Run a menu item by its path of names (e.g. File › New) |
+| `type_text`, `press_key`, `hotkey` | Type text; Enter, Esc; Ctrl+A etc. |
+| `zoom` | Enlarge part of the window to read it (small Navigator text etc.) |
+| `bring_to_front` | Bring Archicad to the front when background input does not take effect |
+
+`cua-driver list-tools` lists all tools.
+
+### 12.4 Per-step procedure
+
+Common rules:
+- Touch only the Archicad window. Do not touch other apps, OS consent prompts, or other projects' files.
+- After each action, take `get_window_state` again and check that it changed as expected before the next one. If not, stop and show the user the screen state.
+- Menu and dialog labels depend on Archicad's language (English: File › New; Japanese: ファイル › 新規). Read the labels on screen and choose.
+- If an unexpected dialog appears (e.g. "save changes?"), do not press anything; ask the user.
+- Do not send Tapir commands (scripts) at the same time. Tell the user not to touch the mouse or keyboard.
+- Saving: the user saves in Archicad, or, with the user's OK, `python scripts/check_connection.py --save`.
+
+**Step 0: open an empty project**
+1. `list_apps` to see if Archicad is running. If not, ask the user to start it (use `launch_app` only if the user asks you to).
+2. `get_window_state` → `invoke_menu` File › New (if that fails, follow the menu with `click`).
+3. When the New dialog appears, read it, choose the item that creates a new project with the default template, and press New (OK). If asked whether to save the previous project, ask the user.
+4. Check: `get_window_state` shows a new untitled project in the title. Then run `python scripts/check_connection.py --scan` → `--count` and check that walls, slabs, etc. are 0.
+
+**Step 5: open the 6 section windows once each**
+1. `get_window_state` to find the Navigator (if hidden, show it from Window › Palettes). Select the Project Map and expand Sections (`click` the triangle on the left).
+2. `double_click` each of the 6 — S南 (south), S東 (east), S北 (north), S西 (west), A-A, B-B (they may appear with numbers, such as "S-01 A-A") — one at a time.
+3. After each, take `get_window_state` again and check that that section's window (tab) opened. The Navigator may change after opening, so find the next item in the fresh list.
+4. When all 6 are open, ask the user to save (or `--save` with their OK).
+
+**Step 8: section markers' Reference IDs to A and B**
+1. In the Navigator's Sections, `right_click` "S-01 A-A" → read the menu with `get_window_state` → `click` the item that renames the section.
+2. In the dialog, `click` the Reference ID field → `hotkey` (Ctrl+A on Windows, Cmd+A on macOS) to select its content → `type_text` `A` → OK. Leave the name field unchanged.
+3. `get_window_state` to check that the Navigator now shows A.
+4. Do the same for "S-01 B-B" with `B`. Then save (as in step 5).
+
+### 12.5 Safety
+
+- cua-driver's default (standard) mode **can send input to any app**. Use it only for these steps and do not take on other tasks in the same conversation. To narrow it, use bounded mode from the official "Permissions" page (a settings file that lists the allowed tools and apps).
+- Do not skip the agent's own approvals (Claude Code permissions, Codex approvals). Do not use the "skip approvals" settings used for `run_sheets.sh` in these steps.
+- cua-driver sends content-free usage telemetry by default. To stop it: `cua-driver telemetry disable`.
+- To stop it when finished: `cua-driver stop`.
