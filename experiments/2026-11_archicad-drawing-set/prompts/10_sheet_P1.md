@@ -1,6 +1,6 @@
 # 1階平面図を、実務の作図ルールで仕上げる
 
-Archicad 26 のプロジェクト「house_from_scratch」で、平面図「1. 1FL」を最初に ChangeWindow（windowType FloorPlan, storyIndex 0）で開いてください。外壁・間仕切り・窓・扉・階段・部屋（ゾーン）があります。注記もまだ何もありません。
+Archicad のプロジェクト「house_from_scratch」で、平面図「1. 1FL」を最初に ChangeWindow（windowType FloorPlan, storyIndex 0）で開いてください。外壁・間仕切り・窓・扉・階段・部屋（ゾーン）があります。注記もまだ何もありません。
 この1階平面図を、実務の作図ルール（<KIT>/作図ルール_平面.md）に合わせて仕上げてください。
 
 - Archicad への命令は Tapir を使う（<KIT>/tapir_http.py の call(port, command, params)、port は 19723）。スクリプトは <KIT>/ に書いて実行する。

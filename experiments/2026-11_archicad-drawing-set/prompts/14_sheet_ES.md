@@ -1,6 +1,6 @@
 # 立面図を、実務の作図ルールで仕上げる
 
-Archicad 26 で、断面ウインドウ「S-01 S南」（南立面図）を、最初に ChangeWindow で開いてください。注記と塗りはまだ何もありません。
+Archicad で、断面ウインドウ「S-01 S南」（南立面図）を、最初に ChangeWindow で開いてください。注記と塗りはまだ何もありません。
 この立面図を、実務の作図ルール（<KIT>/作図ルール_立面.md）に合わせて仕上げてください。
 
 - Archicad への命令は Tapir を使う（<KIT>/tapir_http.py の call(port, command, params)、port は 19723）。スクリプトは <KIT>/ に書いて実行する。

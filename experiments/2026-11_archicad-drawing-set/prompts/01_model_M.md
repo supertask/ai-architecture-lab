@@ -1,6 +1,6 @@
 # Rhino の家を、白紙の Archicad に組む
 
-Archicad 26 で、空のプロジェクト「house_from_scratch」が開いています（壁も床も何もありません。階は 1FL・2FL・RFL だけ設定済み）。
+Archicad で、空のプロジェクト「house_from_scratch」が開いています（壁も床も何もありません。階は 1FL・2FL・RFL だけ設定済み）。
 <KIT>/rhino_house.py は Rhino で作った家（打放しと水盤の家・架空）のスクリプトです。見た目は <KIT>/rhino_house.png。
 この家を、Archicad の壁・スラブ・窓・扉で組んでください。
 

@@ -3,7 +3,7 @@
 
 # 白紙の Archicad から、AI が家を組んで図面8枚まで仕上げた
 
-2026年11月15〜16日に試した記録です。使った AI は Claude Opus 5.5（AI エージェント Hermes Agent）、ソフトは Archicad 26 と、Archicad に命令を送るアドオン Tapir です。AI の性能はすぐ変わるので、この時点での結果として読んでください。
+2026年11月15〜16日に試した記録です。使った AI は Claude Opus 5.5（AI エージェント Hermes Agent）、ソフトは Archicad と、Archicad に命令を送るアドオン Tapir です。AI の性能はすぐ変わるので、この時点での結果として読んでください。
 
 ![図面8枚の一覧](../experiments/2026-11_archicad-drawing-set/images/summary.jpg)
 
@@ -113,7 +113,7 @@ https://github.com/supertask/ai-architecture-lab/tree/master/experiments/2026-11
 
 手順は README に書いています。大まかには、
 
-1. Archicad 26 に Tapir を入れ、空のプロジェクトを作る
+1. Archicad に Tapir を入れ、空のプロジェクトを作る
 2. AI に「指示ファイルを読んで、その指示どおりに作業して」とだけ入力する（家を組む → 間取り → 図面1枚ずつ）
 3. 断面に層と基礎を出すため、スクリプトでモデルを直す
 4. 図を点検して、直しの指示を入れる

@@ -21,7 +21,7 @@
 - `results/`：仕上がりの8枚（`1_P1`〜`8_EW`）と、断面の直す前・後（`sa_before_after.jpg`）
 
 ## 使ったもの
-- Archicad 26
+- Archicad
 - Tapir（Archicad のアドオン。JSON API に命令を足すもの。ポート 19723）
 - AI：Claude Opus 5.5（AI エージェント Hermes Agent で実行）
 - 日付：2026年11月15〜16日
@@ -62,7 +62,7 @@
 高さ：1FL＝GL+100、1CL＝GL+2850、2FL＝GL+3250、2CL＝GL+6600、軒高＝GL+6900、最高高さ＝GL+7600。
 
 ## 再現の手順
-1. Archicad 26 に Tapir を入れる。新しい空のプロジェクトを作り、階を 1FL・2FL・RFL だけにして「house_from_scratch」で保存する。
+1. Archicad に Tapir を入れる。新しい空のプロジェクトを作り、階を 1FL・2FL・RFL だけにして「house_from_scratch」で保存する。
 2. このフォルダを好きな場所に置く（以下 `<KIT>`）。`scripts/tapir_http.py` と `inputs/` の中身を `<KIT>` の直下にも置く（指示がそこを読むため）。指示の `rhino_house.png`・`layout_1F.png` は、この公開版では `.jpg` なので読み替える。
 3. AI エージェントを新しい会話で起動し、「`<KIT>/prompts/01_model_M.md` を読んで、その指示どおりに作業してください」とだけ入力する。終わったら同じように `02_interior_I.md`。
 4. 断面ツールで6本の断面を作る：建物の外 3m に置いた4本（ウインドウ名「S-01 S南」「S-01 S北」「S-01 S東」「S-01 S西」、立面として使う）と、「S-01 A-A」（凹みを東西に）、「S-01 B-B」（南北に）。Tapir では新しい断面の窓を API で開けないことがあったので、ナビゲータで一度ダブルクリックして開いておく。

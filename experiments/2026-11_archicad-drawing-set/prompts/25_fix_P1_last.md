@@ -1,6 +1,6 @@
 # 1階平面図を直す（4回目・最後）
 
-Archicad 26 のプロジェクト「house_from_scratch」で作業します。最初に平面図を ChangeWindow（windowType FloorPlan, storyIndex 0）で開いてください。前回までに AI がこの図に注記を描き、直してきました。最後の点検で残った問題を、下のとおり直してください。
+Archicad のプロジェクト「house_from_scratch」で作業します。最初に平面図を ChangeWindow（windowType FloorPlan, storyIndex 0）で開いてください。前回までに AI がこの図に注記を描き、直してきました。最後の点検で残った問題を、下のとおり直してください。
 
 - Archicad への命令は Tapir を使う（<KIT>/tapir_http.py の call(port, command, params)、port は 19723）。スクリプトは <KIT>/ に書いて実行する。
 - 作図ルール：<KIT>/作図ルール_平面.md（迷ったらこれに従う）。通り芯は <KIT>/grid.json。

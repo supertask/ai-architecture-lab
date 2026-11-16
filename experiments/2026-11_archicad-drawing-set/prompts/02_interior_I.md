@@ -1,6 +1,6 @@
 # 間取りを入れて、通り芯を決める
 
-Archicad 26 のプロジェクト「house_from_scratch」に、外壁・床・屋根・窓・玄関扉だけの家があります（間仕切り・部屋・階段はまだありません）。
+Archicad のプロジェクト「house_from_scratch」に、外壁・床・屋根・窓・玄関扉だけの家があります（間仕切り・部屋・階段はまだありません）。
 この家の間取りは <KIT>/layout_1F.png（1階）と <KIT>/layout_2F.png（2階）の平面図のとおりです。これに合わせて、家の中をつくってください。
 
 - Archicad への命令は Tapir を使う（<KIT>/tapir_http.py の call(port, command, params)、port は 19723）。スクリプトは <KIT>/ に書いて実行する。
