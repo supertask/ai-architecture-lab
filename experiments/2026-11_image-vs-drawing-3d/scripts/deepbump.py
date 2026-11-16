@@ -1,9 +1,10 @@
 """DeepBump で色画像から法線（OpenGL）と高さを作る。1枚 1024px で約10秒（CPU, onnxruntime）。
 
-  uv run -q python scripts/archviz/material/deepbump.py <basecolor.png> <out_dir>
-  uv run -q python scripts/archviz/material/deepbump.py --config <materials.json> [--only k1,k2]
+  uv run -q python scripts/deepbump.py <basecolor.png> <out_dir>
+  uv run -q python scripts/deepbump.py --config <materials.json> [--only k1,k2]
 出力: <out_dir>/normal_deepbump.png, height_deepbump.png（normals_to_height seamless=TRUE）
-DeepBump 本体の場所: --deepbump か 環境変数 DEEPBUMP_DIR（既定 work/app-sandbox/tools/DeepBump, GPL-3.0, commit fad19ba）。
+DeepBump 本体の場所: --deepbump か 環境変数 DEEPBUMP_DIR（既定 <このフォルダ>/tools/DeepBump。
+  git clone https://github.com/HugoTini/DeepBump tools/DeepBump で取得。GPL-3.0、検証時は commit fad19ba）。
 実行は uv で Python 3.12 + onnxruntime + imageio + numpy を一時環境に入れる（3.14 では onnxruntime が無い）。
 """
 import argparse
@@ -16,7 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import keys_of, load_config, mat_dir  # noqa: E402
 
-DEFAULT_DB = Path(__file__).resolve().parents[3] / "work" / "app-sandbox" / "tools" / "DeepBump"
+DEFAULT_DB = Path(__file__).resolve().parents[1] / "tools" / "DeepBump"
 UV = ["uv", "run", "-q", "--no-project", "--python", "3.12", "--with", "onnxruntime", "--with", "imageio", "--with", "numpy", "python"]
 
 

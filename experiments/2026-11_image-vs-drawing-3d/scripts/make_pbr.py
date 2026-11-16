@@ -1,6 +1,6 @@
 """色画像 + DeepBump から PBR 一式（色・法線・高さ・粗さ・金属度・AO）と material.json を作る。
 
-  uv run -q --with numpy --with pillow --with scipy python scripts/archviz/material/make_pbr.py <materials.json> [--only k1,k2] [--sheet out.jpg]
+  uv run -q --with numpy --with pillow --with scipy python scripts/make_pbr.py <materials.json> [--only k1,k2] [--sheet out.jpg]
 入力（<dir>/<key>/）: basecolor_src.png, normal_deepbump.png, height_deepbump.png
 出力: basecolor.png, normal.png（OpenGL +Y。UE では flip_green）, height.png（16bit）, roughness.png, metallic.png, ao.png,
       material.json（物性値・実測値）, <dir>/pbr_summary.json, <dir>/pbr_sheet.jpg

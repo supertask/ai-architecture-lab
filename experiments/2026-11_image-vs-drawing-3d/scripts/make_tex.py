@@ -1,6 +1,9 @@
 from PIL import Image, ImageEnhance
 import shutil, os
-B='C:/path/to/kit/'
+# 比較用の見せ方の調整（元の PBR 一式は触らず、tex/ に調整した複製を作る）。
+# 元：work/materials/<key>/（materials.json で seam → deepbump → make_pbr を通した出力）
+# uv run -q --with pillow python scripts/make_tex.py（このフォルダの直下で実行）
+B = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..') + '/'
 def cp(src,dst,dark=None,flat_normal=False,skip=()):
     os.makedirs(dst,exist_ok=True)
     for f in ('basecolor','normal','roughness','ao','metallic'):
@@ -11,8 +14,10 @@ def cp(src,dst,dark=None,flat_normal=False,skip=()):
         elif f=='normal' and flat_normal:
             im=Image.open(p).convert('RGB'); flat=Image.new('RGB',im.size,(128,128,255)); Image.blend(im,flat,0.75).save(dst+f+'.png')
         else: shutil.copy(p,dst+f+'.png')
-cp(B+'model_v12/materials/concrete/','tex/concrete/',dark=(0.72,1.25))
-cp(B+'texture_patterns/m/08_black_mortar/','tex/black_mortar/',flat_normal=True)
-cp(B+'texture_patterns/m/06_rammed_earth/','tex/rammed_earth/')
-print(os.listdir('tex'))
+M = B + 'work/materials/'
+cp(M+'concrete/',B+'tex/concrete/',dark=(0.72,1.25))
+cp(M+'black_mortar/',B+'tex/black_mortar/',flat_normal=True)
+cp(M+'rammed_earth/',B+'tex/rammed_earth/')
+cp(M+'wood/',B+'tex/wood/')
+print(os.listdir(B+'tex'))
 # rammed_earth: 彩度0.55・明るさ0.85（make_tex.py の後に適用、2026-11-04）

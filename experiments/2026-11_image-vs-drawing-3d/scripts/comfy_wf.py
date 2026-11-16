@@ -1,21 +1,21 @@
 """Comfy Cloud 用のワークフロー / テンプレート引数を作る（生成はしない。送信は Hermes の comfyui MCP で）。
 
   # 色（ベースカラー）: GPT Image 2.5（OpenAIGPTImageNodeV2、約16〜20クレジット/枚）の API 形式ワークフロー
-  uv run -q python scripts/archviz/material/comfy_wf.py gpt-base <materials.json> --out wf.json [--seed 1] [--only k1,k2]
+  uv run -q python scripts/comfy_wf.py gpt-base <materials.json> --out wf.json [--seed 1] [--only k1,k2]
   # 比較用「AIに法線・粗さを直接描かせる」: 先に upload_file した色画像の名前を {key: name} の JSON で渡す
-  uv run -q python scripts/archviz/material/comfy_wf.py gpt-aidirect <materials.json> --uploads up.json --out wf.json
+  uv run -q python scripts/comfy_wf.py gpt-aidirect <materials.json> --uploads up.json --out wf.json
   # Qwen-Image 2.1 テンプレート（run_template の引数）。切替ノードの on_false/on_true/switch と未使用側も同じ文で上書き
-  uv run -q python scripts/archviz/material/comfy_wf.py qwen --kind t2i|edit --prompt "..." [--image <uploaded>] [--seed 1] --out args.json
+  uv run -q python scripts/comfy_wf.py qwen --kind t2i|edit --prompt "..." [--image <uploaded>] [--seed 1] --out args.json
 
 送信の手順（Hermes の comfyui MCP）:
   1. estimate_credits で見積もる（指示文のクレジット上限内か）。2枚程度で1回試してから残りを1回で送る。
-  2. submit_workflow（無人実行では有料ノードの支払い確認ダイアログが出せず止まることがある。本人の指示文に
-     「上限○クレジットで生成可」とあれば confirm: true を付けてよい。購入・トップアップはしない）。
+  2. submit_workflow（無人実行では有料ノードの支払い確認ダイアログが出せず止まることがある。指示文に
+     「上限○クレジットで生成可」と書いておけば confirm: true を付けてよい。購入・トップアップはしない）。
   3. get_output の直後に curl で保存（ダウンロードURLは数分で切れる）→ <dir>/<key>/raw.png（加工しない）。
-  4. 保存した画像ごとに生成レシピを残す（目的・入力・モデル。新しいモデルで作り直す用）:
-     python -X utf8 scripts/gen_recipe.py write <dir>/<key>/raw.png --args wf.json --node "base <key>" \
-         --purpose "<目的。合格条件>" --project P-… [--input <入力画像>]
-     （Qwen は --args args.json だけでよい。作り直しは scripts/regen_from_recipe.py）
+  4. 保存した画像の横に、送った引数 JSON（args.json）とプロンプト・seed を残す（新しいモデルで作り直す用）。
+
+Hermes 以外で使う場合：ComfyUI（ローカル版 / Comfy Cloud）でテンプレート image_qwen_image_2_1_t2i（または _image_edit）を開き、
+  プロンプト欄に prompts/textures.md の文、seed 欄に同じ seed を入れて実行すれば同じ手順になる（同じ画素にはならない）。
 """
 import argparse
 import json

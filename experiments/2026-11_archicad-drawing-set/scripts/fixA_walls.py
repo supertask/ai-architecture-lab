@@ -4,7 +4,8 @@ import os, sys, json
 KIT = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, KIT); import tapir_http as t
 P = int(os.environ.get('ARCHICAD_PORT', '19723'))
 C = json.load(open(os.path.join(KIT, 'fixA_comps.json'), encoding='utf-8'))
-W = json.load(open(os.path.join(KIT, 'walls_before_fixA.json')))
+W = json.load(open(os.path.join(KIT, 'walls_before_fixA.json')))   # 先に fixA_snapshot.py で作る
+t.call(P, 'ChangeWindow', {'windowType': 'FloorPlan', 'storyIndex': 0})   # 3D の窓のままだと要素が0で返る
 zs = t.call(P, 'GetElementsByType', {'elementType': 'Zone'})['elements']
 zd = t.call(P, 'GetDetailsOfElements', {'elements': zs})['detailsOfElements']
 zones = []

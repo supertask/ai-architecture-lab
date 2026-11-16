@@ -1,8 +1,8 @@
 """素材パイプライン共通: 設定 JSON の読み込みと画像の入出力。
 
-設定 JSON（例 scripts/archviz/material/materials.example.json）:
+設定 JSON（例 tex/materials.json）:
 {
-  "dir": "C:/.../<企画>/<版>/materials",         # 素材ごとのフォルダ <dir>/<key>/ を作る
+  "dir": "../work/materials",   # 素材ごとのフォルダ <dir>/<key>/ を作る（相対パスは設定 JSON の場所から）
   "suffix": "(省略可) GPT Image に付ける共通文",
   "materials": {
     "<key>": {"ja": "瓦テラゾ", "ue": "Kawara", "scale_m": 0.8, "prompt": "...英文...",
@@ -24,7 +24,8 @@ from pathlib import Path
 
 def load_config(path):
     cfg = json.loads(Path(path).read_text(encoding="utf-8"))
-    cfg["dir"] = Path(cfg["dir"])
+    p = Path(cfg["dir"])
+    cfg["dir"] = p if p.is_absolute() else (Path(path).resolve().parent / p).resolve()
     return cfg
 
 

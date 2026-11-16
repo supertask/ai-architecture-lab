@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 # 比較用：模型スクリプトを実行 → 地面・道路を共通のものに差し替え → 素材を共通で付ける → 同じカメラで撮る
-# 呼ぶ前に MODEL, TAG, ALIGN, WALLS を globals に入れる（run() を呼ぶ）
+# 使い方：下の KIT をこのフォルダの絶対パス（末尾 /）に書き換え、scripts/run_all_in_rhino.py から呼ぶ（または Rhino の ScriptEditor で開いて run() を呼ぶ）。
+# run(模型スクリプトのパス, 名前, ALIGN, WALLS) で work/compare/<名前>/ に撮影画像と model.3dm を書く。
 import Rhino, System, io, os
 import Rhino.Geometry as G
-B = 'C:/path/to/kit/'
-TP = B + 'texture_patterns/m/'
-WOOD = B + 'model_v12/materials/wood/'
-TX = B + 'compare/tex/'   # make_tex.py：打放しは少し暗く、黒モルタルは凹凸を弱め大きく貼る
-TEX = {'concrete': (TX + 'concrete/', 1800), 'black_mortar': (TX + 'black_mortar/', 2400), 'rammed_earth': (TX + 'rammed_earth/', 1500), 'concrete_v6': (TX + 'concrete_v6/', 14400)}  # concrete_v6：外観 v6 に寄せた明るいグレー、14.4m 角でリピートを消す（tex_v6/make_concrete_v6.py）
+KIT = 'C:/path/to/kit/'   # ← このフォルダ（experiments/2026-11_image-vs-drawing-3d/）の絶対パスに書き換える
+KIT = globals().get('KIT_OVERRIDE', KIT)
+B = KIT
+TX = KIT + 'tex/'   # make_tex.py：打放しは少し暗く、黒モルタルは凹凸を弱め大きく貼る
+WOOD = TX + 'wood/'
+TEX = {'concrete': (TX + 'concrete/', 1800), 'black_mortar': (TX + 'black_mortar/', 2400), 'rammed_earth': (TX + 'rammed_earth/', 1500), 'concrete_v6': (TX + 'concrete_v6/', 14400)}  # concrete_v6：外観 v6 に寄せた明るいグレー、14.4m 角でリピートを消す（tex/concrete_v6_src/make_concrete_v6.py で作る）
 TT = Rhino.DocObjects.TextureType
 YF = -1800
 
@@ -48,9 +50,9 @@ def remap(li, s):
 
 def run(MODEL, TAG, ALIGN=False, WALLS=('concrete',)):
     d = doc()
-    ns = {}
+    ns = {'KIT_OVERRIDE': KIT}
     exec(io.open(MODEL, encoding='utf-8').read(), ns)
-    OUT = B + 'compare/' + TAG + '/'
+    OUT = KIT + 'work/compare/' + TAG + '/'
     if not os.path.isdir(OUT): os.makedirs(OUT)
     # 地面・道路・水盤の底は共通のものに差し替える
     for ln in ('M_Paving', 'M_Asphalt', 'M_BasinStone'):

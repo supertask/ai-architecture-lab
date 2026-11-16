@@ -1,13 +1,19 @@
 # 形の比較：正解（C_reference_v14）と A・B のシルエットを平面・正面・右側面・裏で重ねて、重なり率（IoU）を出す
-# uv run -q --with pillow --with numpy python metrics.py
+# uv run -q --with pillow --with numpy python scripts/metrics_live.py [work/compare のパス]
 import json, os
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-D = os.path.dirname(os.path.abspath(__file__)) + '/'
+import sys
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from fontutil import font
+# 入力：run_compare.py が書いた work/compare/<名前>/sil_*.png（引数で別の場所も可。Rhino 無しで数字だけ確かめるなら results/silhouettes を渡す）　出力：run2_recorded/results/
+D = (sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'work', 'compare')) + '/'
+RES = os.path.join(HERE, '..', 'run2_recorded', 'results') + '/'
 REF = 'C_reference_v14'
 TAGS = [('A_image_only', '外観だけ（1回目）'), ('B_image_plus_drawing', '外観＋図面（1回目）'), ('live_A', '外観だけ（録画回）'), ('live_B', '外観＋図面（録画回）')]
 VIEWS = [('top', '真上（平面）'), ('front', '正面'), ('right', '右側面'), ('back', '裏')]
-F = lambda s: ImageFont.truetype('C:/Windows/Fonts/meiryob.ttc', s)
+F = font
 
 def mask(p):
     a = np.asarray(Image.open(p).convert('RGB')).astype(int)
@@ -50,11 +56,13 @@ for tag, jp in TAGS:
         dr = ImageDraw.Draw(c); dr.text((10, 8), '%s｜%s　重なり %d%%' % (jp, vj, round(iou * 100)), fill='black', font=F(22))
         row.append(c)
     rows.append(row)
-json.dump(res, open(D + 'metrics_live.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+if not res:
+    raise SystemExit('work/compare/<名前>/sil_top.png が見つからない。先に Rhino で scripts/run_all_in_rhino.py を実行する')
+json.dump(res, open(RES + 'metrics_live.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 if rows:
     S = Image.new('RGB', (640 * 4, 480 * len(rows) + 60), 'white'); dr = ImageDraw.Draw(S)
     dr.text((12, 14), '形の重なり（正解＝図面どおりに直してきた模型 v14）　灰＝一致　赤＝足りない　青＝余分', fill='black', font=F(26))
     for i, row in enumerate(rows):
         for j, c in enumerate(row): S.paste(c, (640 * j, 60 + 480 * i))
-    S.save(D + 'overlap_sheet_live.png')
+    S.save(RES + 'overlap_sheet_live.png')
 print(json.dumps(res, ensure_ascii=False))

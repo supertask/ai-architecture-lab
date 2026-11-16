@@ -1,0 +1,60 @@
+{
+ "_comment": "比較に使った4素材の設定（prompts/textures.md と同じ文・seed）。phys の意味は scripts/make_pbr.py の先頭。dir はこのファイルからの相対パス。",
+ "dir": "../work/materials",
+ "materials": {
+  "concrete": {
+   "ja": "打放しコンクリート",
+   "ue": "Concrete",
+   "scale_m": 1.8,
+   "seed": 11,
+   "template": "image_qwen_image_2_1_t2i",
+   "prompt": "Orthographic flat texture photo, straight-on, even overcast light, no perspective, no shadows: Japanese architectural exposed fair-faced concrete wall (uchippanashi) in light warm grey. Exactly one formwork panel 900 mm wide x 1800 mm tall fills the image, with crisp thin panel joint lines along the four edges, and six small round form-tie holes (P-cone, 25 mm diameter, recessed, slightly darker grey) in a 2 x 3 grid, 450 mm apart horizontally and 600 mm apart vertically, centred. Smooth surface with very subtle cloudy tonal variation, faint fine air bubbles, a few faint vertical water streaks. No text, no objects.",
+   "phys": {
+    "rough": 0.78,
+    "db_k": 0.5,
+    "ao_k": 1.0
+   }
+  },
+  "black_mortar": {
+   "ja": "黒モルタル（金鏝）",
+   "ue": "BlackMortar",
+   "scale_m": 1.2,
+   "seed": 38,
+   "template": "image_qwen_image_2_1_t2i",
+   "prompt": "Orthographic flat texture scan of a real architectural wall surface, straight-on, perfectly even diffuse overcast light, no shadows, no light spots, no vignetting, no stains, no perspective, evenly distributed detail over the whole square for seamless tiling, 1.2 m x 1.2 m area. Black pigmented mortar finished with a steel trowel, near-black graphite colour, burnished cloudy patches and fine trowel strokes, slight sheen variation. Matte. No text, no objects, no frame.",
+   "phys": {
+    "rough": 0.45,
+    "rough_detail": 0.08,
+    "db_k": 1.0,
+    "ao_k": 0.8
+   }
+  },
+  "rammed_earth": {
+   "ja": "版築",
+   "ue": "RammedEarth",
+   "scale_m": 1.2,
+   "seed": 36,
+   "template": "image_qwen_image_2_1_t2i",
+   "prompt": "Orthographic flat texture scan of a real architectural wall surface, straight-on, perfectly even diffuse overcast light, no shadows, no light spots, no vignetting, no stains, no perspective, evenly distributed detail over the whole square for seamless tiling, 1.2 m x 1.2 m area. Rammed earth wall (hanchiku), horizontal compacted layers 50-80 mm thick in natural ochre, brown and sand tones, fine aggregate and small pebbles, subtle layer lines. Matte. No text, no objects, no frame.",
+   "phys": {
+    "rough": 0.9,
+    "rough_detail": 0.08,
+    "db_k": 1.0,
+    "ao_k": 0.8
+   }
+  },
+  "wood": {
+   "ja": "木（方立・軒天）",
+   "ue": "WoodCeiling",
+   "scale_m": 1.2,
+   "seed": 12,
+   "template": "image_qwen_image_2_1_t2i",
+   "prompt": "Orthographic flat texture photo, straight-on, even light, no perspective: interior wood ceiling of narrow solid wood boards 90 mm wide running vertically, about 13 boards across, light honey-coloured Japanese cypress (hinoki) with fine straight grain and a few small knots, thin dark 3 mm shadow gaps between boards, matte oiled finish. The image covers 1.2 m x 1.2 m. No text, no objects.",
+   "phys": {
+    "rough": 0.6,
+    "db_k": 0.6,
+    "ao_k": 1.0
+   }
+  }
+ }
+}

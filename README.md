@@ -5,6 +5,15 @@ AI（Claude など）に、建築の模型づくり・図面・素材づくり�
 
 発信：X [@supertask_jp](https://x.com/supertask_jp)
 
+## はじめに：AI から Rhino・Archicad を動かす準備
+
+どの実験も、まず AI（Codex や Claude Code など）から Rhino／Grasshopper・Archicad を動かせる状態にします。手順は次の資料にまとめています。
+
+- セットアップ資料（コピーして AI に貼るプロンプト付き）：https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T
+- ワークショップのスライド：https://docs.google.com/presentation/d/11fd7nvZPuE5BPmIBTQYlUanp_OZPNibPhbAnpD_UStg/edit?usp=sharing
+
+各実験フォルダの README 冒頭「再現の早道」に、そのあとの手順を書いています。実験ごとの `skills/` は、自分の AI にそのまま渡せる手順書（スキル）です。
+
 ## 実験の一覧
 
 [![外観の絵だけ vs 絵＋図面](experiments/2026-11_image-vs-drawing-3d/images/summary.jpg)](experiments/2026-11_image-vs-drawing-3d/)

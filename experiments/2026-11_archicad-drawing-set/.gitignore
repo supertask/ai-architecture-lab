@@ -1,0 +1,10 @@
+# 実行してできる物（キットの元の中身ではない）
+work/
+out/
+__pycache__/
+scripts/walls_before_fixA.json
+scripts/slabs_before_fixA.json
+scripts/fixA_comps.json
+scripts/fixA_slabs_log.json
+scripts/fixA_found_log.json
+scripts/fixA_del2d.json

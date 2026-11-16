@@ -1,8 +1,8 @@
 """継ぎ目（タイリング）の確認と修正。
 
-  uv run -q --with numpy --with pillow python scripts/archviz/material/seam.py check <img...> [--sheet out.jpg]
-  uv run -q --with numpy --with pillow python scripts/archviz/material/seam.py fix <in.png> <out.png> [--sat 0.7] [--gain 1,1,1] [--band 0.12] [--thresh 1.4]
-  uv run -q --with numpy --with pillow python scripts/archviz/material/seam.py config <materials.json> [--only k1,k2]   # raw.png → basecolor_src.png を全素材
+  uv run -q --with numpy --with pillow python scripts/seam.py check <img...> [--sheet out.jpg]
+  uv run -q --with numpy --with pillow python scripts/seam.py fix <in.png> <out.png> [--sat 0.7] [--gain 1,1,1] [--band 0.12] [--thresh 1.4]
+  uv run -q --with numpy --with pillow python scripts/seam.py config <materials.json> [--only k1,k2]   # raw.png → basecolor_src.png を全素材
 継ぎ目比 = 端と端の差の平均 / 隣り合う画素の差の平均（1.0 = 内部と同じ滑らかさ）。1.4 を超える軸だけ、
 端の帯（12%）を「模様の周期ぶんずらした自分のコピー」と混ぜる（目地の線が継ぎ目に来ないずらし量を選ぶ）。
 GPT Image に「seamless」と頼んでも継ぎ目比 3〜12 の素材が出る（v4: 樹脂杉 3.6/12.6 → 0.7/1.1 に修正）。

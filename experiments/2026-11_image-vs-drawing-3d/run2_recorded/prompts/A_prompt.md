@@ -1,9 +1,10 @@
+<!-- 公開用に、入力・出力を置いたフォルダのパスだけ <REC>/ に置き換えた（録画時は短いパスの作業フォルダ。中身は inputs/ と同じ画像）。それ以外は原文のまま。 -->
 Goal: Build a 3D massing model of a house from ONE exterior image only, LIVE in Rhino (this run is screen-recorded).
 
 Language: Japanese for notes and for your short progress lines.
 This is a controlled experiment: you get ONLY one exterior perspective image of a fictional 2-storey house and must infer the 3D form as accurately as you can.
 
-INPUT (the ONLY file you may open or analyze): C:/rec/house_v6C.png
+INPUT (the ONLY file you may open or analyze): <REC>/house_v6C.png
 Use vision_analyze on it as many times as you like (crops welcome: crop with python+pillow via `uv run -q --with pillow python file.py` into the output folder; write scripts to files).
 STRICT: do NOT open, list, or search any other file or folder on this PC. Do NOT use skills, memory, session_search, honcho, delegate_task, Notion, Figma, ComfyUI or paid tools. Using other material would invalidate the experiment.
 
@@ -15,7 +16,7 @@ BUILD LIVE IN RHINO (Rhino is open; use the rhino MCP tool execute_rhino_code, I
 - Layers named exactly: M_Concrete (walls/slabs), M_Glass (glazing, thin solid ~20mm), M_Wood (timber mullions, soffits, bands), M_Water (pool water surface), M_Paving (ground/sidewalk), M_Asphalt (road). Units mm. Z up; the street is on the -Y side (building front faces -Y); X increases to the right as seen from the street; put the bottom-left-front corner of the overall building footprint near the origin.
 - Breps: boxes, extrusions of polylines incl. arc points, G.Brep.CreateBooleanDifference(a,b,tol). Make sure closed solids are outward-oriented before booleans (if SolidOrientation is Inward, Flip()).
 
-OUTPUT folder: C:/rec/A_out/
+OUTPUT folder: <REC>/A_out/
 Write at the end:
 1. model.py - one combined RhinoCommon script that rebuilds exactly what you built (ends with result = 'ok').
 2. params.json - every dimension you assumed (name, value_mm, how you estimated it, confidence high/med/low).

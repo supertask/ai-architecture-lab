@@ -6,6 +6,7 @@ C = json.load(open(os.path.join(KIT, 'fixA_comps.json'), encoding='utf-8'))
 FL1 = C['架空_1階床 フローリング15 断熱85 RC土間150 砕石100']
 bm = {a['name']: a['attributeId'] for a in t.call(P, 'GetAttributesByType', {'attributeType': 'BuildingMaterial'})['attributes']}
 CONC = bm['コンクリート']
+t.call(P, 'ChangeWindow', {'windowType': 'FloorPlan', 'storyIndex': 0})   # 3D の窓のままだと要素が0で返る
 zs = t.call(P, 'GetElementsByType', {'elementType': 'Zone'})['elements']
 zd = t.call(P, 'GetDetailsOfElements', {'elements': zs})['detailsOfElements']
 data = []

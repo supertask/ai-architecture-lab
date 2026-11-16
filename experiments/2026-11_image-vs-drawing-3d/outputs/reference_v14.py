@@ -6,8 +6,10 @@ d = Rhino.RhinoDoc.ActiveDoc
 tol = d.ModelAbsoluteTolerance
 for o in list(d.Objects):
     d.Objects.Delete(o, True)
-MAT = 'C:/path/to/kit/model_v12/materials/'
-OUT = 'C:/path/to/kit/model_v14/'
+KIT = 'C:/path/to/kit/'   # ← このフォルダの絶対パス（run_compare.py から呼ぶと、そちらの KIT が使われる）
+KIT = globals().get('KIT_OVERRIDE', KIT)
+MAT = KIT + 'tex/'
+OUT = KIT + 'work/reference/'
 DEP, R_BACK, SW, REC_Y, GX, YF, R_FL = 9300, 2000, 1000, 5000, 7000, -1800, 900
 PIER_Y, EXT_TOP, SL0, SL1 = 1000, -500, 1400, 2700   # v14：柱・凹みの上の屋根・スリットを 1m 前へ（描き込み r9）
 EX, R_EX, X_HI = 6000, 500, 12600
@@ -138,5 +140,7 @@ try:
 except Exception as e:
     pass
 d.Views.Redraw()
+import os
+if not os.path.isdir(OUT): os.makedirs(OUT)
 d.WriteFile(OUT + 'massing_v14.3dm', Rhino.FileIO.FileWriteOptions())
 result = 'objs %d L%d R%d O%d' % (len(list(d.Objects)), len(Lb), len(Rb), len(Ob))
