@@ -9,9 +9,12 @@ AI（Claude など）に、建築の模型づくり・図面・素材づくり�
 
 [![外観の絵だけ vs 絵＋図面](experiments/2026-11_image-vs-drawing-3d/images/summary.jpg)](experiments/2026-11_image-vs-drawing-3d/)
 
+[![白紙の Archicad から図面8枚まで](experiments/2026-11_archicad-drawing-set/images/summary.jpg)](experiments/2026-11_archicad-drawing-set/)
+
 | 日付 | 実験 | 内容 | 使ったもの |
 | --- | --- | --- | --- |
 | 2026-11 | [外観の絵だけ vs 絵＋図面](experiments/2026-11_image-vs-drawing-3d/) | 同じ家を、外観の絵1枚だけ／絵＋図面で AI に Rhino 模型を作らせ、正解との重なり率を比べた（絵だけ 68〜80%、図面あり 96〜100%） | Claude Opus 5.5, Rhino, Figma, ComfyUI (Qwen-Image 2.1) |
+| 2026-11 | [白紙の Archicad から図面8枚まで](experiments/2026-11_archicad-drawing-set/) | 架空の家を AI が白紙の Archicad に組み、作図ルールを渡して平面2・断面2・立面4を描かせた。断面が弱かったのでモデルに層と基礎を足して描き直し、点検と直しを2〜3回 | Claude Opus 5.5, Archicad 26, Tapir |
 
 図面を人と AI で往復して整えた Figma ボード（閲覧のみ）：[AIと人の図面往復（外観1枚→図面 v7〜v14）](https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4)
 

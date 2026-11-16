@@ -1,0 +1,19 @@
+{
+  "project": "house_from_scratch",
+  "unit": "m",
+  "note": "壁芯の通り芯（1組）。原点・座標は Archicad のモデル座標。X通りは縦（南北方向）の線のx座標、Y通りは横（東西方向）の線のy座標。",
+  "X": [
+    {"name": "X1", "coord": 0.1,  "basis": "西の外壁 芯"},
+    {"name": "X2", "coord": 7.1,  "basis": "水盤横のガラス壁・主寝室｜ホール・2F 洋室2｜納戸の間仕切り 芯"},
+    {"name": "X3", "coord": 10.6, "basis": "1F ホール・玄関｜収納・WC・SIC の間仕切り 芯"},
+    {"name": "X4", "coord": 12.5, "basis": "1F 車庫西の外壁・2F 洋室1｜パントリーの間仕切り 芯"},
+    {"name": "X5", "coord": 15.2, "basis": "2F 東の外壁 芯"},
+    {"name": "X6", "coord": 17.9, "basis": "1F 東の外壁 芯"}
+  ],
+  "Y": [
+    {"name": "Y1", "coord": -1.7, "basis": "南の外壁 芯"},
+    {"name": "Y2", "coord": 5.1,  "basis": "水盤奥の外壁・2F 洋室1/パントリー｜LDK の間仕切り 芯"},
+    {"name": "Y3", "coord": 6.2,  "basis": "1F 水回り｜ホールの間仕切り 芯"},
+    {"name": "Y4", "coord": 9.2,  "basis": "北の外壁 芯"}
+  ]
+}
