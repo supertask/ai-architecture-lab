@@ -158,7 +158,4 @@ What the results say: **to get an AI to build a shape accurately, you need drawi
 
 ## For advanced users and AIs
 
-- [AI_GUIDE.en.md](AI_GUIDE.en.md): index for AI agents (prompt files per step and shared rules)
-- [prompts/](prompts/): each step's prompt, and the verbatim prompts given to the model-building AI in the experiment
-- [TECHNICAL.en.md](TECHNICAL.en.md): file list, capture and scoring details, how the facade textures were made, how to adjust file locations
-- [skills/](skills/README.en.md): working procedures (for AIs)
+- [AI_GUIDE.en.md](AI_GUIDE.en.md): the guide for AI agents. Prompt files per step and shared rules, the file list, capture and scoring details, what was done in the experiment, how the facade textures were made, how to adjust file locations, and pointers to the prompts and working procedures (skills) are all there

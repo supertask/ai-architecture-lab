@@ -62,14 +62,13 @@ Rewrite them to match how your office works and they become your own procedure d
 
 ## For advanced users: folder conventions
 
-In each experiment, README.md is the architect-facing description (with the one-line-per-step table), AI_GUIDE.md is the index for AIs, and TECHNICAL.md has the file list and details. English versions have the same name with `.en.md`.
+In each experiment, README.md is the architect-facing description (with the one-line-per-step table), AI_GUIDE.md is the guide for AIs (file list, commands and experiment details are there too). People need only the README; AIs need only AI_GUIDE. English versions have the same name with `.en.md`.
 
 ```
 experiments/
   YYYY-MM_short-name/
     README.md        … what was tried, results, one line per step, honest notes (for architects)
-    AI_GUIDE.md      … index for AIs
-    TECHNICAL.md     … file list, commands, details
+    AI_GUIDE.md      … guide for AIs (file list, commands, details)
     inputs/          … images and drawings given to the AI
     prompts/         … each step's prompt (read by the AI from the README's one-liners) and the verbatim prompts used in the experiment
     outputs/         … what the AI made (scripts, notes, assumed dimensions)

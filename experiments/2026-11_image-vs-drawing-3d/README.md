@@ -158,7 +158,4 @@ skills フォルダの image-to-massing.md を読んで、この外観パース�
 
 ## 詳しい人・AI 向け
 
-- [AI_GUIDE.md](AI_GUIDE.md)：AI 向けの索引（各段の指示ファイルと、共通の決まり）
-- [prompts/](prompts/)：各段の指示と、実験で模型を作った AI に渡した指示の原文
-- [TECHNICAL.md](TECHNICAL.md)：入っているファイルの一覧、撮影と採点の細部、外壁の質感の作り方、ファイルの置き場所の読み替え
-- [skills/](skills/README.md)：作業手順（AI 向け）
+- [AI_GUIDE.md](AI_GUIDE.md)：AI 向けの手引き。各段の指示ファイルと共通の決まり、入っているファイルの一覧、撮影と採点の細部、実験でやったこと、外壁の質感の作り方、ファイルの置き場所の読み替え、指示（prompts）・作業手順（skills）への案内は、すべてここにあります
