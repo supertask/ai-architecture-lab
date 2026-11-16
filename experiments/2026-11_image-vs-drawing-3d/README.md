@@ -1,122 +1,17 @@
-# 再現キット：外観だけ vs 外観＋図面で、AI に Rhino 模型を作らせる比較
+# AI は外観の絵1枚から、家の3Dを起こせるか — 絵だけ vs 絵＋図面（再現キット）
 
-同じ家を、外観の絵1枚だけ（A）／絵＋図面（B）で AI に Rhino 模型を作らせ、正解との形の重なりを比べた実験です。
+同じ架空の家を、外観の絵1枚だけ（A）と、絵＋簡単な図面（B）で AI に渡し、Rhino の模型を作らせて、正解の模型との形の重なりを比べた実験です。
+同じことを自分で試せるように、必要な物を一式入れています。**プログラムを書く必要はありません。** 準備が済めば、AI に日本語で頼むだけです。
+
 解説記事（note）：https://note.com/supertask/n/n69f258b2f66e
 
 ![外観の絵だけ（A）と、絵＋図面（B）で AI に作らせた模型の比較](images/summary.jpg)
 
-## 再現の早道
+## 結果
 
-### 0. まず AI から Rhino を動かせるようにする（30〜60分）
-次の公開資料の手順で、AI エージェントが Rhino（／Grasshopper）を操作できる状態にします。
-- ワークショップのスライド：https://docs.google.com/presentation/d/11fd7nvZPuE5BPmIBTQYlUanp_OZPNibPhbAnpD_UStg/edit?usp=sharing
-  - ChatGPT のデスクトップアプリで Codex を開く（実行権限は「フルアクセス」）→ 配布ページのプロンプトを貼る → AI の案内どおりに Rhino／Grasshopper（または Archicad）との接続をインストール・設定 → 接続テストとして「バルセロナ・パビリオン」を作らせる。
-- セットアップの手順書：https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T
-- 参考：この実験で使った接続は、Rhino 用の MCP サーバー（[supertask/rhino-mcp](https://github.com/supertask/rhino-mcp)。AI から Rhino 内で Python を実行できる）です。同じ働きのものなら何でも構いません。
-- **1回目の形式（AI はスクリプトを書くだけ）なら、AI と Rhino の接続は不要**です。Rhino で `scripts/run_all_in_rhino.py` を自分で実行すれば、撮影・採点まで進めます。
+正解の模型と、AI が作った模型を、真上・正面・右側面・裏から同じ条件で撮り（この輪郭だけの画像を、以下「影絵」と呼びます）、輪郭の重なり率（重なった面積 ÷ どちらかが占める面積）を出しました。100% なら形がぴったり同じです。
 
-### 1. 自分のエージェントに指示を渡す
-Claude Code・Codex・Hermes Agent のどれでも同じです。
-
-1. AI が答えを見られないよう、入力だけを入れた別フォルダを作る（キットのフォルダの中で AI を起動しない。`outputs/reference_v14.py` と `scripts/draw_v14.py` が答えそのもの）：
-   ```
-   python scripts/prepare_run.py A --out D:/ai-run/A          # 絵だけ
-   python scripts/prepare_run.py B --out D:/ai-run/B          # 絵＋図面
-   # Rhino に部分ごとに送って組ませる（2回目・録画回の形式）なら --live を付ける
-   ```
-2. そのフォルダで**新しい会話**を始め（過去の会話・メモリ・スキルなし）、次の1文だけを入力する：
-   「`D:/ai-run/A/prompt.md` を読んで、その指示どおりに作業してください」
-   - Claude Code：フォルダで `claude` を起動して入力。Codex：デスクトップアプリでフォルダを追加して入力。Hermes Agent：ターミナルで起動して入力。
-   - 指示文にある `vision_analyze`（画像を見る）・`execute_rhino_code`（Rhino で Python を実行）は Hermes でのツール名です。他のエージェントでは、同じ働きのツール（画像の読み込み、Rhino 接続の実行ツール）が使われます。
-3. A と B は別の会話で、同じ AI モデルで行う。できた `model.py` を `outputs/A/`・`outputs/B/` に置き換える（元の出力と比べたいなら別名で置き、`scripts/run_all_in_rhino.py` に行を足す）。
-
-### 2. 撮影と採点
-1. `scripts/run_compare.py` と `scripts/run_all_in_rhino.py` の先頭の `KIT = 'C:/path/to/kit/'` を、このフォルダの絶対パスに書き換える。
-2. Rhino で `scripts/run_all_in_rhino.py` を実行（ScriptEditor で開いて実行、または AI に「このファイルを Rhino で実行して」）→ `work/compare/<名前>/` に影絵と比較画像。**途中で Rhino の窓の大きさを変えない**（縮尺が変わる）。
-3. 採点：`uv run -q --with pillow --with numpy python scripts/metrics.py`（1回目）／`scripts/metrics_live.py`（2回目）→ `results/`・`run2_recorded/results/`。
-4. 比較シート：`uv run -q --with pillow python scripts/sheets.py`。
-
-**Rhino なしで採点だけ確かめる**：検証時の影絵を `results/silhouettes/` に入れてあります。
-`uv run -q --with pillow --with numpy python scripts/metrics_live.py results/silhouettes` で、公開した2回目の数値（`run2_recorded/results/metrics_live.json`）と同じ値が出ます（確認済み。1回目は下の「再現できないもの」を参照）。
-
-### 目安の時間
-| 工程 | 時間 |
-| --- | --- |
-| AI と Rhino の接続（初回だけ） | 30〜60分 |
-| A・B を AI に作らせる | 1件 15〜40分（AI の作業時間。人は待つだけ） |
-| Rhino で撮影（5模型） | 5〜10分 |
-| 採点・比較シート | 数分 |
-| テクスチャを作り直す（任意） | 30分〜（ComfyUI の生成時間込み） |
-| 図面を Figma で往復して作り直す（任意） | 今回は8往復。人の判断が入るので数時間〜数日 |
-
-### 再現できないもの（正直に）
-- **AI の答えは毎回変わります**。同じ指示・同じモデルでも寸法の仮定（目の高さなど）が変わり、A の重なり率は回ごとに数ポイント動きます。傾向（A は 70〜80% 前後、B は 90% 台）を見てください。
-- **AI モデルは更新されます**。2026年11月4〜5日の Claude Opus 5.5 での結果です。
-- **図面づくりの往復は、人の判断そのもの**です。描き込みの過程は Figma ボードで見られますが、自分で往復すれば違う図面になります。B を同じ条件で試すなら `inputs/drawing_v14.png` をそのまま使ってください。
-- **画像生成は同じ画素になりません**。外観の絵（`inputs/house_v6C.png`）は生成済みの画像を同梱しています（絵を生成し直す手順は入れていません）。テクスチャもプロンプトと seed は同じでも、クラウド側のモデル更新で絵は変わります。比較に使ったテクスチャ（`tex/`）は同梱しています。
-- **1回目の数値は、同梱の影絵で再計算すると最大 0.5 ポイントずれます**。1回目の採点のあとで正解の影絵を撮り直したためです（2回目は完全に一致）。
-- 録画（画面の動画）は X に載せたものだけで、録画・編集の手順は入れていません。
-
-## 入っているもの
-- `inputs/house_v6C.png`：外観（AI 画像、架空の家）
-- `inputs/drawing_v14.png`：Figma で人と往復して整えた図面（1階平面・正面・左側面・2階平面、1マス＝1m）（公開版は図の題名から人名だけ外している。図の中身は B に渡したものと同じ）
-  - 往復の過程（人の描き込み r1〜r9 と AI の書き出し v7〜v14）は Figma ボードで見られます（閲覧のみ）：https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4
-
-  [![AIとFigmaで図面を8回往復して作った流れ](images/figma_loop.jpg)](https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4)
-
-- `prompts/A_image_only_prompt.md`・`prompts/B_image_plus_drawing_prompt.md`：AI に渡した指示（原文そのまま）
-- `prompts/textures.md`：テクスチャのプロンプトと後処理
-- `outputs/A/`・`outputs/B/`：AI が書いた模型スクリプト `model.py`、仮定した寸法 `params.json`、メモ `notes.md`
-- `outputs/reference_v14.py`：正解の模型（図面どおり）
-- `run2_recorded/`：2回目（Rhino に部分ごとに送って組んだ録画回）の指示・出力・結果
-- `scripts/`
-  - `prepare_run.py`：AI に渡すきれいな作業フォルダを作る
-  - `run_compare.py`・`run_all_in_rhino.py`：Rhino で模型を実行して同じ条件で撮る
-  - `metrics.py`・`metrics_live.py`：重なり率（IoU）を出す。`sheets.py`：比較シート
-  - `draw_v14.py`：図面 `inputs/drawing_v14.png` を描いたスクリプト（実行すると題名の行以外は同じ画像になる。確認済み）
-  - `comfy_wf.py`・`seam.py`・`deepbump.py`・`make_pbr.py`・`common.py`：テクスチャの生成と PBR 化。`make_tex.py`：比較用の見せ方の調整
-  - `fontutil.py`：日本語フォントを OS ごとに探す
-- `tex/`：比較に使ったテクスチャ（打放し・黒モルタル・版築・木。色・法線・粗さ・AO）、設定 `materials.json`、外観に寄せた打放しの作り方 `concrete_v6_src/`
-- `results/`：比較画像、`metrics.json`、検証時の影絵 `silhouettes/`
-- `skills/`：この実験の作業手順を、どのエージェントにも渡せる形にまとめたもの（[skills/README.md](skills/README.md)）
-
-## 使ったもの
-- AI：Claude Opus 5.5（Hermes Agent 経由。1回目はサブエージェント、2回目は新しい会話。どちらもこれまでの会話は渡していない）
-- Rhino ＋ RhinoCommon（Python スクリプトとして実行）。2回目の AI からの操作は Rhino 用 MCP サーバー
-- 図面：Figma（FigJam）＋ iPad
-- テクスチャ：ComfyUI（Comfy Cloud）Qwen-Image 2.1 t2i → seam → DeepBump → make_pbr
-- 画像処理：Python 3 ＋ Pillow ＋ NumPy（`uv run --with …` で一時環境に入れる）
-
-## 手順（詳しく）
-1. AI に `prompts/A_…md` の指示と外観画像だけを渡し、`model.py` を書かせる（Rhino は実行させない）。
-2. 別の会話で、`prompts/B_…md` の指示と外観画像＋図面を渡し、同じように書かせる。
-3. Rhino で `scripts/run_all_in_rhino.py` を実行（中で `run(model.py のパス, 名前, ALIGN, ('concrete','black_mortar','rammed_earth'))` を呼ぶ）。
-   - 模型を作る → 地面と道路を共通のものに差し替え → 素材を共通で付ける → 同じカメラで撮る（外観と同じ角度・裏の左右・右前・斜め上、形の比較用に真上・正面・右側面・裏の平行投影）。
-   - A は原点を「建物の左端・一番前」に合わせる（ALIGN=True。画像だけでは原点が決まらないため）。正解と B は ALIGN=False。
-4. `scripts/metrics.py`：平行投影の影絵を重ね、±3m の範囲で一番重なる位置に平行移動してから、重なり率（IoU）・足りない割合・余分な割合を出す。
-5. `scripts/sheets.py`：比較画像を作る。
-
-## 結果（2026-11-04、1回ずつ）
-| 見る向き | A 外観だけ | B 外観＋図面 |
-| --- | --- | --- |
-| 真上 | 80% | 91% |
-| 正面 | 77% | 99% |
-| 右側面 | 77% | 99% |
-| 裏 | 77% | 99% |
-
-![4方向の影絵を正解と重ねた比較](results/overlap_sheet.png)
-
-## 正直に書いておくこと
-- A の `model.py` は、そのままだと壁が消えた（面の向きが内向き）。向きを直す 3 行だけ足して実行した（寸法は変えていない）。
-- 正解も図面どおりの模型なので、図面を渡した B に有利な比べ方。
-- 1 回ずつの試行。AI や回数を変えると結果はぶれる。
-- 家は架空（AI 画像から作った）。
-
-## 2回目（録画した回、2026-11-04）
-同じ比較を、AI が Rhino に部分ごとに送って組み上げる形でもう一度やり、画面を録画した。note の見出しの数値（絵だけ 68〜80%、図面あり 96〜100%）はこの回のもの。
-- 指示：`run2_recorded/prompts/A_prompt.md`・`B_prompt.md`（1回目と同じ文面に「Rhino で部分ごとに組む」を足しただけ。入力・出力のフォルダは公開用に `<REC>/` と書き換えた）
-- AI：Hermes Agent（Claude Opus 5.5）をターミナルで起動し、新しい会話で「（作業フォルダ）/A_prompt.md を読んで、その指示どおりに作業してください」とだけ入力。同じ準備は `python scripts/prepare_run.py A --live --out <フォルダ>` でできる
-- 出力：`run2_recorded/outputs/A`・`B`、結果：`run2_recorded/results/`（`metrics_live.json`、`overlap_sheet_live.png`、`cmp_live.jpg`）
+**AI が Rhino で部分ごとに組み立てた回（録画した回、2026-11-04）**：note の見出しの数値（絵だけ 68〜80%、図面あり 96〜100%）はこの回のものです。
 
 | 見る向き | A 外観だけ | B 外観＋図面 |
 | --- | --- | --- |
@@ -127,16 +22,146 @@ Claude Code・Codex・Hermes Agent のどれでも同じです。
 
 ![2回目の重なりの比較](run2_recorded/results/overlap_sheet_live.png)
 
-- A は大きさの仮定（絵を撮ったカメラの高さ）が1回目 2.1m・2回目 1.62m と変わり、形も毎回変わった。
-- B は2回とも図面に書いてある所は正確。ずれたのは図面に無い所（右端の平屋のまわり、凹みの天井の素材）。
+**AI に模型のスクリプト（模型を作るための小さなプログラム）を書かせただけの回（2026-11-04、1回ずつ）**
 
-## 外壁のテクスチャ
-- 比較に使った3種＋木：`tex/materials.json`（プロンプト・seed・物性値）を使い、ComfyUI で色を生成 → `seam.py config` → `deepbump.py --config` → `make_pbr.py`（出力は `work/materials/`）→ `make_tex.py` で比較用に調整して `tex/` へ。詳しくは [skills/pbr-texture-pipeline.md](skills/pbr-texture-pipeline.md)。
-- 外観に寄せたグレーの打放し `tex/concrete_v6_src/`：ComfyUI の Qwen-Image 2.1（画像編集、入力＝外観画像）で作った素地 6 枚、プロンプト原文（`PROMPTS.md`）、組み立てスクリプト `make_concrete_v6.py`
-  - `uv run --with pillow --with numpy python tex/concrete_v6_src/make_concrete_v6.py` で 14.4m 角・4096px のシームレスなテクスチャ（basecolor / normal / roughness / AO / height）を `tex/concrete_v6/` に作る。サイズが大きいので生成物はリポジトリに入れていない。
+| 見る向き | A 外観だけ | B 外観＋図面 |
+| --- | --- | --- |
+| 真上 | 80% | 91% |
+| 正面 | 77% | 99% |
+| 右側面 | 77% | 99% |
+| 裏 | 77% | 99% |
 
-## パスについて
-- スクリプト内の `C:/path/to/kit/` は、このフォルダを置いた場所に読み替えてください（`run_compare.py`・`run_all_in_rhino.py`・`outputs/reference_v14.py` の先頭）。
-- 指示文の `<KIT>`・`<REC>` は、`scripts/prepare_run.py` が作業フォルダのパスに置き換えます。
-- 撮影は Rhino の Rendered 表示を `ViewCapture` で保存しています。Rhino の窓の大きさを変えると平行投影の縮尺が変わるので、全模型を同じ窓の状態で撮ってください。
-- 生成物（`work/`）と DeepBump 本体（`tools/`）は `.gitignore` でリポジトリから外しています。
+![4方向の影絵を正解と重ねた比較](results/overlap_sheet.png)
+
+- 絵だけ（A）は、大きさの手がかり（絵を撮ったカメラの高さ）を AI が仮定します。1回目は 2.1m、2回目は 1.62m と仮定が変わり、形も毎回変わりました。
+- 絵＋図面（B）は、2回とも図面に書いてある所は正確でした。ずれたのは図面に無い所（右端の平屋のまわり、凹みの天井の素材）です。
+
+**B に渡した図面は、AI と人が Figma（ブラウザで使える作図・共有のアプリ）で8回やりとりして作りました。** AI が図面案を出し、人が iPad のペンで「ここは壁」「この窓はこちら」と描き込み、AI が次の版を描く、のくり返しです。過程は Figma のボードで見られます（閲覧のみ）。
+
+[![AIとFigmaで図面を8回往復して作った流れ](images/figma_loop.jpg)](https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4)
+
+## 用意するもの
+
+- **Rhino**
+- **AI**：次のどちらか（どちらも有料プラン）
+  - Claude の有料プラン ＋ Claude Code（デスクトップ版のアプリ）
+  - ChatGPT の有料プラン ＋ Codex（デスクトップ版のアプリ）
+- **最初の1回だけの準備（30〜60分）**：下の資料にある「AI への頼み文（プロンプト）」をコピーして AI に貼ると、AI が Rhino とつなぐ準備をしてくれます。
+  - セットアップ資料：https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T
+  - 講座のスライド：https://docs.google.com/presentation/d/11fd7nvZPuE5BPmIBTQYlUanp_OZPNibPhbAnpD_UStg/edit?usp=sharing
+  - つながっていなくても、AI に模型のスクリプトを書かせる所までは進めます。撮影の時に、AI が「Rhino でこのファイルを開いて実行して」と頼んできます。
+
+## 進め方
+
+### 1. このフォルダを手元に置く
+
+- このページ（GitHub）の上の方にある緑色の「Code」ボタンを押し、「Download ZIP」を選びます。
+  ダウンロードした ZIP を開き、中の「experiments」→「2026-11_image-vs-drawing-3d」というフォルダを、わかりやすい場所に置きます。
+- または、AI に「GitHub の supertask/ai-architecture-lab をダウンロードして」と頼んでもかまいません。
+
+### 2. AI にこのフォルダを開かせて、準備を頼む
+
+Claude Code か Codex のアプリで、作業するフォルダとして、1 で置いたフォルダを選び、こう頼みます（コピーして貼る）。
+
+```
+このフォルダの AI_GUIDE.md を読んで、絵だけの場合（A）の実験を準備して
+```
+
+AI_GUIDE.md は、このフォルダに入っている AI 向けの手順書です。
+このフォルダには**正解の模型も入っています**。模型を作る AI が答えを見ないように、AI は別の場所に「外観の絵と指示だけ」を入れたフォルダを作り、その場所を教えてくれます。
+
+### 3. 新しい会話で、模型を作らせる
+
+アプリで**新しい会話**を始め、作業するフォルダとして、2 で AI が教えたフォルダを選び、こう頼みます。
+
+```
+prompt.md を読んで、その指示どおりに作業してください
+```
+
+AI が絵を読んで寸法を決め、模型を作ります（15〜40分。人は待つだけ）。
+
+### 4. 絵＋図面（B）も同じように
+
+最初の会話に戻って、
+
+```
+絵と図面の場合（B）の実験を準備して
+```
+
+と頼み、3 と同じように、新しい会話で作らせます。A と B は別々の会話で、同じ AI で行ってください。
+
+### 5. 撮って、採点する
+
+最初の会話に戻って、こう頼みます。
+
+```
+A と B の模型ができた。正解と同じ条件で撮って、重なり具合を採点して
+```
+
+AI が Rhino で正解・A・B を同じカメラで撮り、重なり率の表と比較の画像を作ります。
+
+**Rhino を使わずに、採点のしかただけ確かめたい時**は、こう頼みます。録画した回の数値と同じ値が出ます。
+
+```
+このフォルダの AI_GUIDE.md を読んで、Rhino を使わずに、採点のしかただけ確かめて
+```
+
+## 人がやること
+
+- 新しい会話を始めて、フォルダを選び、頼む言葉を貼る（A と B で1回ずつ）
+- 撮影の間、**Rhino の窓の大きさを変えない**（大きさが変わると写る縮尺が変わり、重なり率がくずれます）
+- できた模型と数字を見る
+
+## 時間の目安
+
+| 工程 | 時間 |
+| --- | --- |
+| AI と Rhino の接続（初回だけ） | 30〜60分 |
+| A・B を AI に作らせる | 1件 15〜40分（AI の作業時間。人は待つだけ） |
+| Rhino で撮影（5模型） | 5〜10分 |
+| 採点・比較シート | 数分 |
+| 外壁の質感（テクスチャ）を作り直す（任意） | 30分〜（画像生成の時間込み） |
+| 図面を Figma で往復して作り直す（任意） | 今回は8往復。人の判断が入るので数時間〜数日 |
+
+## 費用
+
+AI は、契約している Claude か ChatGPT のプランの範囲で使います。外壁の質感を作り直す場合だけ、画像生成のサービス（ComfyUI のクラウド版）を別に使います（任意）。
+
+## まったく同じにはならないこと
+
+- **AI の答えは毎回変わります。** 同じ指示でも寸法の仮定（目の高さなど）が変わり、A の重なり率は回ごとに数ポイント動きます。傾向（A は 70〜80% 前後、B は 90% 台）を見てください。
+- **AI は更新されます。** 2026年11月4〜5日の Claude Opus 5.5 での結果です。
+- **図面づくりのやりとりは、人の判断そのものです。** 自分でやりとりすれば違う図面になります。B を同じ条件で試す時は、同梱の図面をそのまま使います（AI_GUIDE.md に従えば、AI がそうします）。
+- **画像生成は、同じ絵になりません。** 外観の絵と、比較に使った外壁の質感は、できあがった物を同梱しています。
+- **スクリプトを書かせた回の数値は、同梱の影絵で計算し直すと最大 0.5 ポイントずれます**（採点のあとで正解の影絵を撮り直したため。録画した回は完全に一致します）。
+
+## 自分の仕事で使うには
+
+この実験の作業手順は、「skills」フォルダに**ふつうの日本語の文章**（AI に渡す手順書）として入っています。
+
+- 外観の絵や写真から、Rhino のボリューム模型を起こす
+- AI が図面案を Figma に置き、人がペンで描き込み、AI が次の版を描く（B の図面の作り方）
+- 画像生成で外壁の質感を作り、Rhino で使える形にそろえる
+- 絵だけ／絵＋図面のように、入力を変えて公平に比べる
+
+自分の外観パースやスケッチで試す時は、たとえばこう頼めます。
+
+```
+skills フォルダの image-to-massing.md を読んで、この外観パースから Rhino でボリューム模型を起こして
+```
+
+結果から言えるのは、**AI に正確に形を起こさせるには図面が要る**ということです。図面に書いた所はほぼ正確に読み、書いていない所（素材、「ここは壁」など）で外れました。
+
+## 正直に書いておくこと
+
+- A の模型は、そのままだと壁が消えました（立体の面の向きが内向きだったため）。向きを直す3行だけを足して実行しました（寸法は変えていません）。
+- 正解も図面どおりの模型なので、図面を渡した B に有利な比べ方です。
+- 1回ずつの試行です。AI や回数を変えると結果はぶれます。
+- 家は架空です（AI 画像から作りました）。
+- 使ったもの：AI は Claude Opus 5.5（AI エージェント Hermes Agent 経由。AI にパソコン上の作業をさせる道具）、Rhino、Figma ＋ iPad、外壁の質感は ComfyUI（Qwen-Image 2.1）。
+
+## 詳しい人・AI 向け
+
+- [AI_GUIDE.md](AI_GUIDE.md)：AI が読む手順書（上の頼み方で、AI はこれに従って動きます）
+- [TECHNICAL.md](TECHNICAL.md)：入っているファイルの一覧、撮影と採点の細部、外壁の質感の作り方、ファイルの置き場所の読み替え
+- [skills/](skills/README.md)：作業手順（AI 向け）

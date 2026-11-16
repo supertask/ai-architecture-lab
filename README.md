@@ -1,18 +1,36 @@
 # AI × 建築 実験ラボ
 
-AI（Claude など）に、建築の模型づくり・図面・素材づくりをさせた実験を、**同じことを誰でも再現できる形**で置いています。
-各実験フォルダに、AI に渡した指示の原文・入力・出力・手順・使ったソフトの版をまとめています。
+AI に、建築の模型づくり・図面・素材づくりをさせた実験を、**誰でも同じことを試せる形**で置いています。
+
+**プログラムの知識は要りません。** 最初に1回だけ準備をすれば、あとは AI（Claude や ChatGPT）に日本語で話しかけるだけで、AI が Rhino や Archicad を動かして作業します。
 
 発信：X [@supertask_jp](https://x.com/supertask_jp)
 
-## はじめに：AI から Rhino・Archicad を動かす準備
+## はじめに
 
-どの実験も、まず AI（Codex や Claude Code など）から Rhino／Grasshopper・Archicad を動かせる状態にします。手順は次の資料にまとめています。
+### 用意するもの
 
-- セットアップ資料（コピーして AI に貼るプロンプト付き）：https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T
-- ワークショップのスライド：https://docs.google.com/presentation/d/11fd7nvZPuE5BPmIBTQYlUanp_OZPNibPhbAnpD_UStg/edit?usp=sharing
+- 使うソフト：Rhino か Archicad（実験によって違います）
+- AI：次のどちらか（どちらも有料プラン）
+  - Claude の有料プラン ＋ Claude Code（デスクトップ版のアプリ）
+  - ChatGPT の有料プラン ＋ Codex（デスクトップ版のアプリ）
 
-各実験フォルダの README 冒頭「再現の早道」に、そのあとの手順を書いています。実験ごとの `skills/` は、自分の AI にそのまま渡せる手順書（スキル）です。
+### 最初の1回だけ：AI と Rhino・Archicad をつなぐ
+
+下の資料にある「AI への頼み文（プロンプト）」をコピーして、AI に貼ってください。AI が、Rhino・Archicad を AI から動かすための準備を自分で進めます（30〜60分ほど）。
+
+- セットアップ資料（AI に貼る頼み文付き）：https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T
+- 講座のスライド：https://docs.google.com/presentation/d/11fd7nvZPuE5BPmIBTQYlUanp_OZPNibPhbAnpD_UStg/edit?usp=sharing
+
+### そのあと：実験を選んで、AI に頼む
+
+1. 下の一覧から実験を選び、そのページを開きます。
+2. ページの説明どおりに、このページ（GitHub）の緑の「Code」ボタン →「Download ZIP」でファイルを手元に置きます。
+3. AI のアプリで、その実験のフォルダを開き、ページに書いてある言葉をコピーして貼ります。たとえば：
+   ```
+   このフォルダの AI_GUIDE.md を読んで、白紙の Archicad に家を組んで
+   ```
+   AI_GUIDE.md は AI 向けの手順書です。AI がこれを読んで、必要な作業を進めます。人がやるのは、AI に頼まれた画面の操作と、できた物を見て「ここを直して」と言うことです。
 
 ## 実験の一覧
 
@@ -22,19 +40,33 @@ AI（Claude など）に、建築の模型づくり・図面・素材づくり�
 
 | 日付 | 実験 | 内容 | 使ったもの |
 | --- | --- | --- | --- |
-| 2026-11 | [外観の絵だけ vs 絵＋図面](experiments/2026-11_image-vs-drawing-3d/) | 同じ家を、外観の絵1枚だけ／絵＋図面で AI に Rhino 模型を作らせ、正解との重なり率を比べた（絵だけ 68〜80%、図面あり 96〜100%） | Claude Opus 5.5, Rhino, Figma, ComfyUI (Qwen-Image 2.1) |
-| 2026-11 | [白紙の Archicad から図面8枚まで](experiments/2026-11_archicad-drawing-set/) | 架空の家を AI が白紙の Archicad に組み、作図ルールを渡して平面2・断面2・立面4を描かせた。断面が弱かったのでモデルに層と基礎を足して描き直し、点検と直しを2〜3回 | Claude Opus 5.5, Archicad, Tapir |
+| 2026-11 | [外観の絵だけ vs 絵＋図面](experiments/2026-11_image-vs-drawing-3d/) | 同じ家を、外観の絵1枚だけ／絵＋図面で AI に Rhino 模型を作らせ、正解との形の重なりを比べた（絵だけ 68〜80%、図面あり 96〜100%） | Claude Opus 5.5, Rhino, Figma, ComfyUI (Qwen-Image 2.1) |
+| 2026-11 | [白紙の Archicad から図面8枚まで](experiments/2026-11_archicad-drawing-set/) | 架空の家を AI が白紙の Archicad に組み、描き方の決まり（作図ルール）を渡して平面2・断面2・立面4を描かせた。断面が弱かったのでモデルに層と基礎を足して描き直し、点検と直しを2〜3回 | Claude Opus 5.5, Archicad, Tapir |
 
-図面を人と AI で往復して整えた Figma ボード（閲覧のみ）：[AIと人の図面往復（外観1枚→図面 v7〜v14）](https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4)
+図面を人と AI でやりとりして整えた Figma ボード（閲覧のみ）：[AIと人の図面往復（外観1枚→図面 v7〜v14）](https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4)
 
 [![AIとFigmaで図面を8回往復して作った流れ](experiments/2026-11_image-vs-drawing-3d/images/figma_loop.jpg)](https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4)
 
-## フォルダの決まり
+## 自分の仕事に使うには
+
+各実験の `rules`・`skills` フォルダには、AI に渡した「描き方の決まり」や「作業の手順」が、**ふつうの日本語の文章**で入っています。
+自分の事務所のやり方に書き換えれば、それがそのまま自分の AI 用の手順書（スキル）になります。書き換えも AI に頼めます。
+
+## 注意
+
+- 題材の家はすべて架空（AI 画像から作ったもの）です。実在の物件・図面は使っていません。
+- AI の答えは毎回変わります。各実験のページの数値や図と、まったく同じにはなりません。
+
+## 詳しい人向け：フォルダの決まり
+
+各実験の README.md は建築家向けの説明、AI_GUIDE.md は AI が従う手順、TECHNICAL.md はファイルの一覧や細部です。
 
 ```
 experiments/
   YYYY-MM_短い名前/
-    README.md        … 何を試したか・結果・手順・正直に書いておくこと
+    README.md        … 何を試したか・結果・頼み方・正直に書いておくこと（建築家向け）
+    AI_GUIDE.md      … AI が読む手順書
+    TECHNICAL.md     … ファイルの一覧・コマンド・細部
     inputs/          … AI に渡した画像・図面
     prompts/         … AI に渡した指示（原文）
     outputs/         … AI が作ったもの（スクリプト・メモ・仮定した寸法）
@@ -43,6 +75,4 @@ experiments/
 docs/                … 解説記事（GitHub Pages でブログとして公開する場所）
 ```
 
-## 注意
-- 題材の家はすべて架空（AI 画像から作ったもの）です。実在の物件・図面は使っていません。
-- スクリプト内のパス（`C:/path/to/kit/`、`<KIT>`）は、自分の環境に読み替えてください。
+スクリプトの中の `C:/path/to/kit/`・`<KIT>` は、自分の環境の場所に読み替えます（AI_GUIDE.md に従えば、AI が読み替えます）。
