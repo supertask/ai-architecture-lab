@@ -1,15 +1,17 @@
+🇯🇵 日本語 | [🇺🇸 English](TECHNICAL.en.md)
+
 # 技術メモ：外観だけ vs 外観＋図面（詳しい人向け）
 
-建築家向けの説明は [README.md](README.md)、AI が従う手順は [AI_GUIDE.md](AI_GUIDE.md) にあります。
+建築家向けの説明は [README.md](README.md)、AI 向けの索引は [AI_GUIDE.md](AI_GUIDE.md)、各段の手順は [prompts/](prompts/) にあります。
 ここには、ファイルの一覧・手順の細部・撮影と採点・テクスチャ・パスの扱いをまとめています。
 
 ## AI と Rhino の接続
 
-- セットアップの手順書：https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T
+- セットアップの手順書：https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T#ja
 - ワークショップのスライド：https://docs.google.com/presentation/d/11fd7nvZPuE5BPmIBTQYlUanp_OZPNibPhbAnpD_UStg/edit?usp=sharing
   - ChatGPT のデスクトップアプリで Codex を開く（実行権限は「フルアクセス」）→ 配布ページのプロンプトを貼る → AI の案内どおりに Rhino／Grasshopper（または Archicad）との接続をインストール・設定 → 接続テストとして「バルセロナ・パビリオン」を作らせる。
 - この実験で使った接続は、Rhino 用の MCP サーバー（[supertask/rhino-mcp](https://github.com/supertask/rhino-mcp)。AI から Rhino 内で Python を実行できる）。同じ働きのものなら何でもよい。
-- **1回目の形式（AI はスクリプトを書くだけ）なら、AI と Rhino の接続は不要。** Rhino で `scripts/run_all_in_rhino.py` を自分で実行すれば、撮影・採点まで進める。
+- **1回目の形式（AI はスクリプトを書くだけ）なら、AI と Rhino の接続は不要。** 撮影は、`scripts/make_rhino_runner.py` が作る `work/run_mine_here.py`（または `scripts/run_all_in_rhino.py`）を Rhino の ScriptEditor で自分で実行すれば進める。
 
 ## 手順（コマンド）
 
@@ -23,22 +25,27 @@ Claude Code・Codex・Hermes Agent のどれでも同じ。
    python scripts/prepare_run.py B --out D:/ai-run/B          # 絵＋図面
    # Rhino に部分ごとに送って組ませる（2回目・録画回の形式）なら --live を付ける
    ```
+   （README の段 0・2 の1行「`prompts/00_prepare_A.md` を読んで、指示どおりに作業してください」で、AI がこれを `../ai-run-A`・`../ai-run-B` に作る。）
 2. そのフォルダで**新しい会話**を始め（過去の会話・メモリ・スキルなし）、次の1文だけを入力する：
-   「`D:/ai-run/A/prompt.md` を読んで、その指示どおりに作業してください」
+   「`prompt.md` を読んで、指示どおりに作業してください」
+   - 実験（録画回）も同じ形：新しい会話に「（作業フォルダ）/A_prompt.md を読んで、その指示どおりに作業してください」の1行だけ。実験のエージェントは Hermes Agent。
    - Claude Code：フォルダで `claude` を起動して入力。Codex：デスクトップアプリでフォルダを追加して入力。Hermes Agent：ターミナルで起動して入力。
    - 指示文にある `vision_analyze`（画像を見る）・`execute_rhino_code`（Rhino で Python を実行）は Hermes でのツール名。他のエージェントでは、同じ働きのツール（画像の読み込み、Rhino 接続の実行ツール）が使われる。
-3. A と B は別の会話で、同じ AI モデルで行う。できた `model.py` を `outputs/A/`・`outputs/B/` に置き換える（元の出力と比べたいなら別名で置き、`scripts/run_all_in_rhino.py` に行を足す）。
+3. A と B は別の会話で、同じ AI モデルで行う。できた `model.py`（と `params.json`・`notes.md`）を `work/mine/A/`・`work/mine/B/` にコピーし、`python scripts/make_rhino_runner.py` で撮影用のファイルを作る（公開の `outputs/` は上書きしない）。
    - 出力の場所：1回目の形式は `<out>/outputs/A/`、`--live` は `<out>/A_out/`（どちらも `model.py`・`params.json`・`notes.md`）。
 
 ### 2. 撮影と採点
 
+README の段 4 の1行（`prompts/10_shoot_and_score.md`）で、AI が次を行う：模型を `work/mine/A|B/` に集める → `python scripts/make_rhino_runner.py`（キットの場所を書き込んだ `work/run_mine_here.py` を作る）→ Rhino で実行 → `metrics.py work/compare --out work/results_mine`。
+公開した模型を撮り直す時は、手で次の形で：
+
 1. `scripts/run_compare.py` と `scripts/run_all_in_rhino.py` の先頭の `KIT = 'C:/path/to/kit/'` を、このフォルダの絶対パスに書き換える。
 2. Rhino で `scripts/run_all_in_rhino.py` を実行（ScriptEditor で開いて実行、または AI に「このファイルを Rhino で実行して」）→ `work/compare/<名前>/` に影絵と比較画像。**途中で Rhino の窓の大きさを変えない**（縮尺が変わる）。
-3. 採点：`uv run -q --with pillow --with numpy python scripts/metrics.py`（1回目）／`scripts/metrics_live.py`（2回目）→ `results/`・`run2_recorded/results/`。
+3. 採点：`uv run -q --with pillow --with numpy python scripts/metrics.py`（1回目）／`scripts/metrics_live.py`（2回目）→ `results/`・`run2_recorded/results/`。`--out <フォルダ>` を付けると公開済みの結果を上書きせずに書き出す。`--tags A_image_only,B_image_plus_drawing` で採点する模型を絞る。
 4. 比較シート：`uv run -q --with pillow python scripts/sheets.py`。
 
 **Rhino なしで採点だけ確かめる**：検証時の影絵を `results/silhouettes/` に入れてある。
-`uv run -q --with pillow --with numpy python scripts/metrics_live.py results/silhouettes` で、公開した2回目の数値（`run2_recorded/results/metrics_live.json`）と同じ値が出る（確認済み。1回目は下の「再現できないもの」を参照）。
+`uv run -q --with pillow --with numpy python scripts/metrics_live.py results/silhouettes --out work/results_check` で、公開した2回目の数値（`run2_recorded/results/metrics_live.json`）と同じ値が出る（確認済み。数分かかる。1回目は下の「再現できないもの」を参照）。README の1行「`prompts/11_check_scoring.md` を読んで、指示どおりに作業してください」でも同じことをする。
 
 ### 手順（中身）
 
@@ -61,17 +68,19 @@ Claude Code・Codex・Hermes Agent のどれでも同じ。
 
 ## 入っているもの
 
-- `README.md`（建築家向け）・`AI_GUIDE.md`（AI 向けの手順）・`TECHNICAL.md`（このファイル）
+- `README.md`（建築家向け）・`AI_GUIDE.md`（AI 向けの索引）・`TECHNICAL.md`（このファイル）。英語版は `README.en.md`・`AI_GUIDE.en.md`・`TECHNICAL.en.md`
 - `inputs/house_v6C.png`：外観（AI 画像、架空の家）
 - `inputs/drawing_v14.png`：Figma で人と往復して整えた図面（1階平面・正面・左側面・2階平面、1マス＝1m）（公開版は図の題名から人名だけ外している。図の中身は B に渡したものと同じ）
   - 往復の過程（人の描き込み r1〜r9 と AI の書き出し v7〜v14）は Figma ボードで見られる（閲覧のみ）：https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4
-- `prompts/A_image_only_prompt.md`・`prompts/B_image_plus_drawing_prompt.md`：AI に渡した指示（原文そのまま）
+- `prompts/A_image_only_prompt.md`・`prompts/B_image_plus_drawing_prompt.md`：AI に渡した指示（原文そのまま。`prepare_run.py` が場所を置き換え、最後に「終わったら元の会話に戻るよう伝える」1文を足して `prompt.md` にする）
+- `prompts/00_prepare_A.md`・`00_prepare_B.md`・`10_shoot_and_score.md`・`11_check_scoring.md`：README の各段で AI が読む指示（公開用に書いた。実験者の AI が直接行った準備・撮影・採点を文章にした物。`11_` の採点以外は、この形では流していない）
 - `prompts/textures.md`：テクスチャのプロンプトと後処理
 - `outputs/A/`・`outputs/B/`：AI が書いた模型スクリプト `model.py`、仮定した寸法 `params.json`、メモ `notes.md`
 - `outputs/reference_v14.py`：正解の模型（図面どおり）
 - `run2_recorded/`：2回目（Rhino に部分ごとに送って組んだ録画回）の指示・出力・結果
 - `scripts/`
   - `prepare_run.py`：AI に渡すきれいな作業フォルダを作る
+  - `make_rhino_runner.py`：自分の A・B の模型（`work/mine/`）を正解と同じ条件で撮る Rhino 用ファイル `work/run_mine_here.py` を作る（キットの場所を書き込み済み）
   - `run_compare.py`・`run_all_in_rhino.py`：Rhino で模型を実行して同じ条件で撮る
   - `metrics.py`・`metrics_live.py`：重なり率（IoU）を出す。`sheets.py`：比較シート
   - `draw_v14.py`：図面 `inputs/drawing_v14.png` を描いたスクリプト（実行すると題名の行以外は同じ画像になる。確認済み）
@@ -79,6 +88,7 @@ Claude Code・Codex・Hermes Agent のどれでも同じ。
   - `fontutil.py`：日本語フォントを OS ごとに探す
 - `tex/`：比較に使ったテクスチャ（打放し・黒モルタル・版築・木。色・法線・粗さ・AO）、設定 `materials.json`、外観に寄せた打放しの作り方 `concrete_v6_src/`
 - `results/`：比較画像、`metrics.json`、検証時の影絵 `silhouettes/`
+- `images/`：README の画像（`inputs_A_B.jpg`＝外観の絵と図面を並べた物）
 - `skills/`：この実験の作業手順を、どのエージェントにも渡せる形にまとめたもの（[skills/README.md](skills/README.md)）
 
 ## 使ったもの

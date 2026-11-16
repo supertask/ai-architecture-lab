@@ -1,7 +1,7 @@
 """修正A-3：1階の床（部屋ごと）と基礎（外壁の下）を足す。"""
 import os, sys, json
 KIT = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, KIT); import tapir_http as t
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 C = json.load(open(os.path.join(KIT, 'fixA_comps.json'), encoding='utf-8'))
 FL1 = C['架空_1階床 フローリング15 断熱85 RC土間150 砕石100']
 bm = {a['name']: a['attributeId'] for a in t.call(P, 'GetAttributesByType', {'attributeType': 'BuildingMaterial'})['attributes']}

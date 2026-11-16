@@ -23,7 +23,7 @@ import os, sys, json, argparse
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import tapir_http as t
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 OUT = os.path.join(os.path.dirname(HERE), 'out', 'sections')
 FILE = {'S南': '01_south', 'S東': '02_east', 'S北': '03_north', 'S西': '04_west', 'A-A': '05_section_AA', 'B-B': '06_section_BB'}
 

@@ -5,3 +5,5 @@ GitHub Pages を有効にすると `https://supertask.github.io/ai-architecture-
 
 - 記事は `docs/YYYY-MM-DD-短い名前.md` に置き、本文から `experiments/` の再現キットへリンクする。
 - 外部のブログ（note、Zenn など）に載せる場合も、ここを元原稿にして再現キットへリンクする。
+
+English: this folder holds the (Japanese) article drafts for each experiment. For English documentation, see each experiment's `README.en.md` (start from [../README.en.md](../README.en.md)).

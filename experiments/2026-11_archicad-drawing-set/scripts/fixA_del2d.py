@@ -15,7 +15,7 @@ import os, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import tapir_http as t
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 APPLY = '--apply' in sys.argv
 VIEWS = ['S南', 'S東', 'S北', 'S西', 'A-A', 'B-B']
 TYPES = ['Line', 'PolyLine', 'Hatch', 'Text', 'Dimension', 'Circle', 'Arc', 'Label', 'Spline', 'Hotspot',

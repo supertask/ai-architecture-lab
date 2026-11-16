@@ -16,7 +16,7 @@ import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import tapir_http as t
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 D = float(sys.argv[1]) if len(sys.argv) > 1 else 0.1
 
 t.call(P, 'ChangeWindow', {'windowType': 'FloorPlan', 'storyIndex': 0})

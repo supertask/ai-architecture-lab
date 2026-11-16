@@ -8,10 +8,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from fontutil import font
 # 入力：run_compare.py が書いた work/compare/<名前>/sil_*.png（引数で別の場所も可。Rhino 無しで数字だけ確かめるなら results/silhouettes を渡す）　出力：results/
-D = (sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, '..', 'work', 'compare')) + '/'
+# 引数：[影絵のフォルダ] [--out 書き出し先] [--tags A_image_only,B_image_plus_drawing]（--out を付けると公開済みの結果を上書きしない）
+ARGS = sys.argv[1:]
+def _opt(k):
+    if k in ARGS:
+        i = ARGS.index(k); v = ARGS[i + 1]; del ARGS[i:i + 2]; return v
+OUT_OPT, TAGS_OPT = _opt('--out'), _opt('--tags')
+D = (ARGS[0] if ARGS else os.path.join(HERE, '..', 'work', 'compare')) + '/'
 RES = os.path.join(HERE, '..', 'results') + '/'
+if OUT_OPT: RES = os.path.abspath(OUT_OPT) + '/'
+os.makedirs(RES, exist_ok=True)
 REF = 'C_reference_v14'
 TAGS = [('A_image_only', '外観だけ'), ('B_image_plus_drawing', '外観＋図面')]
+if TAGS_OPT: TAGS = [t for t in TAGS if t[0] in TAGS_OPT.split(',')]
 VIEWS = [('top', '真上（平面）'), ('front', '正面'), ('right', '右側面'), ('back', '裏')]
 F = font
 

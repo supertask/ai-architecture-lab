@@ -14,7 +14,7 @@
 #   WORK       作業フォルダ（既定 <KIT>/work）。エージェントはここで起動する。
 #   SHEETS     流す指示（prompts/ のファイル名から .md を除いた物）。既定は 10〜17 の8枚。
 #   MAX_SEC    1枚の上限秒（既定 2700＝45分。注記の多い平面は 30 分では足りなかった）。timeout が無ければ上限なし。
-#   PY         Python（既定 python）。ARCHICAD_PORT でポートを変えられる（既定 19723）。
+#   PY         Python（既定 python）。ポートは ARCHICAD_PORT → work/archicad_port.txt → 19723。
 #
 # 実験でのやり方（同じ形）：1枚ごとに別のプロセスでエージェントを起動し、終わるたびに外から SaveProject を送った。
 # 8枚を続けて描かせた時、エージェントは自分では保存せず、途中で Archicad が落ちて、保存前の状態に戻りかけた。
@@ -37,7 +37,7 @@ for s in $SHEETS; do
   f="$WORK/prompts/$s.md"
   [ -f "$f" ] || { echo "== $s：$f が無い。飛ばす"; continue; }
   echo "== $s $(date +%T)"
-  msg="$f を読んで、そのとおりに作業してください。"
+  msg="$f を読んで、指示どおりに作業してください。"
   ( cd "$WORK" && $TO $AGENT_CMD "$msg" ) > "$LOG/$s.txt" 2>&1
   echo "rc=$? $(date +%T)（記録：$LOG/$s.txt）"
   "$PY" "$HERE/check_connection.py" --save || { echo "SAVE FAILED（Archicad が落ちた？）。止める。再開は、最後に保存した .pln を開いて、残りの SHEETS だけ流す"; exit 3; }

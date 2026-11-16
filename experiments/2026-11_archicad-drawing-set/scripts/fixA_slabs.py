@@ -27,7 +27,7 @@ import os, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import tapir_http as t
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 APPLY = '--apply' in sys.argv
 C = json.load(open(os.path.join(HERE, 'fixA_comps.json'), encoding='utf-8'))
 ROOF, FL2, CEIL = (C['架空_屋根 押えコン60 断熱30 防水10 RC200'], C['架空_2階床 フローリング15 置床85 RC200'], C['架空_天井 LGS40 PB9.5'])

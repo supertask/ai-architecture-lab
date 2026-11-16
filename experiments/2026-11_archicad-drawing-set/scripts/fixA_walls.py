@@ -2,7 +2,7 @@
 規則（11/16 確認）：flipped=True の壁では、複合構造の最初の層が進行方向の右側に来る。"""
 import os, sys, json
 KIT = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, KIT); import tapir_http as t
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 C = json.load(open(os.path.join(KIT, 'fixA_comps.json'), encoding='utf-8'))
 W = json.load(open(os.path.join(KIT, 'walls_before_fixA.json')))   # 先に fixA_snapshot.py で作る
 t.call(P, 'ChangeWindow', {'windowType': 'FloorPlan', 'storyIndex': 0})   # 3D の窓のままだと要素が0で返る

@@ -30,7 +30,7 @@ if opt('--expect'):
         k, v = kv.split('='); expect[k.strip()] = int(v)
 if '--offline' not in args:
     import tapir_http as t
-    P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+    P = t.default_port()
     for s in t.call(P, 'GetStories', {})['stories']:
         # 作図ルールでは最上階（RFL）を「軒高」と書く
         expect.setdefault('軒高' if s['name'] == 'RFL' else s['name'], round(s['level'] * 1000))
@@ -46,7 +46,12 @@ print('期待値（mm, GL 基準）:', expect)
 grid_names = set()
 for gpath in (os.path.join(os.path.dirname(HERE), 'work', 'grid.json'), os.path.join(HERE, 'grid.json')):
     if os.path.exists(gpath):
-        g = json.load(open(gpath, encoding='utf-8')); grid_names = {x['name'] for k in ('X', 'Y') for x in g.get(k, [])}; break
+        g = json.load(open(gpath, encoding='utf-8'))
+        try:
+            grid_names = {x['name'] for k in ('X', 'Y') for x in g.get(k, [])}
+        except (TypeError, KeyError):
+            print('grid.json の形がキットと違う。先に python scripts/check_grid.py でそろえる'); grid_names = set()
+        break
 
 seen = {}   # 名前 -> {図: 値}
 bad = []

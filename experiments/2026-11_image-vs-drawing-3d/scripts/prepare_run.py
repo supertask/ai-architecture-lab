@@ -44,9 +44,14 @@ def main():
         body = body.split("## 実行時に")[0].rstrip() + "\n"
         body = body.replace("<KIT>", o).replace("<WORKDIR>", o)
         (out / "outputs" / a.which).mkdir(parents=True, exist_ok=True)
+    # キットで足した最後の1文（模型の作り方には関係しない。ユーザーが次に何をするかを伝えるため）
+    body = body.rstrip() + ("\n\n## After finishing (added by the public kit)\n"
+                            "When everything is written, tell the user in their language: the model is done, and they should go back to "
+                            "the first conversation (the kit folder) and paste the next one-line request "
+                            "(prompts/10_shoot_and_score.md). Do not do anything else.\n")
     (out / "prompt.md").write_text(body, encoding="utf-8")
     print("作業フォルダ:", o)
-    print("AI への入力: 「%s/prompt.md を読んで、その指示どおりに作業してください」" % o)
+    print("AI への入力（このフォルダで新しい会話）: 「prompt.md を読んで、指示どおりに作業してください」")
 
 
 if __name__ == "__main__":

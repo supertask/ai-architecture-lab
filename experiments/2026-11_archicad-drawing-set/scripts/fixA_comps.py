@@ -1,7 +1,7 @@
 """修正A：複合構造（架空の家用）を作る。結果は同じフォルダの fixA_comps.json"""
 import os, sys, json
 KIT = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, KIT); import tapir_http as t
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 bm = {a['index']: a['attributeId'] for a in t.call(P, 'GetAttributesByType', {'attributeType': 'BuildingMaterial'})['attributes']}
 solid = t.call(P, 'GetAttributesByType', {'attributeType': 'Line'})['attributes'][0]['attributeId']
 def comp(name, use, skins):

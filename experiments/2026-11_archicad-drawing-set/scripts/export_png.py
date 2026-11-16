@@ -22,7 +22,7 @@ import layer_found
 from PIL import Image
 import numpy as np
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 MARGIN = float(os.environ.get('PLAN_MARGIN', '9.5'))
 args = sys.argv[1:]
 O = os.path.join(os.path.dirname(HERE), 'out', 'png')

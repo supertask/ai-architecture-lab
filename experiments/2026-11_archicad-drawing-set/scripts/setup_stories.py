@@ -16,7 +16,7 @@ import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import tapir_http as t
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 STORIES = [
     {'index': 0, 'name': '1FL', 'level': 0.0, 'dispOnSections': False},
     {'name': '2FL', 'level': 3.15, 'dispOnSections': False},

@@ -10,7 +10,7 @@ import os, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import tapir_http as t
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 OUT = os.path.join(HERE, 'walls_before_fixA.json')
 
 if __name__ == '__main__':

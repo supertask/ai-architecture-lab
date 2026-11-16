@@ -1,5 +1,24 @@
-"""Minimal client for Archicad JSON API + Tapir add-on commands (read/write on a given port)."""
-import json, urllib.request
+"""Minimal client for Archicad JSON API + Tapir add-on commands (read/write on a given port).
+
+default_port(): env ARCHICAD_PORT -> archicad_port.txt (written by check_connection.py --scan; looked up
+next to this file and in <kit>/work/) -> 19723.
+"""
+import json, os, urllib.request
+
+
+def default_port():
+    if os.environ.get('ARCHICAD_PORT'):
+        return int(os.environ['ARCHICAD_PORT'])
+    here = os.path.dirname(os.path.abspath(__file__))
+    for p in (os.path.join(here, 'archicad_port.txt'), os.path.join(os.path.dirname(here), 'work', 'archicad_port.txt')):
+        if os.path.exists(p):
+            try:
+                return int(open(p, encoding='utf-8').read().strip())
+            except ValueError:
+                pass
+    return 19723
+
+
 def call(port, cmd, params=None, timeout=120):
     body = {"command": "API.ExecuteAddOnCommand",
             "parameters": {"addOnCommandId": {"commandNamespace": "TapirCommand", "commandName": cmd},
@@ -13,6 +32,8 @@ def call(port, cmd, params=None, timeout=120):
     if isinstance(res, dict) and res.get("error"):
         raise RuntimeError(res)
     return res
+
+
 def api(port, cmd, params=None, timeout=120):
     body = {"command": cmd}
     if params is not None: body["parameters"] = params

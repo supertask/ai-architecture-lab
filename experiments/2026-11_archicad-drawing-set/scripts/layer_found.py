@@ -15,7 +15,7 @@ import os, sys, json
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import tapir_http as t
 
-P = int(os.environ.get('ARCHICAD_PORT', '19723'))
+P = t.default_port()
 NAME = '架空_地中（基礎）'
 RAISE = float(os.environ.get('RAISE', '0.1'))
 
