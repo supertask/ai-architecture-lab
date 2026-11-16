@@ -67,6 +67,7 @@ The "In the experiment" column says how that step was done in the experiment:
 - *3 In the experiment, this was done midway through the review/fix rounds (between the 3rd and 4th fix).
 - Step 7 can also be run as a batch (`scripts/run_sheets.sh`: hands each prompt to a fresh AI run and saves after each sheet; see [TECHNICAL.en.md](TECHNICAL.en.md)). This is the same shape as the experiment's batch run.
 - In step 10, add what you noticed in plain words after the line. Example: `Read work/prompts/30_inspect_and_fix.md and follow its instructions. In section A-A, the blue waterproofing line runs up over the parapet coping.`
+- **The "By hand" steps (0, 5, 8) can sometimes be handed to the AI.** If your AI has a screen-control feature (computer use: the AI moves the mouse and keyboard), give it that step's text and ask it to do it on screen. In our environment (Hermes Agent) the AI can operate Archicad's menus and Navigator through a screen-control tool, **but doing these three steps by AI screen control has not been tested yet.** If your AI has no such feature or it fails, do them by hand (a few minutes each).
 - **The flow in this table has not yet been run end-to-end from the public kit** (see "Honest notes").
 
 ### Prompts included as records of the experiment (not part of the normal order)
