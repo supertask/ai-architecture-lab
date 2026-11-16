@@ -7,44 +7,35 @@
 
 **手順の本体は `prompts/` の指示ファイルです。** ユーザーは各段で、新しい会話に次の形の1行を貼ります。
 「`<指示ファイル>` を読んで、指示どおりに作業してください」
-各指示ファイルは、それだけで動くように書いてあります（前の段が済んでいるかの確認、保存、記録、次に貼る1行の案内まで）。
-指示ファイルの名前が無いまま「このフォルダの AI_GUIDE.md を読んで、白紙の Archicad に家を組んで」のように頼まれた時は、下の表で今どの段かを判断し（`work/progress.md` があれば読む）、その段の指示ファイルを読んで進めてください。
+指示ファイルに書いてあることだけを行ってください。段の順番、保存、次に貼る1行は、ユーザーが [README.md](README.md) の表を見て進めます（指示ファイルには書いてありません）。
+指示ファイルの名前が無いまま頼まれた時は、README の表を示して、どの段から始めるかをユーザーに確かめてください。
 
-## 段と指示ファイル
+## 指示ファイルと「実験で」
 
-| 段 | ユーザーが貼る1行の中のファイル | 中身 | 人の画面操作 |
+| 段（README の表） | ファイル | 中身 | 実験で |
 | --- | --- | --- | --- |
-| 0 | `prompts/00_prepare.md` | 接続の確認、`work/` 作り（`prepare_workdir.py`）、階の設定と保存 | 空のプロジェクトを開く（必要な時） |
-| 1 | `work/prompts/01_model_M.md` | 外形を組む（実験の原文＋キットの追記） | なし |
-| 2 | `work/prompts/02_interior_I.md` | 間取りと通り芯（`work/grid.json`） | なし |
-| 3 | `work/prompts/05_sections.md` | 立面・断面の線（`make_sections.py`） | 断面図の窓6つを1回ずつ開く |
-| 4 | `work/prompts/06_fix_model.md` | 層・基礎・1FL＝GL+100（`fixA_*`・`layer_found.py`） | なし |
-| 5 | `work/prompts/10_all_sheets.md`（または `10_sheet_P1`〜`17_sheet_EW` を1本ずつ） | 8枚を描く。1枚ごとに保存 | 落ちた時に開き直す |
-| 6 | `work/prompts/18_rename_and_export.md` | 断面記号の参照ID を A・B に、8枚を画像に（`export_png.py`） | 参照ID の変更 |
-| 7 | `work/prompts/30_inspect_and_fix.md` | 点検、直しの指示（`work/prompts/30_fix_*.md`）、直し、作図ルールを育てる | なし（指摘を書き足す） |
+| 1 | `prompts/00_prepare.md` | `check_connection.py --scan` → `prepare_workdir.py` → `setup_stories.py work/house_from_scratch.pln` を流すだけ | 追加（未使用） |
+| 2 | `work/prompts/01_model_M.md` | 外形を組む | 同じ指示で実行 |
+| 3 | `work/prompts/02_interior_I.md` | 間取りと通り芯（`work/grid.json`） | 同じ指示で実行 |
+| 4 | `work/prompts/05_sections.md` | `make_sections.py create` を流すだけ | 同じスクリプトを実行（指示文は今回追加） |
+| 6 | `work/prompts/06_fix_model.md` | `fixA_snapshot` → `fixA_comps` → `fixA_walls` → `fixA_slabs --apply` → `fixA_found` → `fixA_raise` → `fixA_del2d --apply` を流すだけ | 同じスクリプトを実行（指示文は今回追加） |
+| 7 | `work/prompts/12_sheet_SA` → `13_sheet_SB` → `14_sheet_ES` → `15_sheet_EN` → `16_sheet_EE` → `17_sheet_EW` → `10_sheet_P1` → `11_sheet_P2` | 1枚ずつ描く | 同じ指示で実行 |
+| 9 | `work/prompts/18_export.md` | `layer_found.py` → `export_png.py` を流すだけ | 同じスクリプトを実行（指示文は今回追加） |
+| 10 | `work/prompts/30_inspect_and_fix.md` | 点検、直しの指示を書く、直す | 追加（未使用） |
+| 記録 | `03_south_elevation_recorded`・`04_fix_partition_F` | 実験の回の記録 | 同じ指示で実行 |
+| 記録 | `20_`〜`25_` | 実験の直しの記録（そのときの失敗に合わせた指示。あなたの結果には当てはまらないことが多い） | 同じ指示で実行 |
 
-- `work/prompts/` は段 0 の `prepare_workdir.py` が作ります。指示の中の `<KIT>`（作業フォルダ）・`<KITROOT>`（キット）・ポートは、ここで実際の値に置き換わります。キットの `prompts/` の元のファイルは書き換えません。
-- `03_south_elevation_recorded`・`04_fix_partition_F`・`20_`〜`25_` は実験の記録（例）です。ふだんの順では使いません（各ファイルの末尾に使い方を書いてあります）。
+段 0・5・8 は人が Archicad の画面で行います（空のプロジェクトを開く、断面の窓6つを開く、断面記号の参照ID を A・B に変える）。
 
-## どの段でも守る決まり
-
-1. **ユーザーは建築家で、プログラマーではない。** 返事はユーザーと同じ言語で、建築の言葉で短く。コマンド、パス、プログラム用語を見せない（要る時はひとことで言い換える）。
-2. **コマンドは全部あなたが実行する。** ユーザーに実行を頼まない。
-3. **画面の操作が要る時だけユーザーに頼む。** 1回に1つ、メニューの場所まで書き、「終わったら『できた』と送ってください」と添えて待つ。
-4. **Archicad への命令は、いつも1本ずつ。** 2つのスクリプトやエージェントから同時に送らない。命令の間、ユーザーに Archicad の画面を触らないよう頼む。
-5. **1つの指示（1枚の図）が終わるたびに保存する**（`python scripts/check_connection.py --save`）と、`work/progress.md` に1行の記録。
-6. **結果を作らない。** 失敗は平易に伝え、次の手を提案する。
-7. **触ってよいのは、キットの中と、このために開いた Archicad のプロジェクト（house_from_scratch）だけ。** `make_sections.py create` はプロジェクトの断面マーカーを全部消すので、ほかのプロジェクトでは流さない。
-8. 指示の中の「session_search、honcho、delegate は使わない」は、実験で使ったエージェント（Hermes Agent）の機能名。「記憶・過去の会話・ほかの AI への丸投げを使わない」と読み替える。
-9. つながらない・Tapir が無い時は、セットアップ資料（日本語 https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T#ja ／英語 https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T#en）を案内して止まる。
-
-## 再開するとき
-
-「続きをやって」「次は何？」と言われたら、`work/progress.md` を読み、`python scripts/check_connection.py` でつながりを確かめてから、終わっていない段の1行をユーザーに案内する（または、その指示ファイルを読んで進める）。
+- `work/prompts/` は段 1 の `prepare_workdir.py` が作ります。指示の中の `<KIT>`（作業フォルダ）・`<KITROOT>`（キット）・ポートは、ここで実際の値に置き換わります。キットの `prompts/` の元のファイルは書き換えません。
+- 指示の中の「session_search、honcho、delegate は使わない」は、実験で使ったエージェント（Hermes Agent）の機能名。「記憶・過去の会話・ほかの AI への丸投げを使わない」と読み替えてください。
+- 結果を作らないでください。スクリプトが失敗したら、出力をそのまま見せて止まります。
+- Archicad への命令は、いつも1本ずつ。2つのスクリプトやエージェントから同時に送らないでください。
+- つながらない・Tapir が無い時は、セットアップ資料（日本語 https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T#ja ／英語 https://claude.ai/artifact/UwQrsxsWJztdwNVAd93t8T#en）を案内して止まります。
 
 ## 参考
 
 - 操作のコツ（落ちない送り方、命令の書き方）：[skills/archicad-operation.md](skills/archicad-operation.md)
 - 点検と直しの指示の作り方：[skills/inspection.md](skills/inspection.md)
 - スキル（rules・skills）のエージェントへの渡し方：[skills/README.md](skills/README.md)
-- ファイルの一覧、スクリプトの出どころ、パスの扱い、手で流す方法：[TECHNICAL.md](TECHNICAL.md)
+- ファイルの一覧、実験でやった順、スクリプトの出どころ、パスの扱い：[TECHNICAL.md](TECHNICAL.md)

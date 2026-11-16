@@ -8,7 +8,7 @@ The kit's knowledge is split into three parts. All are Markdown, so any AI agent
 | --- | --- | --- |
 | Drawing rules (how to draw) | `../rules/作図ルール_平面.md` (plans), `作図ルール_断面.md` (sections), `作図ルール_立面.md` (elevations) — see [../rules/README.en.md](../rules/README.en.md) | Drawing rounds. Each prompt (`prompts/10_`–`17_`, `20_`–`25_`) names exactly one rule file for its sheet type |
 | Archicad operating tips | `archicad-operation.md` | Every round that drives Archicad through the API. Also contains notes for writing your own prompts |
-| How to review and write fix prompts | `inspection.md` | Whoever (human or AI) reviews the finished sheets and writes fix prompts (step 7, `prompts/30_inspect_and_fix.md`) |
+| How to review and write fix prompts | `inspection.md` | Whoever (human or AI) reviews the finished sheets and writes fix prompts (step 10, `prompts/30_inspect_and_fix.md`; added for the kit, not used in the experiment) |
 
 - The drawing rules stay in `rules/` (the prompts read them from there; `scripts/prepare_workdir.py` copies them into the work folder).
 - The drawing rules summarize the drafting conventions of professional drawings. No shapes, layouts or numbers were copied.

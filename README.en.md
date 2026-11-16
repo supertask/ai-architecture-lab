@@ -32,7 +32,7 @@ Copy the "prompt for the AI" from the page below and paste it into the AI. The A
    ```
    Read prompts/00_prepare.md and follow its instructions.
    ```
-   In the experiments, too, this one line was all we gave the AI (the experiments used the Hermes Agent AI agent). At the end of each step, the AI tells you the next line. Your part is the screen actions the AI asks for, and looking at the results and saying "fix this".
+   In the experiments, too, this one line was all we gave the AI (the experiments used the Hermes Agent AI agent). Check the next line to paste in the table on each experiment's page. Your part is the screen actions the AI asks for, and looking at the results and saying "fix this".
 
 ## Experiments
 

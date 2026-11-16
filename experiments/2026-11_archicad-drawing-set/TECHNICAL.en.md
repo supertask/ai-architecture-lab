@@ -22,12 +22,14 @@ Paste the distributed prompt into ChatGPT Codex (desktop); the AI installs and c
 
 ## Procedure (commands)
 
-The commands for each step and the GUI actions requested from the human are written in the per-step prompt files (`prompts/00_prepare.md`, `05_sections.md`, `06_fix_model.md`, `10_all_sheets.md`, `18_rename_and_export.md`, `30_inspect_and_fix.md`, plus the "kit additions" appended to the experiment's prompts). Follow the same order if you run things by hand.
-Overview: `check_connection.py --scan` → `prepare_workdir.py` → `setup_stories.py work/house_from_scratch.pln` → prompts `01_`, `02_` (→ `check_grid.py`) → `make_sections.py create` (+ GUI: open the 6 section windows) → `make_sections.py shoot` → model fix `fixA_*`, `layer_found.py` → prompts `10_`–`17_` (`run_sheets.sh` or one at a time; `check_connection.py --save` after each) → GUI: Reference IDs to A/B → `export_png.py`, `check_levels.py` → write and run fix prompts.
+The order of steps, the human GUI actions and saving are in the table in [README.en.md](README.en.md). The script-only prompts (`00_prepare`, `05_sections`, `06_fix_model`, `18_export`) just run the commands below in order and show the output, so running them by hand is the same.
+Overview (in the kit folder): GUI: open an empty project → `check_connection.py --scan` → `prepare_workdir.py` → `setup_stories.py work/house_from_scratch.pln` → prompts `01_`, `02_` → `make_sections.py create` → GUI: open each of the 6 section windows once → `fixA_snapshot.py` → `fixA_comps.py` → `fixA_walls.py` → `fixA_slabs.py --apply` → `fixA_found.py` → `fixA_raise.py` → `fixA_del2d.py --apply` → prompts `12_`→`13_`→`14_`→`15_`→`16_`→`17_`→`10_`→`11_` (each in a new conversation; save after each; `run_sheets.sh` does the same) → GUI: Reference IDs to A/B → `layer_found.py` → `export_png.py` → (review and fixes).
+
+`run_sheets.sh`: pass a non-interactive "run once" agent command, e.g. `AGENT_CMD='claude -p --dangerously-skip-permissions' bash scripts/run_sheets.sh`. By default it runs the 8 prompts of step 7 in the experiment's order, each in a new process, and sends SaveProject after each (stops if saving fails). You can also name prompts, e.g. `SHEETS='20_fix_SA_round2'`.
 
 ### Running the prompts with your own agent
 
-The prompt files (`prompts/*.md`) are plain prose (Japanese), not tied to any agent. Start the agent **in the kit folder** and type only this one line into a new conversation (step 0 is `prompts/00_prepare.md`; from step 1 on, `work/prompts/…`):
+The prompt files (`prompts/*.md`) are plain prose (Japanese), not tied to any agent. Start the agent **in the kit folder** and type only this one line into a new conversation (only the first, `prompts/00_prepare.md`, is in the kit's prompts; after that, `work/prompts/…`):
 
 > "Read `work/prompts/01_model_M.md` and follow its instructions."
 
@@ -62,15 +64,17 @@ Most of the time is the AI thinking. More rule items make it longer.
   - `rhino_house.jpg`: what it looks like
   - `layout_1F.jpg`, `layout_2F.jpg`: layout drawings (fictional; used by the prompt that adds partitions, rooms and the stair)
 - `prompts/`
-  - The experiment's prompts (`01_`, `02_`, `03_`, `04_`, `10_`–`17_`, `20_`–`25_`): verbatim; only paths replaced by `<KIT>/`; a "kit additions" section (pre-checks, saving, logging, next line) appended at the end (see the "Flow" table below)
-  - Step prompts written for the kit: `00_prepare` (preparation), `05_sections` (elevation/section lines), `06_fix_model` (model fix), `10_all_sheets` (8 sheets in order), `18_rename_and_export` (Reference IDs and export), `30_inspect_and_fix` (one review/fix round). They put into words what the experimenter's AI did directly, so it can be run with one line. Not run in Archicad in this form
+  - The experiment's prompts (`01_`, `02_`, `03_`, `04_`, `10_`–`17_`, `20_`–`25_`): exactly the files given as one line to a new conversation in the experiment. The only differences: the experiment's folder location replaced by `<KIT>/`, and the Archicad version number removed (see "Check against the original prompts" below)
+  - Script-only prompts (`00_prepare`, `05_sections`, `06_fix_model`, `18_export`): added for the public kit. They only run the scripts the experimenter's AI ran directly, in the same order with the same arguments, show the output, and stop on error (`check_connection.py` and `prepare_workdir.py` in `00_prepare` are scripts newly written for the kit)
+  - `30_inspect_and_fix`: added (not used in the experiment). Puts into words the review and fix-prompt writing the experimenter's AI did
 - `rules/`: drawing rules (elevation, plan, section; in Japanese — see [rules/README.en.md](rules/README.en.md)). The AI drew using only these and information readable from Archicad
 - `skills/`: knowledge handed to AI agents (guide to the drawing rules, [Archicad operating tips](skills/archicad-operation.md), [how to review and write fix prompts](skills/inspection.md))
 - `scripts/`
   - `tapir_http.py`: minimal client sending Archicad JSON API + Tapir commands
-  - Setup and running: `check_connection.py` (connection check; `--scan` to find the port; `--count` to check the project is blank; `--save`), `prepare_workdir.py` (work folder), `setup_stories.py` (stories), `check_grid.py` (checks the grid file and normalizes its format), `make_sections.py` (elevation/section lines), `run_sheets.sh` (runs prompts one by one and saves)
-  - Model fix: `fixA_snapshot.py` → `fixA_comps.py` → `fixA_walls.py` → `fixA_slabs.py` → `fixA_found.py` → `fixA_raise.py` → `layer_found.py` (+ `fixA_del2d.py` if needed)
-  - Review: `export_png.py` (8 sheets as high-res PNG and text), `check_levels.py` (checks level notation)
+  - Setup and running: `check_connection.py` (connection check; `--scan` to find the port; `--count` to check the project is blank; `--save`), `prepare_workdir.py` (work folder), `setup_stories.py` (stories), `make_sections.py` (elevation/section lines; `shoot` exports the 6 views), `run_sheets.sh` (hands prompts one by one to a fresh agent and saves)
+  - Model fix (same order as the experiment): `fixA_snapshot.py` → `fixA_comps.py` → `fixA_walls.py` → `fixA_slabs.py --apply` → `fixA_found.py` → `fixA_raise.py` → `fixA_del2d.py --apply`. `layer_found.py` comes after the 8 sheets, before export
+  - Export: `export_png.py` (8 sheets as high-res PNG and text; hides the below-ground layer for elevations and plans)
+  - Added (not used in the experiment): `check_levels.py` (checks level notation), `check_grid.py` (checks the grid file and normalizes its format). Used by `30_inspect_and_fix`
   - `grid.json`: grid lines the AI fixed in the layout step of the experiment (record; can be put into the work folder with `prepare_workdir.py --with-grid`)
   - `record/walls_before_fixA.json`: the experiment model's wall snapshot before the fix (record; element IDs are specific to that model and cannot be used for another)
 - `results/`: the final 8 sheets (`1_P1`–`8_EW`), section before/after (`sa_before_after.jpg`), south elevation without/with skill (`noskill_vs_skill.jpg`; 14 November, slightly earlier house)
@@ -106,11 +110,18 @@ The rewritten scripts have only been syntax-checked and test-run in the parts th
 | 2 | Add partitions, interior doors, stair and rooms; fix one set of grid lines (`grid.json`) | `02_interior_I.md` | not recorded |
 | 3 | Finish the south elevation with the drawing rules, including lines and fills | `03_south_elevation_recorded.md` + `rules/作図ルール_立面.md` (version at that time) | recorded, ~10 min |
 | 4 | Draw the remaining sheets. Midway, fix a partition that pierced the roof, delete the 2D and redraw | `04_fix_partition_F.md` | not recorded |
-| 5 | Sections were weak, so Hermes fixed the model (see "Model fix" below) | `scripts/` | not recorded |
-| 6 | Write new section rules and redraw the 8 sheets one by one (SaveProject after each) | `10_sheet_P1.md`–`17_sheet_EW.md` | not recorded |
-| 7 | Compare with the drafting conventions of professional drawings; Hermes wrote fix prompts and gave them to the AI | `20_`–`25_` (examples) | not recorded |
+| 5 | Sections were weak, so Hermes fixed the model (see "Model fix" below). Order: wall snapshot → `fixA_comps` → `fixA_walls` → `fixA_slabs` → `fixA_found` → whole house +0.1 (`fixA_raise`) → save → delete the earlier round's 2D (`fixA_del2d`) | `scripts/` | not recorded; ~12 min in all |
+| 6 | Write new section rules and redraw the 8 sheets, each in a new conversation, in the order A-A → B-B → south → north → east → west → ground floor → first floor; SaveProject from outside after each | `12_sheet_SA.md` → … → `11_sheet_P2.md` | not recorded; ~2 h 50 min |
+| 7 | Export and review. Below-ground lines showed in elevations/plans, so `layer_found.py` moved them to their own layer and the sheets were exported again | `scripts/` | not recorded |
+| 8 | Compare with the actual office drawings; Hermes wrote fix prompts and gave them to the AI (between the 3rd and 4th round, the section markers' Reference IDs were changed to A/B in the GUI) | `20_`–`25_` (examples) | not recorded |
 
-The kit's steps (the table in the README) are this flow without 3 and 4 (drawing before the model fix). To try 3 and 4 too, run `03_` after `05_sections`, then go to `06_fix_model` (which first deletes the old 2D with `fixA_del2d.py --apply`). The elevation/section lines (`make_sections.py`) were, in the experiment, created on the previous model of this house and left in the blank project.
+The kit's steps (the table in the README) are this flow without 3 and 4 (drawing before the model fix, and the fix made during it). In the experiment, the blank project was the previous model of this house saved under a new name and emptied; its stories (1FL/2FL/RFL) and elevation/section lines were reused. The kit creates the same stories with `setup_stories.py` and the same lines with `make_sections.py create` (both generalized from the commands sent in that earlier round).
+
+### Check against the original prompts
+
+`01_`, `02_`, `03_`, `04_`, `10_`–`17_` and `20_`–`25_` were compared character by character with the prompt files actually given in the experiment. The only two differences:
+- the experiment's folder location (a path on the PC) is replaced by `<KIT>/` (`prepare_workdir.py` puts the work folder's location back);
+- the version number after "Archicad" in the first lines is removed.
 
 ### Number of fix rounds
 
@@ -153,7 +164,7 @@ Heights: 1FL = GL+100, 1CL = GL+2850, 2FL = GL+3250, 2CL = GL+6600, eaves = GL+6
 - Archicad crashed twice while the 8 sheets were drawn in a row. As countermeasures, the project is saved after every sheet and the prompts avoid `GetElementsInDrawOrder`.
 - The drawing rules summarize the drafting conventions of professional drawings; no shapes, layouts or numbers were copied. In the public version, the number of source drawings and internal file names were removed (the content of the conventions is the same). The recorded south-elevation round used the version of `rules/作図ルール_立面.md` before the final section "rules added in the 11/16 review".
 - The house is fictional. Each was a single trial; results change with other AIs or more runs.
-- The kit's step prompts (00, 05, 06, 10_all_sheets, 18, 30) and the "kit additions" appended to the experiment's prompts were written for publication and have not been run end-to-end against Archicad.
+- The script-only prompts (00, 05, 06, 18) and `30_inspect_and_fix` were written for publication. The flow in the README table has not yet been run from start to finish from the public kit.
 
 ## Paths
 
@@ -161,4 +172,4 @@ Heights: 1FL = GL+100, 1CL = GL+2850, 2FL = GL+3250, 2CL = GL+6600, eaves = GL+6
 - To replace by hand, put the contents of `scripts/tapir_http.py`, `rules/*.md` and `inputs/` directly in one folder and replace `<KIT>/` in the prompts with that folder. The prompts mention `rhino_house.png` and `layout_1F.png`; in this public version they are `.jpg`, so convert them or adjust the names.
 - The scripts read and write files in their own folder such as `tapir_http.py`, `fixA_comps.json`, `walls_before_fixA.json` (created when run; listed in `.gitignore`). Exports go to `<KITROOT>/out/` (the `out` folder in the kit).
 - Port: taken from the environment variable `ARCHICAD_PORT` → `work/archicad_port.txt` (written by `check_connection.py --scan` with the port it found) → 19723 (`tapir_http.default_port()`). `prepare_workdir.py` replaces "port は 19723" in the prompts with this number.
-- Progress is logged one line at a time in `work/progress.md` (the "kit additions" at the end of each prompt make the AI do this). Resuming starts from here.
+- `prepare_workdir.py` also creates `work/progress.md` (a progress note). Only `30_inspect_and_fix` uses it.

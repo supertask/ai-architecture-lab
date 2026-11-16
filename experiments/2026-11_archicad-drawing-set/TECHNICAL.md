@@ -22,12 +22,14 @@ ChatGPT Codex（デスクトップ版）に配布のプロンプトを貼ると�
 
 ## 手順（コマンド）
 
-各段のコマンドと、人に頼む GUI の操作は、段ごとの指示ファイル（`prompts/00_prepare.md`・`05_sections.md`・`06_fix_model.md`・`10_all_sheets.md`・`18_rename_and_export.md`・`30_inspect_and_fix.md`、と実験の指示の末尾の「キットで足したこと」）に書いた。人が手で追う時も同じ順でよい。
-概要：`check_connection.py --scan` → `prepare_workdir.py` → `setup_stories.py work/house_from_scratch.pln` → 指示 `01_`・`02_`（→ `check_grid.py`）→ `make_sections.py create`（＋GUI：断面の窓6つを開く）→ `make_sections.py shoot` → モデルの直し `fixA_*`・`layer_found.py` → 指示 `10_`〜`17_`（`run_sheets.sh` または1本ずつ。1本ごとに `check_connection.py --save`）→ GUI：参照ID を A・B に → `export_png.py`・`check_levels.py` → 直しの指示を書いて流す。
+段の順・人の操作・保存は [README.md](README.md) の表。スクリプトを流す段の指示（`00_prepare`・`05_sections`・`06_fix_model`・`18_export`）は、下のコマンドを順に流して出力を見せるだけなので、人が手で流しても同じ。
+概要（キットのフォルダで）：GUI：空のプロジェクトを開く → `check_connection.py --scan` → `prepare_workdir.py` → `setup_stories.py work/house_from_scratch.pln` → 指示 `01_`・`02_` → `make_sections.py create` → GUI：断面の窓6つを1回ずつ開く → `fixA_snapshot.py` → `fixA_comps.py` → `fixA_walls.py` → `fixA_slabs.py --apply` → `fixA_found.py` → `fixA_raise.py` → `fixA_del2d.py --apply` → 指示 `12_`→`13_`→`14_`→`15_`→`16_`→`17_`→`10_`→`11_`（1本ずつ新しい会話。1本ごとに保存。`run_sheets.sh` でも同じ）→ GUI：参照ID を A・B に → `layer_found.py` → `export_png.py` →（点検と直し）。
+
+`run_sheets.sh`：`AGENT_CMD='claude -p --dangerously-skip-permissions' bash scripts/run_sheets.sh` のように、非対話で1回だけ実行するエージェントのコマンドを渡す。既定で段 7 の8本を実験と同じ順に、1本ずつ新しいプロセスで流し、1本ごとに SaveProject を送る（保存に失敗したら止まる）。`SHEETS='20_fix_SA_round2'` のように指示を指定することもできる。
 
 ### 自分のエージェントで指示を流す
 
-指示ファイル（`prompts/*.md`）は、特定のエージェントに依存しない普通の文章。エージェントを**キットのフォルダで**起動し、新しい会話に次の1行だけを入力する（段 0 は `prompts/00_prepare.md`、段 1 以降は `work/prompts/…`）。
+指示ファイル（`prompts/*.md`）は、特定のエージェントに依存しない普通の文章。エージェントを**キットのフォルダで**起動し、新しい会話に次の1行だけを入力する（最初の `prompts/00_prepare.md` だけキットの prompts、その後は `work/prompts/…`）。
 
 > 「`work/prompts/01_model_M.md` を読んで、指示どおりに作業してください」
 
@@ -62,15 +64,17 @@ AI の考える時間が大半。ルールの項目を増やすと伸びる。
   - `rhino_house.jpg`：その見た目
   - `layout_1F.jpg`・`layout_2F.jpg`：間取りの図（架空。間仕切り・部屋・階段を入れる指示で使った）
 - `prompts/`
-  - 実験の指示（`01_`・`02_`・`03_`・`04_`・`10_`〜`17_`・`20_`〜`25_`）：原文。パスだけ `<KIT>/` に置き換え、末尾に「キットで足したこと」（始める前の確認・保存・記録・次の1行）を追記（下の「流れ」の表）
-  - 公開用に書いた段の指示：`00_prepare`（準備）・`05_sections`（立面・断面の線）・`06_fix_model`（モデルの直し）・`10_all_sheets`（8枚を順に）・`18_rename_and_export`（参照ID と書き出し）・`30_inspect_and_fix`（点検と直し1周）。実験で実験者の AI が直接行った作業を、1行で流せる形に書いた物。この形では Archicad で流していない
+  - 実験の指示（`01_`・`02_`・`03_`・`04_`・`10_`〜`17_`・`20_`〜`25_`）：実験で新しい会話に1行で渡した指示の原文そのまま。違いは、実験のフォルダの場所を `<KIT>/` に置き換えたことと、Archicad の版の番号を外したこと、20・23・24 の「比べる相手」の一文を一般的な言い方（実務の図面の描き方）に変えたことだけ（下の「指示の原文との照合」）
+  - スクリプトを流すだけの指示（`00_prepare`・`05_sections`・`06_fix_model`・`18_export`）：公開用に足した。中身は、実験者の AI が直接流したスクリプトを同じ順・同じ引数で流し、出力を見せ、エラーなら止まる、だけ（`00_prepare` の `check_connection.py`・`prepare_workdir.py` は公開用に新しく書いたスクリプト）
+  - `30_inspect_and_fix`：追加（実験では未使用）。実験者の AI が行った点検と直しの指示作りを、文章にした物
 - `rules/`：作図ルール（立面・平面・断面）。AI はこれと Archicad から読める情報だけで描いた
 - `skills/`：AI エージェントに渡す知識（作図ルールの案内、[Archicad 操作のコツ](skills/archicad-operation.md)、[点検と直しの指示の作り方](skills/inspection.md)）
 - `scripts/`
   - `tapir_http.py`：Archicad の JSON API ＋ Tapir の命令を送る最小のクライアント
-  - 準備と実行：`check_connection.py`（接続の確認・ポートを探す `--scan`・白紙か数える `--count`・保存 `--save`）、`prepare_workdir.py`（作業フォルダ）、`setup_stories.py`（階）、`check_grid.py`（通り芯ファイルの確認と形の統一）、`make_sections.py`（立面・断面の線）、`run_sheets.sh`（1枚ずつ流して保存）
-  - モデルの直し：`fixA_snapshot.py` → `fixA_comps.py` → `fixA_walls.py` → `fixA_slabs.py` → `fixA_found.py` → `fixA_raise.py` → `layer_found.py`（＋必要なら `fixA_del2d.py`）
-  - 点検：`export_png.py`（8枚を高解像度の PNG と文字に）、`check_levels.py`（レベル表記の照合）
+  - 準備と実行：`check_connection.py`（接続の確認・ポートを探す `--scan`・白紙か数える `--count`・保存 `--save`）、`prepare_workdir.py`（作業フォルダ）、`setup_stories.py`（階）、`make_sections.py`（立面・断面の線。`shoot` で6面を画像に）、`run_sheets.sh`（1本ずつ新しいエージェントに渡して保存）
+  - モデルの直し（実験と同じ順）：`fixA_snapshot.py` → `fixA_comps.py` → `fixA_walls.py` → `fixA_slabs.py --apply` → `fixA_found.py` → `fixA_raise.py` → `fixA_del2d.py --apply`。`layer_found.py` は8枚を描いた後、書き出しの前
+  - 書き出し：`export_png.py`（8枚を高解像度の PNG と文字に。立面・平面では地中の画層を隠す）
+  - 追加（実験では未使用）：`check_levels.py`（レベル表記の照合）、`check_grid.py`（通り芯ファイルの確認と形の統一）。`30_inspect_and_fix` が使う
   - `grid.json`：実験で AI が間取りの回で決めた通り芯（記録。`prepare_workdir.py --with-grid` で作業フォルダに入れられる）
   - `record/walls_before_fixA.json`：実験のモデルの、直す前の壁の控え（記録。要素 ID はそのモデルだけの物で、ほかのモデルには使えない）
 - `results/`：仕上がりの8枚（`1_P1`〜`8_EW`）、断面の直す前・後（`sa_before_after.jpg`）、スキルなし／ありの南立面（`noskill_vs_skill.jpg`。11月14日、少し前の版の家）
@@ -106,11 +110,18 @@ AI の考える時間が大半。ルールの項目を増やすと伸びる。
 | 2 | 間仕切り・内部の扉・階段・部屋を入れ、通り芯を1組決める（`grid.json`） | `02_interior_I.md` | 録画なし |
 | 3 | 南立面を、作図ルールで線と塗りまで仕上げる | `03_south_elevation_recorded.md` ＋ `rules/作図ルール_立面.md`（この時点の版） | 録画あり。約10分 |
 | 4 | 残りの図面を描く。途中で、屋根を突き抜けた間仕切りを直し 2D を消して描き直した | `04_fix_partition_F.md` | 録画なし |
-| 5 | 断面が弱かったので、Hermes がモデルを直す（下の「モデルの直し」） | `scripts/` | 録画なし |
-| 6 | 断面の作図ルールを新しく書き、8枚を1枚ずつ描き直す（1枚ごとに SaveProject） | `10_sheet_P1.md`〜`17_sheet_EW.md` | 録画なし |
-| 7 | 実務の図面の描き方（作法）と比べ、Hermes が直しの指示を書いて AI に入れる | `20_`〜`25_`（例） | 録画なし |
+| 5 | 断面が弱かったので、Hermes がモデルを直す（下の「モデルの直し」）。順：壁の控え → `fixA_comps` → `fixA_walls` → `fixA_slabs` → `fixA_found` → 家ごと +0.1（`fixA_raise`）→ 保存 → 前の回の 2D を消す（`fixA_del2d`） | `scripts/` | 録画なし。全部で約12分 |
+| 6 | 断面の作図ルールを新しく書き、8枚を1本ずつ新しい会話で描き直す。順は A-A → B-B → 南 → 北 → 東 → 西 → 1階 → 2階。1本ごとに外から SaveProject | `12_sheet_SA.md` → … → `11_sheet_P2.md` | 録画なし。約2時間50分 |
+| 7 | 書き出して点検。立面・平面に地中の線が出たので `layer_found.py` で画層を分けて書き出し直す | `scripts/` | 録画なし |
+| 8 | 実務の図面の描き方（作法）と比べ、Hermes が直しの指示を書いて AI に入れる（3回目と4回目の間に、断面記号の参照ID を画面で A・B に変えた） | `20_`〜`25_`（例） | 録画なし |
 
-キットの段（README の表）は、この流れから 3・4（モデルを直す前の描画）を除いた形。3・4 も試す時は、`05_sections` の後に `03_` を流し、`06_fix_model`（古い 2D を `fixA_del2d.py --apply` で消してから直す）に進む。断面・立面の線（`make_sections.py`）は、実験ではこの家の前のモデルで作った物を、白紙のプロジェクトにそのまま残して使った。
+キットの段（README の表）は、この流れから 3・4（モデルを直す前の描画と、その途中の直し）を除いた形。実験の白紙のプロジェクトは、この家の前の回のモデルを別名で保存して中身を空にした物で、階（1FL・2FL・RFL）と断面・立面の線はその時の物を使った。キットでは、同じ階の設定を `setup_stories.py`、同じ線を `make_sections.py create` で作る（どちらも、前の回に送った命令を取り出して一般化したスクリプト）。
+
+### 指示の原文との照合
+
+`01_`・`02_`・`03_`・`04_`・`10_`〜`17_`・`20_`〜`25_` は、実験で実際に渡した指示ファイルと1文字ずつ比べた。違いは次の2つだけ。
+- 実験のフォルダの場所（PC の中のパス）を `<KIT>/` に置き換えた（`prepare_workdir.py` が作業フォルダの場所に戻す）。
+- 冒頭の「Archicad」の後ろの版の番号を外した。
 
 ### 直しの回数
 
@@ -153,7 +164,7 @@ AI の考える時間が大半。ルールの項目を増やすと伸びる。
 - 図面8枚を続けて描かせている間に、Archicad が2回落ちた。対策として、1枚ごとに保存し、指示で `GetElementsInDrawOrder` を使わないようにした。
 - 作図ルールは、実務の図面の描き方（作法）を整理したもの。形・間取り・数値は写していない。公開版では、元にした図面の件数と内部のファイル名を外した（描き方の中身は同じ）。南立面の録画の回は、`rules/作図ルール_立面.md` の最後の「11/16 の点検で足した決まり」が入る前の版を使った。
 - 家は架空。1回ずつの試行で、AI や回数を変えると結果は変わる。
-- キットの段の指示（00・05・06・10_all_sheets・18・30）と、実験の指示の末尾に足した「キットで足したこと」は公開用に書いた物で、Archicad で通しでは流していない。
+- スクリプトを流すだけの指示（00・05・06・18）と `30_inspect_and_fix` は公開用に書いた物。README の表の流れを、公開したキットで最初から最後まで流したことはまだない。
 
 ## パスについて
 
@@ -161,4 +172,4 @@ AI の考える時間が大半。ルールの項目を増やすと伸びる。
 - 手で読み替える時は、`scripts/tapir_http.py`・`rules/*.md`・`inputs/` の中身を1つのフォルダの直下に置き、指示の `<KIT>/` をそのフォルダに置き換える。指示の `rhino_house.png`・`layout_1F.png` は、この公開版では `.jpg` なので、変換するか読み替える。
 - スクリプトは、同じフォルダの `tapir_http.py`・`fixA_comps.json`・`walls_before_fixA.json` などを読み書きする（実行するとできる。`.gitignore` 済み）。書き出しは `<KITROOT>/out/`（キットの中の out）。
 - ポート：環境変数 `ARCHICAD_PORT` → `work/archicad_port.txt`（`check_connection.py --scan` が見つけた番号を書く）→ 19723 の順に使う（`tapir_http.default_port()`）。`prepare_workdir.py` は、指示文の「port は 19723」をこの番号に置き換える。
-- 進み具合は `work/progress.md` に1行ずつ（各指示の末尾の「キットで足したこと」が書かせる）。再開はここを読む。
+- `prepare_workdir.py` は `work/progress.md`（進み具合のメモ）も作る。使うのは `30_inspect_and_fix` だけ。
