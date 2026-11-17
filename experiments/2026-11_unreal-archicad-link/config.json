@@ -1,0 +1,52 @@
+{
+ "_about": "Per-project settings for the layout kit. Edit this file for your own model; the scripts contain no project data.",
+ "archicad_port": 19723,
+ "room_zone_name": "LDK",
+ "front_axis": "+y",
+ "_front_axis": "Library objects in the template face their local +y side. facing = Archicad angle + 90 deg.",
+ "kinds": [
+  ["ダイニングチェア", "dining_chair"], ["dining chair", "dining_chair"],
+  ["アームチェア", "lounge_chair"], ["ラウンジチェア", "lounge_chair"], ["armchair", "lounge_chair"],
+  ["ソファ", "sofa"], ["sofa", "sofa"],
+  ["コーヒーテーブル", "coffee_table", {"min_width": 0.9, "else": "side_table"}],
+  ["サイドテーブル", "side_table"], ["side table", "side_table"], ["coffee table", "coffee_table"],
+  ["カーペット", "rug"], ["ラグ", "rug"], ["rug", "rug"], ["carpet", "rug"],
+  ["オットマン", "pouf"], ["プフ", "pouf"], ["ottoman", "pouf"],
+  ["サイドボード", "tv_unit"], ["テレビボード", "tv_unit"], ["TVボード", "tv_unit"], ["tv unit", "tv_unit"],
+  ["テレビ", "tv"], ["TV", "tv"],
+  ["本棚", "shelf"], ["シェルフ", "shelf"], ["shelf", "shelf"], ["bookcase", "shelf"],
+  ["ダイニングテーブル", "dining_table"], ["角テーブル", "dining_table"], ["丸テーブル", "dining_table"], ["dining table", "dining_table"],
+  ["ベンチ", "bench"], ["bench", "bench"],
+  ["観葉植物", "plant"], ["植物", "plant"], ["plant", "plant"],
+  ["ランプ", "floor_lamp"], ["lamp", "floor_lamp"],
+  ["スツール", "stool"], ["stool", "stool"]
+ ],
+ "kind_by_guid": {
+  "8E8DBFFC-2AB1-40F0-8473-51C31F4F2826": "floor_lamp"
+ },
+ "_kind_by_guid": "Overrides for stand-in objects (here a stool part stands in for a floor lamp).",
+ "ignore_guids": [],
+ "keep_out_zone_names": ["階段", "吹抜", "stair", "void"],
+ "_keep_out": "Rectangles kept free of furniture. reach:true = also a main-path target (people arrive there, e.g. a stair landing).",
+ "keep_out": [
+  {"name": "階段の降り口（仮定）", "rect": [7.2, 0.15, 8.3, 1.0], "reach": true}
+ ],
+ "fixtures": [
+  {"kind": "kitchen_counter", "name": "キッチン（仮定・未モデル）", "rect": [10.35, 4.39, 13.05, 5.04], "assumed": true}
+ ],
+ "entries": [],
+ "_entries": "Leave empty to auto-detect openings in the room outline that have no wall (>= 0.6 m). Or list {name, point:[x,y]}.",
+ "rules": {
+  "main_path_m": 0.8,
+  "secondary_path_m": 0.6,
+  "door_clear_m": 0.8,
+  "kitchen_aisle_m": 0.9,
+  "dining_to_kitchen_m": 2.5,
+  "sofa_faces_tv_deg": 15,
+  "sofa_tv_m": [2.0, 3.6],
+  "tv_window_margin_m": 0.3,
+  "lounge_to_centre_deg": 25,
+  "chair_pull_out_m": 0.6,
+  "big_move_m": 3.0
+ }
+}

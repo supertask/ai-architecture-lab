@@ -12,7 +12,7 @@ Updates: X [@supertask_jp](https://x.com/supertask_jp) (Japanese)
 
 ### What you need
 
-- Software: Rhino or Archicad (depends on the experiment)
+- Software: Rhino, Archicad or Unreal Engine (depends on the experiment)
 - An AI, one of these (both paid plans):
   - a paid Claude plan + Claude Code (desktop app)
   - a paid ChatGPT plan + Codex (desktop app)
@@ -40,10 +40,13 @@ Copy the "prompt for the AI" from the page below and paste it into the AI. The A
 
 [![From a blank Archicad project to 8 sheets](experiments/2026-11_archicad-drawing-set/images/summary.jpg)](experiments/2026-11_archicad-drawing-set/README.en.md)
 
+[![Ask in one sentence, and the furniture layout changes in Archicad and Unreal Engine at the same time](experiments/2026-11_unreal-archicad-link/images/img1_cafe_en.jpg)](experiments/2026-11_unreal-archicad-link/README.en.md)
+
 | Date | Experiment | Summary | Used |
 | --- | --- | --- | --- |
 | 2026-11 | [Exterior image only vs image + drawings](experiments/2026-11_image-vs-drawing-3d/README.en.md) | The AI built Rhino models of the same house from one exterior image only / image + drawings, and we compared the shape overlap with the correct model (image only 68–80%, with drawings 96–100%) | Claude Opus 5.5, Rhino, Figma, ComfyUI (Qwen-Image 2.1) |
 | 2026-11 | [From a blank Archicad project to 8 sheets](experiments/2026-11_archicad-drawing-set/README.en.md) | The AI built a fictional house in a blank Archicad project and, given drawing rules, drew 2 plans, 2 sections and 4 elevations. Sections were weak, so layers and foundations were added to the model and the sheets redrawn; 2–3 rounds of review and fixes | Claude Opus 5.5, Archicad, Tapir |
+| 2026-11 | [Unreal Engine ⇄ Archicad: ask the AI for a furniture layout](experiments/2026-11_unreal-archicad-link/README.en.md) | Ask in one sentence, e.g. "line the sofas up by the window, like a café": the AI reads the Archicad room, designs the furniture arrangement, checks it against rules (path widths etc.) and applies it. The Unreal Engine 3D view moves at the same time, and moving furniture in Unreal Engine moves the Archicad plan | Claude Opus 5.5, Archicad, Tapir, Unreal Engine (Datasmith Direct Link) |
 
 Figma board where a human and the AI refined the drawings together (view only): [Drawing loop between AI and human (one exterior image → drawings v7–v14)](https://www.figma.com/board/Fajd8nO7JFtNX5Ty2JOus4)
 

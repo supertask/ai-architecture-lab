@@ -1,0 +1,116 @@
+{
+ "status": "PASS",
+ "violations": [],
+ "waived": [],
+ "metrics": {
+  "sofa_tv": [
+   {
+    "sofa": "sofa",
+    "deg": 0.0,
+    "m": 2.7
+   }
+  ],
+  "dining_to_kitchen_m": 1.52,
+  "open_floor_circle_m": 2.82,
+  "open_floor_centre": [
+   13.67,
+   3.13
+  ],
+  "moved": [
+   [
+    "shelf",
+    5.94,
+    90
+   ],
+   [
+    "tv",
+    4.21,
+    90
+   ],
+   [
+    "tvunit",
+    4.21,
+    90
+   ],
+   [
+    "coffee",
+    2.29,
+    90
+   ],
+   [
+    "rug",
+    2.29,
+    90
+   ],
+   [
+    "side2",
+    1.79,
+    0
+   ],
+   [
+    "side1",
+    1.7,
+    90
+   ],
+   [
+    "lounge1",
+    1.68,
+    90
+   ],
+   [
+    "lamp",
+    1.56,
+    0
+   ],
+   [
+    "lounge2",
+    1.38,
+    90
+   ],
+   [
+    "dchair1",
+    0.98,
+    0
+   ],
+   [
+    "dtable",
+    0.97,
+    0
+   ],
+   [
+    "dchair3",
+    0.96,
+    0
+   ],
+   [
+    "dchair2",
+    0.92,
+    0
+   ],
+   [
+    "dchair4",
+    0.92,
+    0
+   ],
+   [
+    "plant3",
+    0.88,
+    0
+   ],
+   [
+    "sofa",
+    0.67,
+    90
+   ]
+  ],
+  "moved_n": 17,
+  "moved_3m_plus": [
+   "shelf",
+   "tv",
+   "tvunit"
+  ],
+  "max_move_m": 5.94
+ },
+ "pieces_sha256": "a30afc48052f19e6068d745915dae9308ccf2040799cde2d6513e648fc3b9721",
+ "room_read_at": "2026-11-17 11:59:10"
+}

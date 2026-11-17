@@ -1,0 +1,129 @@
+{
+ "status": "PASS",
+ "violations": [],
+ "waived": [
+  [
+   "sofa_faces_tv",
+   "sofa",
+   "sofa is 57° off the TV"
+  ],
+  [
+   "sofa_tv_distance",
+   "sofa",
+   "sofa–TV 5.06 m (want 2.0–3.6)"
+  ]
+ ],
+ "metrics": {
+  "sofa_tv": [
+   {
+    "sofa": "sofa",
+    "deg": 57.2,
+    "m": 5.06
+   }
+  ],
+  "dining_to_kitchen_m": 1.49,
+  "open_floor_circle_m": 3.15,
+  "open_floor_centre": [
+   9.92,
+   2.83
+  ],
+  "moved": [
+   [
+    "shelf",
+    7.09,
+    90
+   ],
+   [
+    "side1",
+    5.47,
+    90
+   ],
+   [
+    "coffee",
+    3.53,
+    90
+   ],
+   [
+    "rug",
+    3.53,
+    90
+   ],
+   [
+    "sofa",
+    3.33,
+    90
+   ],
+   [
+    "dchair1",
+    3.1,
+    0
+   ],
+   [
+    "dchair2",
+    3.1,
+    0
+   ],
+   [
+    "dchair3",
+    3.1,
+    0
+   ],
+   [
+    "dchair4",
+    3.1,
+    0
+   ],
+   [
+    "dtable",
+    3.1,
+    0
+   ],
+   [
+    "lounge1",
+    2.29,
+    180
+   ],
+   [
+    "lounge2",
+    2.08,
+    180
+   ],
+   [
+    "plant3",
+    1.04,
+    0
+   ],
+   [
+    "lamp",
+    0.99,
+    0
+   ],
+   [
+    "plant1",
+    0.7,
+    0
+   ],
+   [
+    "side2",
+    0.3,
+    0
+   ]
+  ],
+  "moved_n": 16,
+  "moved_3m_plus": [
+   "shelf",
+   "side1",
+   "coffee",
+   "rug",
+   "sofa",
+   "dchair1",
+   "dchair2",
+   "dchair3",
+   "dchair4",
+   "dtable"
+  ],
+  "max_move_m": 7.09
+ },
+ "pieces_sha256": "8ddc883e203eb1289b46fe41942807d11f82f3def45980cc2b3a61647a2b4640",
+ "room_read_at": "2026-11-17 12:21:26"
+}

@@ -1,0 +1,45 @@
+{
+ "_about": "Unreal-side settings for ue_follow.py / ue_attach.py / ue_material_swap.py. No paths to your PC are needed: the scripts find this folder themselves.",
+ "archicad_port": null,
+ "_archicad_port": "null = use archicad_port from ../config.json, else env ARCHICAD_PORT, else scan 19723-19743 (one Archicad open).",
+ "element_types": ["Object"],
+ "_element_types": "Datasmith actors with the tag Archicad.Element.Type.<type> are followed (Object = library-part furniture).",
+ "settle_s": 0.3,
+ "pull": true,
+ "pull_dt": 0.2,
+ "drag": true,
+ "drag_dt": 0.3,
+ "hold_s": 1.2,
+ "tol_m": 0.003,
+ "tol_rad": 0.002,
+ "rebuild": false,
+ "_rebuild": "true = also call Tapir RebuildView after a send (only if your Archicad plan does not redraw by itself).",
+ "rescan_s": 1.5,
+ "mark_dirty": true,
+ "_mark_dirty": "Actors moved by the follower are marked modified, so File > Save actually writes the level.",
+ "log": "logs/follow.jsonl",
+
+ "attach": {
+  "_about": "ue_attach.py: real furniture meshes attached as children of the Datasmith actors. Meshes: upright, real size, pivot anywhere.",
+  "mesh_front": "+Y",
+  "_mesh_front": "Direction the meshes face in their own Unreal axes (+Y for most Poly Haven models). Per item: \"mesh_front\".",
+  "hide_parent": true,
+  "items": [
+   {"match": {"kind": "sofa"}, "mesh": "/Game/Furniture/SM_Sofa", "fit": "uniform"},
+   {"match": {"kind": "dining_chair"}, "mesh": "/Game/Furniture/SM_DiningChair", "fit": "none"},
+   {"match": {"libpart": "Plant"}, "mesh": ["/Game/Furniture/SM_Plant_Pot", "/Game/Furniture/SM_Plant_Leaves"], "fit": "height"},
+   {"match": {"guid": "00000000-0000-0000-0000-000000000000"}, "mesh": "/Game/Furniture/SM_Vase", "fit": "none", "on_top": true, "offset_cm": [0, 0, 0]}
+  ],
+  "_items": "match: kind (same names as ../config.json kinds), libpart (part-name substring) or guid. fit: none | uniform | box | height. Optional: yaw (extra deg), on_top, offset_cm [x,y,z] in the parent's axes, mesh_front."
+ },
+
+ "material_swap": {
+  "_about": "ue_material_swap.py: restyle the material ASSETS Datasmith created (asset level, no per-actor loop). Re-run after every Direct Link reimport.",
+  "search_root": "/Game",
+  "map": {
+   "/Game/Looks/MI_Concrete": ["Concrete"],
+   "/Game/Looks/MI_Oak": ["Wood Floor"]
+  },
+  "_map": "your material (instance) path -> Datasmith material asset names (exact or substring)."
+ }
+}

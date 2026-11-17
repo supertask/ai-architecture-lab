@@ -1,0 +1,6 @@
+__pycache__/
+logs/
+ue/logs/
+undo/
+*.mp4
+*.mkv

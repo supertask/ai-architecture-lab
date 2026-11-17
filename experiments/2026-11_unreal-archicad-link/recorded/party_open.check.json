@@ -1,0 +1,133 @@
+{
+ "status": "PASS",
+ "violations": [],
+ "waived": [
+  [
+   "sofa_faces_tv",
+   "sofa",
+   "sofa is 65° off the TV"
+  ],
+  [
+   "sofa_tv_distance",
+   "sofa",
+   "sofa–TV 4.72 m (want 2.0–3.6)"
+  ],
+  [
+   "rug_centred",
+   "rug",
+   "rug centre 3.21 m from coffee table"
+  ],
+  [
+   "rug_under_seats",
+   "lounge2",
+   "lounge2 front legs off the rug"
+  ]
+ ],
+ "metrics": {
+  "sofa_tv": [
+   {
+    "sofa": "sofa",
+    "deg": 65.0,
+    "m": 4.72
+   }
+  ],
+  "dining_to_kitchen_m": 1.27,
+  "open_floor_circle_m": 5.03,
+  "open_floor_centre": [
+   10.82,
+   1.88
+  ],
+  "moved": [
+   [
+    "pouf",
+    5.4,
+    0
+   ],
+   [
+    "shelf",
+    5.29,
+    90
+   ],
+   [
+    "coffee",
+    3.21,
+    90
+   ],
+   [
+    "plant2",
+    3.08,
+    0
+   ],
+   [
+    "dchair4",
+    2.74,
+    90
+   ],
+   [
+    "dchair3",
+    2.73,
+    90
+   ],
+   [
+    "lounge2",
+    2.48,
+    90
+   ],
+   [
+    "lounge1",
+    2.38,
+    180
+   ],
+   [
+    "lamp",
+    2.3,
+    0
+   ],
+   [
+    "plant1",
+    2.07,
+    0
+   ],
+   [
+    "dtable",
+    1.9,
+    0
+   ],
+   [
+    "side2",
+    1.35,
+    0
+   ],
+   [
+    "dchair1",
+    1.15,
+    90
+   ],
+   [
+    "tv",
+    0.75,
+    0
+   ],
+   [
+    "tvunit",
+    0.75,
+    0
+   ],
+   [
+    "dchair2",
+    0.57,
+    180
+   ]
+  ],
+  "moved_n": 16,
+  "moved_3m_plus": [
+   "pouf",
+   "shelf",
+   "coffee",
+   "plant2"
+  ],
+  "max_move_m": 5.4
+ },
+ "pieces_sha256": "a445e59a023453ccd907a676ca8225d76d19cbaf1fd177889e5a977d3f5be1c3",
+ "room_read_at": "2026-11-17 12:25:16"
+}

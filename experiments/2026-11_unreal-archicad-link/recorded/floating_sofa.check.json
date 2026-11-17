@@ -1,0 +1,113 @@
+{
+ "status": "PASS",
+ "violations": [],
+ "waived": [
+  [
+   "wall_aligned",
+   "lounge1",
+   "lounge1 turned 30°"
+  ],
+  [
+   "wall_aligned",
+   "lounge2",
+   "lounge2 turned 150°"
+  ]
+ ],
+ "metrics": {
+  "sofa_tv": [
+   {
+    "sofa": "sofa",
+    "deg": 0.0,
+    "m": 2.98
+   }
+  ],
+  "dining_to_kitchen_m": 0.89,
+  "open_floor_circle_m": 2.55,
+  "open_floor_centre": [
+   9.62,
+   3.33
+  ],
+  "moved": [
+   [
+    "side1",
+    2.32,
+    0
+   ],
+   [
+    "lounge1",
+    0.93,
+    4
+   ],
+   [
+    "coffee",
+    0.88,
+    0
+   ],
+   [
+    "rug",
+    0.88,
+    0
+   ],
+   [
+    "sofa",
+    0.81,
+    0
+   ],
+   [
+    "lamp",
+    0.76,
+    0
+   ],
+   [
+    "side2",
+    0.72,
+    0
+   ],
+   [
+    "tv",
+    0.6,
+    0
+   ],
+   [
+    "tvunit",
+    0.6,
+    0
+   ],
+   [
+    "dchair1",
+    0.4,
+    0
+   ],
+   [
+    "dchair2",
+    0.4,
+    0
+   ],
+   [
+    "dchair3",
+    0.4,
+    0
+   ],
+   [
+    "dchair4",
+    0.4,
+    0
+   ],
+   [
+    "dtable",
+    0.4,
+    0
+   ],
+   [
+    "lounge2",
+    0.36,
+    30
+   ]
+  ],
+  "moved_n": 15,
+  "moved_3m_plus": [],
+  "max_move_m": 2.32
+ },
+ "pieces_sha256": "726661490d33e4f408fda90309be7a45f1eb4e3662c19b2a754623744d32302a",
+ "room_read_at": "2026-11-17 13:03:51"
+}
