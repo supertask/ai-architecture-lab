@@ -7,16 +7,17 @@ If Unreal Engine is connected, the same furniture moves in the Unreal Engine 3D 
 
 No answers are prepared in advance. Every time, the AI designs from the current room (walls, windows, doors, stair, furniture).
 
-![AI layout 1: café seats by the window. Top: Unreal Engine; bottom: Archicad plan (same layout, linked)](images/img1_cafe_en.jpg)
-
 **You do not need to write any code.** After a one-time setup, you just paste the "one line" from the table below into the AI.
 
 ## What it does (the four requests in the experiment)
 
-| 2. For a party, clear a big space in the middle | 4. Float the sofa in the middle of the room |
+| 1. Line the sofas up by the window, like a café | 2. For a party, clear a big space in the middle |
 | --- | --- |
-| ![AI layout 2: open centre for a party](images/img2_party_en.jpg) | ![AI layout 4: floating sofa](images/img3_floating_en.jpg) |
+| ![AI layout 1: café seats by the window](images/img1_cafe_en.jpg) | ![AI layout 2: open centre for a party](images/img2_party_en.jpg) |
+| **3. Swap the dining and living areas** | **4. Float the sofa in the middle of the room** |
+| ![AI layout 3: swap dining and living](images/img4_swap_en.jpg) | ![AI layout 4: floating sofa](images/img3_floating_en.jpg) |
 
+In each image, top: Unreal Engine; bottom: Archicad plan (same layout, linked).
 
 Frames from the recording (captions in Japanese).
 
