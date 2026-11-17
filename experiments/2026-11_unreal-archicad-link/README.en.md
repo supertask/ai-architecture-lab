@@ -93,7 +93,7 @@ These are the exact words given to the AI in the experiment (in Japanese; only t
 - The furniture look in Unreal Engine comes from separate 3D furniture attached with `ue/ue_attach.py` (those 3D models, the Unreal Engine project and the Archicad file are not in this folder).
 - The `examples` folder is a development test record of the same four requests (the AI role was played by the AI agent used for development).
 - The house is fictional. AI answers differ every time, so the same request will not give the same arrangement.
-- Used: AI — Claude Opus 5.5 (under a Claude Code subscription, called from the Hermes Agent AI agent); software — Archicad with Tapir, Unreal Engine with Datasmith Direct Link. 17 November 2026.
+- Used: AI — Claude Opus 5.5 (run from the Hermes Agent AI agent); software — Archicad with Tapir, Unreal Engine with Datasmith Direct Link. 17 November 2026.
 
 ## For advanced users and AIs
 

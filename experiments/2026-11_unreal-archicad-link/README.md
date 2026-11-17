@@ -93,7 +93,7 @@ AI が考えた配置の上面図（AI が自分で書いて、決まりで確�
 - Unreal Engine 側の家具の見た目は、`ue/ue_attach.py` で別に付けた 3D の家具です（その 3D の家具、Unreal Engine のプロジェクト、Archicad のファイルはこのフォルダに入れていません）。
 - `examples` フォルダは、開発中に同じ4つの頼みを試した動作確認の記録です（AI の役は開発に使った AI エージェント自身）。
 - 家は架空です。AI の答えは毎回変わるので、同じ頼みでも同じ配置にはなりません。
-- 使ったもの：AI は Claude Opus 5.5（Claude Code の契約で、AI エージェント Hermes Agent から利用）、ソフトは Archicad と Tapir、Unreal Engine と Datasmith Direct Link。2026年11月17日。
+- 使ったもの：AI は Claude Opus 5.5（AI エージェント Hermes Agent から利用）、ソフトは Archicad と Tapir、Unreal Engine と Datasmith Direct Link。2026年11月17日。
 
 ## 詳しい人・AI 向け
 
