@@ -13,17 +13,10 @@ No answers are prepared in advance. Every time, the AI designs from the current 
 
 ## What it does (the four requests in the experiment)
 
-| 2. For a party, clear a big space in the middle | 3. Float the sofa in the middle of the room |
+| 2. For a party, clear a big space in the middle | 4. Float the sofa in the middle of the room |
 | --- | --- |
-| ![AI layout 2: open centre for a party](images/img2_party_en.jpg) | ![AI layout 3: floating sofa](images/img3_floating_en.jpg) |
+| ![AI layout 2: open centre for a party](images/img2_party_en.jpg) | ![AI layout 4: floating sofa](images/img3_floating_en.jpg) |
 
-Top views of the arrangements the AI designed (written by the AI and checked against the rules; labels in Japanese). Grey dotted outlines are the original positions.
-
-| Café seats by the south window | Party: open centre |
-| --- | --- |
-| ![Café seats by the south window](recorded/window_cafe.png) | ![Party: open centre](recorded/party_open.png) |
-| **Swap dining and living** | **Float the sofa in the middle** |
-| ![Swap dining and living](recorded/swap_dining_living.png) | ![Float the sofa in the middle](recorded/floating_sofa.png) |
 
 Frames from the recording (captions in Japanese).
 

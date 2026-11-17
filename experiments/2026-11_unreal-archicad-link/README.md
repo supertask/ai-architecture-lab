@@ -13,17 +13,9 @@ Unreal Engine をつないでおけば、同じ家具が Unreal Engine の 3D �
 
 ## できること（実験で頼んだ4つ）
 
-| ② パーティー用に真ん中を広く空けて | ③ ソファを部屋の真ん中に浮かせて |
+| ② パーティー用に真ん中を広く空けて | ④ ソファを部屋の真ん中に浮かせて |
 | --- | --- |
-| ![AI案② パーティー用に中央を空ける](images/img2_party.jpg) | ![AI案③ ソファを部屋の真ん中に](images/img3_floating.jpg) |
-
-AI が考えた配置の上面図（AI が自分で書いて、決まりで確かめたもの）。灰色の点線が元の位置です。
-
-| 窓際のカフェ席 | パーティー：中央を空ける |
-| --- | --- |
-| ![窓際のカフェ席](recorded/window_cafe.png) | ![パーティー：中央を空ける](recorded/party_open.png) |
-| **ダイニングとリビングを入れ替え** | **ソファを部屋の中央に浮かせる** |
-| ![ダイニングとリビングを入れ替え](recorded/swap_dining_living.png) | ![ソファを部屋の中央に浮かせる](recorded/floating_sofa.png) |
+| ![AI案② パーティー用に中央を空ける](images/img2_party.jpg) | ![AI案④ ソファを部屋の真ん中に](images/img3_floating.jpg) |
 
 録画の一場面です。
 
