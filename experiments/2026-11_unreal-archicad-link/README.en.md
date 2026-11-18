@@ -95,4 +95,4 @@ These are the exact words given to the AI in the experiment (in Japanese; only t
 - [AI_GUIDE.en.md](AI_GUIDE.en.md): the procedure for AIs (setup, reading the room, layout format, rule list, applying, undo)
 - [ue/README.en.md](ue/README.en.md): Unreal Engine setup and the follower (`ue_follow.py`), attaching furniture meshes, swapping materials, pitfalls
 - Contents: `read_room.py` (read the room), `check_layout.py` (check against the rules), `apply_layout.py` (apply to Archicad), `tapir.py` (talks to Archicad), `config.json` (room and furniture settings), `room.json` (the room as read in the experiment), `ue/` (Unreal Engine side), `recorded/` (arrangements the AI wrote in the experiment), `examples/` (development tests), `layouts/` (where the AI writes new arrangements)
-- Updates: X [@supertask_jp](https://x.com/supertask_jp) (Japanese); article (note: coming soon)
+- Updates: X [@supertask_jp](https://x.com/supertask_jp) (Japanese); article ([note](https://note.com/supertask/n/nc2c73428550d), Japanese)

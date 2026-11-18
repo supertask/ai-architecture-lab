@@ -95,4 +95,4 @@ Unreal Engine をつないでおけば、同じ家具が Unreal Engine の 3D �
 - [AI_GUIDE.md](AI_GUIDE.md)：AI 向けの手順（準備・部屋の読み取り・配置の書き方・決まりの一覧・反映・元に戻し方）
 - [ue/README.md](ue/README.md)：Unreal Engine 側の準備と見張り（`ue_follow.py`）、家具の付け替え、素材の差し替え、落とし穴
 - 入っているもの：`read_room.py`（部屋を読む）、`check_layout.py`（決まりで確かめる）、`apply_layout.py`（Archicad に反映）、`tapir.py`（Archicad との通信）、`config.json`（部屋と家具の設定）、`room.json`（実験の部屋の読み取り結果）、`ue/`（Unreal Engine 側）、`recorded/`（実験で AI が書いた配置）、`examples/`（開発中の動作確認）、`layouts/`（AI が新しい配置を書く場所）
-- 発信：X [@supertask_jp](https://x.com/supertask_jp)、解説記事（note: coming soon）
+- 発信：X [@supertask_jp](https://x.com/supertask_jp)、解説記事（[note](https://note.com/supertask/n/nc2c73428550d)）
